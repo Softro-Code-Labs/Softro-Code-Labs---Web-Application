@@ -127,8 +127,8 @@ export const si: UI = {
     privacyNote: "ඔබේ විස්තර භාවිත කරන්නේ ඔබට පිළිතුරු දීමට පමණයි.",
     privacyLink: "රහස්‍යතා ප්‍රතිපත්තිය",
     kinds: [
-      { value: "Mobile app", label: "ජංගම යෙදුමක්" },
       { value: "Website or web app", label: "වෙබ් අඩවියක් හෝ වෙබ් යෙදුමක්" },
+      { value: "Mobile app", label: "ජංගම යෙදුමක්" },
       { value: "Online store", label: "ඔන්ලයින් වෙළඳසැලක්" },
       { value: "Business system", label: "ව්‍යාපාර පද්ධතියක්" },
       { value: "AI or automation", label: "AI හෝ ස්වයංක්‍රීයකරණය" },

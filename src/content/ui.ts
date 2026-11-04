@@ -125,8 +125,8 @@ export const en = {
     privacyLink: "Privacy policy",
     /** The value is what arrives in the enquiry email, so it stays in English in both languages. */
     kinds: [
-      { value: "Mobile app", label: "Mobile app" },
       { value: "Website or web app", label: "Website or web app" },
+      { value: "Mobile app", label: "Mobile app" },
       { value: "Online store", label: "Online store" },
       { value: "Business system", label: "Business system" },
       { value: "AI or automation", label: "AI or automation" },

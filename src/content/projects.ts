@@ -79,9 +79,9 @@ const ola = {
 const baileyn = {
   phone: { src: "/work/baileyn-phone.webp", width: 540, height: 1169, frame: "phone", alt: "Baileyn store home page on a phone, with English and Sinhala language buttons, the cart and an Order now button", caption: "On a phone, where most customers order." },
   pressing: { src: "/work/baileyn-pressing.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn home page chapter At the mill: a 3D bottle tilted as oil pours into it, beside the headline Pressed the traditional way, then filtered", caption: "The home page tells the oil's story with a 3D bottle that moves as you scroll." },
-  product: { src: "/work/baileyn-product.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn product page for White Coconut Oil with a photo, description, 750 ml and 1 L size options, stock and Add to cart and Buy now buttons", caption: "The product page: pick a size, add to cart or buy now." },
+  product: { src: "/work/baileyn-cart.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn cart page showing the delivery fee for the chosen district before anyone orders", caption: "The cart shows the delivery fee for the chosen district before anyone orders." },
   checkout: { src: "/work/baileyn-checkout.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn checkout with steps for cart, details and confirmation, fields for name, mobile number and district, and an order summary with a Place order button", caption: "Guest checkout: a mobile number and a district, then pay on delivery." },
-  sinhala: { src: "/work/baileyn-sinhala.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn shop page in Sinhala, with Sinhala navigation, search, filters and product card", caption: "The whole store also works in Sinhala." },
+  sinhala: { src: "/work/baileyn-track.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn order tracking page with fields for order number and mobile number, and a one-time SMS code", caption: "Order tracking: the order number and mobile number, then a one-time SMS code." },
 } satisfies Record<string, Shot>;
 
 const tourvista = {
