@@ -37,16 +37,24 @@ Until these are set and the domain is verified in Resend, the form shows a messa
 | --- | --- |
 | Email, phone and WhatsApp | `src/content/site.ts` |
 | English page wording, address and reply time | `src/content/ui.ts` |
+| The home page numbers (3 projects, 46 tools and so on) | `home.stats` in `src/content/ui.ts` |
+| "Open for new projects" and the two lines under the home buttons | `home.availability` and `home.assurances` in `src/content/ui.ts` |
+| The three "What happens next" steps beside the enquiry form | `closing.next` in `src/content/ui.ts` |
 | Projects, screenshots, services and process (English) | `src/content/projects.ts` |
+| A project's badge ("Live") and the colour of the glow behind its screens | `status` and `tint` in `src/content/projects.ts` |
 | Privacy policy and terms (English) | `src/content/legal.ts` |
 | Client quotes | `src/content/testimonials.ts` |
-| Colours for the dark and light themes | `src/app/globals.css` |
+| Colours, type sizes and motion for both themes | `src/app/globals.css` |
+
+In headings, words between `*asterisks*` are highlighted, as in the home heading "Software that \*fits\* the people using it."
+
+The home page numbers must stay true. Change them when the facts change, and never round them up.
 
 ## Sinhala version
 
 Every page also exists in Sinhala under `/si` (for example `/si/work`). The language button in the header switches between the two.
 
-All Sinhala wording is in `src/content/si/`:
+All Sinhala wording is in `src/content/si/`. The newest lines (the home page numbers, "What happens next", the footer labels and the project badges) are a first draft, so have a Sinhala reader check them.
 
 | File | Holds |
 | --- | --- |
@@ -68,10 +76,20 @@ Put the image in `public/work` (WebP, about 1200px wide for desktop pages and 54
 ```
 
 `frame` is `"browser"` for a desktop page, `"phone"` for an upright phone screen and `"phone-wide"` for a sideways one.
-Each project has one `screen` (shown in the sloped panel) and a `gallery` (shown on its case study page).
+Each project has one `screen` and an optional `accent`, which are shown together in its 3D panel, and a `gallery` shown on its case study page.
 
 Keep test banners, hosting badges and real customer details out of every screenshot.
 
 ## Add a client quote
 
 Add real, approved words to `src/content/testimonials.ts`. The section appears on the Home page automatically.
+
+## Keeping it fast
+
+The design is built to stay quick on ordinary phones. When you add to it:
+
+- Animate only `transform` and `opacity`. Everything that moves already respects the phone's "reduce motion" setting.
+- Give long sections lower down a page the `defer` class (see `globals.css`), so the browser skips them until they are near the screen.
+- Use only the font weights 400, 500, 600 and 700. Each extra weight costs time before the first paint.
+- Keep screenshots in WebP at the sizes above. The site serves them as AVIF or WebP, resized for each screen.
+- Avoid `filter: blur()` and masks on large areas near the top of a page. Soft glows are drawn with gradients instead.

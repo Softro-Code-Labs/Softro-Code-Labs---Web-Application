@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { Footer, Header, PhoneBar } from "@/components/SiteChrome";
+import { Footer } from "@/components/Footer";
+import { Motion } from "@/components/Motion";
+import { Header, PhoneBar } from "@/components/SiteChrome";
+import { plain } from "@/components/ui";
 import { getContent } from "@/content";
 import { site } from "@/content/site";
 import { isLang, langs, type Lang } from "@/i18n";
@@ -29,16 +32,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0b1220" },
-    { media: "(prefers-color-scheme: light)", color: "#eef1f6" },
+    { media: "(prefers-color-scheme: dark)", color: "#070b14" },
+    { media: "(prefers-color-scheme: light)", color: "#f5f6fa" },
   ],
+  // Lets the phone action bar sit clear of the home indicator on modern phones.
+  viewportFit: "cover",
 };
 
 export default async function RootLayout({ children, params }: Props) {
   const lang = pick((await params).lang);
   const { ui } = getContent(lang);
   return (
-    <html lang={lang} className={fontClasses} suppressHydrationWarning>
+    // data-scroll-behavior: smooth scrolling for links within a page, but instant jumps between pages.
+    <html lang={lang} className={fontClasses} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
@@ -46,10 +52,11 @@ export default async function RootLayout({ children, params }: Props) {
         <a className="skip" href="#main">
           {ui.chrome.skip}
         </a>
-        <Header lang={lang} t={ui.chrome} />
+        <Header lang={lang} t={ui.chrome} whatsappLabel={ui.home.whatsapp} />
         <main id="main">{children}</main>
-        <Footer lang={lang} t={ui.chrome} address={ui.address} />
+        <Footer lang={lang} t={ui.chrome} address={ui.address} tagline={plain(ui.home.heading)} />
         <PhoneBar lang={lang} t={ui.chrome} />
+        <Motion />
       </body>
     </html>
   );

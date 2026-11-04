@@ -9,6 +9,10 @@ export type Project = {
   need: string[];
   built: string[];
   stands: string;
+  /** A two or three word status shown as a badge, such as "Live". */
+  status: string;
+  /** The colour of the glow behind the project's screens. */
+  tint: string;
   link?: { href: string; label: string };
   /** The screen shown in the sloped panel on the Home, Work and case study pages. */
   screen: Shot;
@@ -34,7 +38,7 @@ export type Shot = {
 };
 
 /** The translatable parts of a project and a screenshot, used by si/projects.ts. */
-export type ProjectText = Pick<Project, "kind" | "summary" | "tech" | "need" | "built" | "stands"> & { linkLabel?: string };
+export type ProjectText = Pick<Project, "kind" | "summary" | "tech" | "need" | "built" | "stands" | "status"> & { linkLabel?: string };
 export type ShotText = Pick<Shot, "alt" | "caption">;
 export type Service = { name: string; short: string; long: string; example: { label: string; href: string } };
 export type Step = { name: string; text: string };
@@ -86,6 +90,8 @@ export const projects: Project[] = [
       "The Trace the O brand identity, app icons and animated launch screen",
     ],
     stands: "The Android client test build is ready, and the app is being prepared for Google Play and the App Store.",
+    status: "Test build ready",
+    tint: "#8b5cf6",
     screen: ola.home,
     accent: ola.guide,
     gallery: [ola.guide, ola.trace, ola.celebrate, ola.traceSinhala, ola.profile],
@@ -111,6 +117,8 @@ export const projects: Project[] = [
       "WhatsApp ordering alongside the online store",
     ],
     stands: "The store is complete and online.",
+    status: "Live",
+    tint: "#f5a524",
     link: { href: "https://baileynstore.com/", label: "Visit the Baileyn store" },
     screen: baileyn.phone,
     accent: baileyn.pressing,
@@ -135,6 +143,8 @@ export const projects: Project[] = [
       "Page titles, descriptions and share images written for search",
     ],
     stands: "The site is live.",
+    status: "Live",
+    tint: "#22b8cf",
     link: { href: "https://tourvistatours.com/", label: "Visit Tourvista Tours" },
     screen: tourvista.home,
     accent: tourvista.packages,

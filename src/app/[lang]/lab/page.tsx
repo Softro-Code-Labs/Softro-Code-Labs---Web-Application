@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { ScreenGallery } from "@/components/ProjectScreen";
-import { RibbonRow } from "@/components/Ribbon";
-import { ClosingEnquiry, LabRow } from "@/components/Sections";
+import { ScreenGallery } from "@/components/Devices";
+import { Cpu, Download, Save } from "@/components/icons";
+import { ClosingCTA, LabFeature } from "@/components/Sections";
+import { Page, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { pageMetadata, resolveLang, type LangParams } from "@/i18n";
+
+const stepIcons = [Download, Cpu, Save];
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const lang = await resolveLang(params);
@@ -15,31 +18,42 @@ export default async function LabPage({ params }: LangParams) {
   const lang = await resolveLang(params);
   const { ui, labShots } = getContent(lang);
   return (
-    <>
-      <LabRow pageTitle lang={lang} />
-      <RibbonRow className="pt-14 pb-12 min-[981px]:pt-[104px]">
-        <h2 className="display-l max-w-[760px]">{ui.lab.howHeading}</h2>
-        <ol className="mt-10 grid gap-8 min-[981px]:grid-cols-3 min-[981px]:pr-16">
-          {ui.lab.how.map((step, index) => (
-            <li key={step.title}>
-              <p aria-hidden="true" className="font-display text-[56px] leading-none font-semibold text-crimson">
-                {index + 1}
-              </p>
-              <h3 className="mt-3 text-[21px] leading-snug font-semibold">{step.title}</h3>
-              <p className="mt-2 text-muted">{step.text}</p>
-            </li>
-          ))}
-        </ol>
-      </RibbonRow>
-      <section aria-labelledby="screens" className="px-(--gutter) pt-10 pb-16 min-[981px]:pb-24">
-        <div className="max-w-[1194px]">
-          <h2 id="screens" className="display-m mb-10">
-            {ui.lab.screensHeading}
-          </h2>
+    <Page>
+      <LabFeature pageTitle lang={lang} />
+
+      <section className="section defer" style={vars({ "--defer-h": "600px" })} aria-labelledby="how-heading">
+        <div className="wrap">
+          <SectionHeader id="how-heading" title={ui.lab.howHeading} />
+          <ol className="grid gap-5 min-[1024px]:grid-cols-3">
+            {ui.lab.how.map((step, index) => {
+              const Icon = stepIcons[index] ?? Cpu;
+              return (
+                <li key={step.title} className="card spot p-7 min-[1024px]:p-9" data-spot data-reveal style={vars({ "--i": index })}>
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="icon-tile">
+                      <Icon size={22} />
+                    </span>
+                    <span className="font-mono text-[12px] tracking-[0.12em] text-subtle" aria-hidden="true">
+                      0{index + 1}
+                    </span>
+                  </div>
+                  <h3 className="title mt-8">{step.title}</h3>
+                  <p className="mt-3 text-muted">{step.text}</p>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
+      </section>
+
+      <section className="section defer" style={vars({ "--defer-h": "1600px" })} aria-labelledby="screens">
+        <div className="wrap">
+          <SectionHeader id="screens" title={ui.lab.screensHeading} />
           <ScreenGallery shots={[labShots.menu, labShots.phone, labShots.convert, labShots.password]} />
         </div>
       </section>
-      <ClosingEnquiry lang={lang} />
-    </>
+
+      <ClosingCTA lang={lang} />
+    </Page>
   );
 }

@@ -25,6 +25,7 @@ export const projectText: Record<Slug, ProjectText> = {
       "Trace the O සන්නාම අනන්‍යතාව, යෙදුම් අයිකන සහ සජීවිකරණ ආරම්භක තිරය",
     ],
     stands: "Android සේවාදායක පරීක්ෂණ සංස්කරණය සූදානම්. යෙදුම Google Play සහ App Store සඳහා සූදානම් කෙරෙමින් පවතී.",
+    status: "පරීක්ෂණ සංස්කරණය සූදානම්",
   },
   baileyn: {
     kind: "ඔන්ලයින් වෙළඳසැල",
@@ -44,6 +45,7 @@ export const projectText: Record<Slug, ProjectText> = {
       "ඔන්ලයින් වෙළඳසැලට අමතරව WhatsApp හරහා ඇණවුම් කිරීම",
     ],
     stands: "වෙළඳසැල සම්පූර්ණයි, දැන් අන්තර්ජාලයේ ක්‍රියාත්මකයි.",
+    status: "ක්‍රියාත්මකයි",
     linkLabel: "Baileyn වෙළඳසැලට පිවිසෙන්න",
   },
   "tourvista-tours": {
@@ -63,6 +65,7 @@ export const projectText: Record<Slug, ProjectText> = {
       "සෙවුම් යන්ත්‍ර සඳහා ලියූ පිටු මාතෘකා, විස්තර සහ බෙදාගැනීමේ රූප",
     ],
     stands: "වෙබ් අඩවිය දැන් අන්තර්ජාලයේ ක්‍රියාත්මකයි.",
+    status: "ක්‍රියාත්මකයි",
     linkLabel: "Tourvista Tours වෙත පිවිසෙන්න",
   },
 };

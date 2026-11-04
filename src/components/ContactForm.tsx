@@ -6,6 +6,8 @@ import { flushSync } from "react-dom";
 import { site, whatsapp } from "@/content/site";
 import type { UI } from "@/content/ui";
 import { fill, localize, type Lang } from "@/i18n";
+import { ArrowRight, Shield } from "./icons";
+import { vars } from "./ui";
 
 type Errors = Partial<Record<"name" | "contact" | "message", string>>;
 
@@ -45,23 +47,31 @@ export function ContactForm({ lang, t, replyTime }: { lang: Lang; t: UI["form"];
 
   if (status === "sent") {
     return (
-      <div role="status" className="border-t border-line pt-6">
-        <p className="display-m">{t.sentHeading}</p>
-        <p className="mt-3 text-muted">{fill(t.sentText, { time: replyTime })}</p>
+      <div role="status" className="flex min-h-[320px] flex-col justify-center py-6">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true" className="text-ok">
+          <circle cx="32" cy="32" r="30" stroke="currentColor" strokeOpacity="0.3" strokeWidth="2" />
+          <path className="check-draw" d="M20 33l8 8 16-17" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" style={vars({ "--len": 40 })} />
+        </svg>
+        <p className="display-2 mt-6">{t.sentHeading}</p>
+        <p className="lead mt-3 text-muted">{fill(t.sentText, { time: replyTime })}</p>
       </div>
     );
   }
 
+  const sending = status === "sending";
+
   return (
-    <form onSubmit={submit} noValidate aria-label={t.label} className="space-y-5">
-      <Field label={t.name} name="name" autoComplete="name" error={errors.name} />
-      <Field label={t.contact} name="contact" error={errors.contact} />
+    <form onSubmit={submit} noValidate aria-label={t.label} className="grid gap-6">
+      <div className="grid gap-6 min-[640px]:grid-cols-2 min-[640px]:gap-4">
+        <Field label={t.name} name="name" autoComplete="name" error={errors.name} />
+        <Field label={t.contact} name="contact" error={errors.contact} />
+      </div>
 
       <fieldset>
-        <legend className="text-[15px] font-semibold">{t.kindLegend}</legend>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <legend className="field-label">{t.kindLegend}</legend>
+        <div className="mt-3 flex flex-wrap gap-2">
           {t.kinds.map((kind, index) => (
-            <label key={kind.value} className="chip relative">
+            <label key={kind.value} className="pick">
               <input type="radio" name="kind" value={kind.value} defaultChecked={index === t.kinds.length - 1} />
               <span>{kind.label}</span>
             </label>
@@ -69,10 +79,11 @@ export function ContactForm({ lang, t, replyTime }: { lang: Lang; t: UI["form"];
         </div>
       </fieldset>
 
-      <label className="field">
-        {t.message}
-        {t.messageHint && <span className="mt-1 block text-sm font-normal text-muted">{t.messageHint}</span>}
+      <label className="block">
+        <span className="field-label">{t.message}</span>
+        {t.messageHint && <span className="mt-1 block text-sm text-muted">{t.messageHint}</span>}
         <textarea
+          className="input"
           name="message"
           rows={4}
           aria-invalid={errors.message ? true : undefined}
@@ -90,7 +101,7 @@ export function ContactForm({ lang, t, replyTime }: { lang: Lang; t: UI["form"];
       </div>
 
       {(status === "failed" || status === "offline") && (
-        <p role="alert" className="text-[15px]">
+        <p role="alert" className="rounded-2xl border border-accent/40 bg-accent/8 p-4 text-[15px] leading-relaxed">
           {status === "offline" ? t.offline : t.failed}{" "}
           <a className="link" href={`mailto:${site.email}`}>
             {site.email}
@@ -103,24 +114,32 @@ export function ContactForm({ lang, t, replyTime }: { lang: Lang; t: UI["form"];
         </p>
       )}
 
-      <button type="submit" className="btn" disabled={status === "sending"}>
-        {status === "sending" ? t.sending : t.send}
-      </button>
-      <p className="text-sm text-muted">
-        {t.privacyNote}{" "}
-        <Link className="underline underline-offset-2 hover:text-paper" href={localize(lang, "/privacy")}>
-          {t.privacyLink}
-        </Link>
-      </p>
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
+        <button type="submit" className="btn btn-primary w-full min-[640px]:w-auto" disabled={sending} aria-busy={sending || undefined}>
+          {sending && <span className="spinner" aria-hidden="true" />}
+          {sending ? t.sending : t.send}
+          {!sending && <ArrowRight size={18} className="arrow" />}
+        </button>
+        <p className="flex items-start gap-2 text-sm text-muted">
+          <Shield size={16} className="mt-0.5 flex-none text-ok" />
+          <span>
+            {t.privacyNote}{" "}
+            <Link className="underline underline-offset-2 hover:text-fg" href={localize(lang, "/privacy")}>
+              {t.privacyLink}
+            </Link>
+          </span>
+        </p>
+      </div>
     </form>
   );
 }
 
 function Field({ label, name, error, autoComplete }: { label: string; name: string; error?: string; autoComplete?: string }) {
   return (
-    <label className="field">
-      {label}
+    <label className="block">
+      <span className="field-label">{label}</span>
       <input
+        className="input"
         type="text"
         name={name}
         autoComplete={autoComplete}
@@ -134,7 +153,7 @@ function Field({ label, name, error, autoComplete }: { label: string; name: stri
 
 function Problem({ id, text }: { id: string; text: string }) {
   return (
-    <span id={id} className="mt-1.5 block text-sm font-normal text-accent">
+    <span id={id} className="mt-2 block text-sm font-medium text-accent">
       {text}
     </span>
   );

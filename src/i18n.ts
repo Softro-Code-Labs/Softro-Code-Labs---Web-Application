@@ -15,6 +15,15 @@ export function localize(lang: Lang, path: string) {
   return path === "/" ? "/si" : `/si${path}`;
 }
 
+/**
+ * The address as the visitor sees it. English pages are served from /en behind the scenes
+ * (see src/proxy.ts), and pages built ahead of time report that inner address, so it is removed here.
+ */
+export function visiblePath(pathname: string) {
+  if (pathname === "/en") return "/";
+  return pathname.startsWith("/en/") ? pathname.slice(3) : pathname;
+}
+
 /** The language of a visible address. */
 export const langOf = (pathname: string): Lang => (pathname === "/si" || pathname.startsWith("/si/") ? "si" : "en");
 

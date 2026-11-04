@@ -31,16 +31,31 @@ export const en = {
     otherLangLabel: "Read this page in Sinhala",
     privacy: "Privacy policy",
     terms: "Terms of use",
+    footerPages: "Pages",
+    footerLegal: "Legal",
+    backToTop: "Back to top",
   },
 
   home: {
-    heading: "Software that fits the people using it.",
+    /** Words between *asterisks* are highlighted. */
+    heading: "Software that *fits* the people using it.",
+    availability: "Open for new projects",
     lead: "We're Softro Code Labs. We build websites, online stores, mobile apps and browser tools, shaped around how your customers actually behave.",
     whatsapp: "Chat on WhatsApp",
     seeWork: "See our work",
-    note: "Recent work in education, retail and travel, plus 46 browser tools of our own.",
+    assurances: ["We reply within {time}", "We work in English and Sinhala"],
+    /** Only real numbers. Each value counts up from zero when the page opens. */
+    stats: [
+      { value: 3, label: "client projects in education, retail and travel" },
+      { value: 46, label: "free browser tools built in our Lab" },
+      { value: 2, label: "languages we build in: English and Sinhala" },
+      { value: 2, label: "working days to reply to an enquiry" },
+    ],
+    workEyebrow: "Selected work",
     workHeading: "What we've built so far",
     servicesHeading: "Four ways we can help",
+    servicesLink: "See all services",
+    processEyebrow: "Process",
     processHeading: "How a project runs",
   },
 
@@ -53,6 +68,7 @@ export const en = {
     intro: "The Lab is where we build our own products. It keeps our skills sharp and lets us test ideas with real users.",
     productLead: "46 free file tools that run inside your browser, so your files never leave your device.",
     tryIt: "Try Swift Converter Hub",
+    chip: "Runs on your device. Nothing is uploaded.",
     barsHeading: "Tools in each studio",
     howHeading: "Most converters upload your file. Ours comes to your file.",
     how: [
@@ -69,6 +85,13 @@ export const en = {
     heading: "Have something you want built?",
     lead: "Tell us what it needs to do, and we'll tell you how we'd build it.",
     whatsapp: "Prefer WhatsApp? Message us",
+    nextHeading: "What happens next",
+    next: [
+      "We reply within {time}.",
+      "We talk through what it needs to do and who will use it.",
+      "We tell you how we'd build it, and what it will cost.",
+    ],
+    direct: "Or reach us directly",
   },
 
   form: {
@@ -131,6 +154,8 @@ export const en = {
     screensApp: "Screens from the app",
     screensSite: "Screens from the site",
     next: "Next project: {name}",
+    kindLabel: "Type",
+    techLabel: "Built with",
   },
 
   about: {

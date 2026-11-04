@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
-import { RibbonRow } from "@/components/Ribbon";
-import { ClosingEnquiry, Steps } from "@/components/Sections";
+import Link from "next/link";
+import { Emblem } from "@/components/Emblem";
+import { ArrowRight, Chat, Puzzle, Shield } from "@/components/icons";
+import { ClosingCTA, Process } from "@/components/Sections";
+import { Eyebrow, Page, PageHero, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
-import { pageMetadata, resolveLang, type LangParams } from "@/i18n";
+import { localize, pageMetadata, resolveLang, type LangParams } from "@/i18n";
+
+/** Fit, care with data, plain speaking: in the order of about.values. */
+const valueIcons = [Puzzle, Shield, Chat];
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const lang = await resolveLang(params);
@@ -14,36 +20,80 @@ export default async function AboutPage({ params }: LangParams) {
   const lang = await resolveLang(params);
   const { ui, steps } = getContent(lang);
   const t = ui.about;
+  const [opening, ...story] = t.story;
   return (
-    <>
-      <RibbonRow variant="first" className="pt-14 pb-14 min-[981px]:pt-20">
-        <h1 className="display-xl max-w-[900px]">{t.heading}</h1>
-        <p className="lead mt-6 max-w-[620px] text-muted">{t.lead}</p>
-      </RibbonRow>
-      <RibbonRow className="pt-6 pb-12">
-        <h2 className="display-l mb-8">{t.storyHeading}</h2>
-        <div className="max-w-[640px] space-y-4 text-muted">
-          {t.story.map((paragraph) => (
-            <p key={paragraph}>{paragraph}</p>
-          ))}
+    <Page>
+      <PageHero
+        eyebrow={ui.chrome.about}
+        title={t.heading}
+        lead={t.lead}
+        aside={
+          <div className="stage-enter flex justify-center py-4 min-[1024px]:py-0">
+            <Emblem interactive className="w-[min(40vw,230px)] min-[1024px]:w-[250px]" />
+          </div>
+        }
+      >
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+          <Link href={localize(lang, "/contact")} className="btn btn-primary">
+            {ui.chrome.start}
+            <ArrowRight size={18} className="arrow" />
+          </Link>
+          <Link href={localize(lang, "/work")} className="link-arrow">
+            {ui.home.seeWork}
+            <span className="ring">
+              <ArrowRight size={16} className="arrow" />
+            </span>
+          </Link>
         </div>
-      </RibbonRow>
-      <RibbonRow className="pt-6 pb-12">
-        <h2 className="display-l mb-10">{t.valuesHeading}</h2>
-        <div className="min-[981px]:pr-16">
-          {t.values.map((value) => (
-            <div key={value.name} className="grid gap-x-12 gap-y-2 border-t border-line py-6 min-[981px]:grid-cols-[1fr_1.4fr]">
-              <h3 className="card-title font-display text-[32px] leading-tight font-semibold">{value.name}</h3>
-              <p className="text-muted">{value.text}</p>
+      </PageHero>
+
+      <section className="section defer" aria-labelledby="story-heading">
+        <div className="wrap grid gap-x-16 gap-y-10 min-[1024px]:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)]">
+          <div data-reveal>
+            <div className="min-[1024px]:sticky min-[1024px]:top-[calc(var(--header-h)+40px)]">
+              <Eyebrow>01</Eyebrow>
+              <h2 id="story-heading" className="display-2 mt-4">
+                {t.storyHeading}
+              </h2>
             </div>
-          ))}
+          </div>
+          <div className="max-w-[680px]">
+            <p className="lead" data-reveal>
+              {opening}
+            </p>
+            <div className="mt-8 space-y-5 text-[17.5px] leading-relaxed text-muted">
+              {story.map((paragraph, index) => (
+                <p key={paragraph} data-reveal style={vars({ "--i": index })}>
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+          </div>
         </div>
-      </RibbonRow>
-      <RibbonRow className="pt-6 pb-12">
-        <h2 className="display-l mb-10">{t.processHeading}</h2>
-        <Steps steps={steps} />
-      </RibbonRow>
-      <ClosingEnquiry lang={lang} />
-    </>
+      </section>
+
+      <section className="section defer" style={vars({ "--defer-h": "600px" })} aria-labelledby="values-heading">
+        <div className="wrap">
+          <SectionHeader id="values-heading" eyebrow="02" title={t.valuesHeading} />
+          <div className="grid gap-5 min-[1024px]:grid-cols-3">
+            {t.values.map((value, index) => {
+              const Icon = valueIcons[index] ?? Puzzle;
+              return (
+                <article key={value.name} className="card spot p-7 min-[1024px]:p-9" data-spot data-reveal style={vars({ "--i": index })}>
+                  <span className="icon-tile">
+                    <Icon size={22} />
+                  </span>
+                  <h3 className="title mt-8">{value.name}</h3>
+                  <p className="mt-3 text-muted">{value.text}</p>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <Process steps={steps} eyebrow="03" title={t.processHeading} />
+      <ClosingCTA lang={lang} />
+    </Page>
   );
 }

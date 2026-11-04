@@ -1,23 +1,36 @@
 @import "tailwindcss";
 
 /*
-  Colour tokens. Utilities such as bg-night and text-paper read these variables,
-  so the light theme only has to swap the values below.
-  "night" is always the page background and "paper" the contrasting band.
+  Design tokens.
+  Colours are CSS variables, so the light theme only swaps the values in section 2.
+  Tailwind utilities such as bg-surface, text-muted and border-line read them.
 */
 @theme inline {
-  --color-night: var(--night);
-  --color-raised: var(--raised);
-  --color-line: var(--line);
-  --color-paper: var(--paper);
+  --color-bg: var(--bg);
+  --color-bg-soft: var(--bg-soft);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--fg);
   --color-muted: var(--muted);
-  --color-muted-paper: var(--muted-paper);
+  --color-subtle: var(--subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-ok: var(--ok);
   --color-crimson: #ef4c5b;
   --color-crimson-deep: #a70b21;
-  /* Crimson for small text: bright on navy, deep on paper, so it always passes contrast. */
-  --color-accent: var(--accent);
-  --font-display: var(--font-yaldevi), "Yaldevi Sinhala", "Arial Narrow", system-ui, sans-serif;
-  --font-sans: var(--font-schibsted), "Yaldevi Sinhala", system-ui, sans-serif;
+  --color-coral: #ff8a7a;
+
+  /* Schibsted Grotesk for Latin text; Sinhala letters fall through to Yaldevi Sinhala. */
+  --font-sans: var(--font-schibsted), "Yaldevi Sinhala", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-schibsted), "Yaldevi Sinhala", ui-sans-serif, system-ui, sans-serif;
+  /* Yaldevi is the brand lettering: the wordmark beside the logo. */
+  --font-brand: var(--font-yaldevi), "Yaldevi Sinhala", system-ui, sans-serif;
+  /* Short on purpose: each family name is a font lookup on first paint. */
+  --font-mono: ui-monospace, Consolas, monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 /* Sinhala letters use Yaldevi: regular for body text, semibold for headings and labels. */
@@ -36,354 +49,1391 @@
   unicode-range: U+0D80-0DFF, U+200C-200D;
 }
 
+/* The count-up numbers animate this whole number. */
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+/* ---------------------------------------------------------------------------
+   1. Themes. Dark is the default; the layout's inline script sets data-theme
+   before the first paint, from the saved choice or the system setting.
+   Every text colour here passes WCAG AA on the backgrounds it sits on.
+--------------------------------------------------------------------------- */
 :root {
   color-scheme: dark;
-  --night: #0b1220;
-  --raised: #141d30;
-  --line: #7d8aa3;
-  --paper: #eef1f6;
-  --muted: #a3aec2;
-  --muted-paper: #4a566d;
-  --accent: #ef4c5b;
-  --accent-on-paper: #a70b21;
+  --bg: #070b14;
+  --bg-soft: #0a101c;
+  --surface: #0d1321;
+  --surface-2: #131b2d;
+  --fg: #eef1f6;
+  --muted: #9aa6bd; /* 8.0:1 on --bg */
+  --subtle: #7d8aa3; /* 5.4:1 on --bg */
+  --line: rgb(148 163 194 / 0.13);
+  --line-strong: rgb(148 163 194 / 0.24);
+  --accent: #ef4c5b; /* 5.5:1 on --bg */
+  --ok: #34d399;
+  --edge-hi: rgb(255 255 255 / 0.13);
+  --edge-lo: rgb(239 76 91 / 0.22);
+  --grid-line: rgb(148 163 194 / 0.07);
+  --glass: rgb(9 14 25 / 0.72);
+  --shadow-card: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 30px 60px -32px rgb(0 0 0 / 0.75);
+  --shadow-pop: 0 24px 48px -20px rgb(0 0 0 / 0.65);
+  --text-grad: linear-gradient(100deg, #ff9d8f 0%, #ef4c5b 45%, #d0213b 100%);
+
+  --gutter: clamp(16px, 4vw, 40px);
+  --section-y: clamp(96px, 11vw, 160px);
+  --header-h: 72px;
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --night: #eef1f6;
-  --raised: #ffffff;
-  --line: #7d8aa3;
-  --paper: #0b1220;
-  --muted: #4a566d;
-  --muted-paper: #a3aec2;
-  --accent: #a70b21;
-  --accent-on-paper: #ef4c5b;
-}
-/* Inside a contrasting band, the accent flips with the background. */
-.on-paper {
-  --accent: var(--accent-on-paper);
-}
-
-:root {
-  --r: 46px;
-  --rise: 36.4cqw;
-  --gutter: 40px;
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 96px;
-}
-
-body {
-  background: var(--color-night);
-  color: var(--color-paper);
-  font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-  border-radius: 3px;
-}
-
-.skip {
-  position: absolute;
-  left: 16px;
-  top: -80px;
-  z-index: 60;
-  background: var(--color-crimson);
-  color: #0b1220;
-  padding: 12px 16px;
-  font-weight: 600;
-}
-.skip:focus {
-  top: 12px;
-}
-
-/* Type */
-.display-xl,
-.display-l,
-.display-m {
-  font-family: var(--font-display);
-  font-weight: 600;
-  text-wrap: balance;
-}
-.display-xl {
-  font-size: clamp(52px, 7.6vw, 112px);
-  line-height: 0.98;
-  letter-spacing: -0.01em;
-}
-.display-l {
-  font-size: clamp(42px, 5vw, 64px);
-  line-height: 1.02;
-}
-.display-m {
-  font-size: clamp(32px, 3.4vw, 48px);
-  line-height: 1.1;
-}
-.lead {
-  font-size: 21px;
-  line-height: 1.45;
-}
-
-/* Links and buttons */
-.link {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--accent);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 120ms;
-}
-.link:hover {
-  color: var(--color-paper);
-}
-.on-paper .link:hover {
-  color: var(--color-night);
-}
-
-/* The main button keeps navy text on crimson in both themes (5.6:1). */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 52px;
-  padding: 0 24px;
-  border-radius: 2px;
-  background: var(--color-crimson);
-  color: #0b1220;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 120ms, color 120ms;
-}
-.btn:hover {
-  background: var(--color-paper);
-  color: var(--color-night);
-}
-.btn:disabled {
-  opacity: 0.6;
-  cursor: progress;
-}
-.btn-quiet {
-  min-height: 44px;
-  padding: 0 16px;
-  background: none;
-  border: 1px solid var(--color-line);
-  color: var(--color-paper);
-}
-.btn-quiet:hover {
-  background: var(--color-raised);
-}
-
-/* The ribbon: rows of text, a sloped panel and a vertical spine */
-.rows {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) var(--r) 120px;
-  padding-inline: var(--gutter);
-}
-.span-text {
-  grid-column: 1 / 3;
-}
-.rail {
-  position: relative;
-}
-.spine {
-  position: absolute;
-  inset: -17px 0 31px;
-  background: linear-gradient(var(--color-crimson-deep), var(--color-crimson));
-  clip-path: polygon(0 17px, 100% 0, 100% calc(100% - 17px), 0 100%);
-  transform-origin: top;
-}
-.spine-first {
-  top: 0;
-  clip-path: polygon(0 0, 100% 24px, 100% calc(100% - 17px), 0 100%);
-}
-.spine-last {
-  bottom: 0;
-  clip-path: polygon(0 17px, 100% 0, 100% 100%, 0 calc(100% - 24px));
-}
-.fold {
-  position: relative;
-  container-type: inline-size;
-  /* A row can ask for a taller panel on desktop; phones always use the compact height below. */
-  min-height: var(--fold-min, 660px);
-}
-.band {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right, var(--color-crimson), var(--color-crimson-deep));
-  clip-path: polygon(0 var(--rise), 100% 0, 100% var(--r), 0 calc(var(--rise) + var(--r)));
-}
-.panel {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  clip-path: polygon(
-    0 calc(var(--rise) + var(--r) + 12px),
-    100% calc(var(--r) + 12px),
-    100% 100%,
-    0 100%
-  );
-}
-.panel-art {
-  position: absolute;
-  right: 40px;
-  bottom: 0;
-}
-
-.hero {
-  position: relative;
-  min-height: 760px;
-  padding: 88px var(--gutter) 64px;
-}
-.hero-mark {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 16px;
-  width: 352px;
-  height: 534px;
-}
-
-/* One motion moment: the ribbon draws as you scroll. */
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .spine {
-      animation: draw linear both;
-      animation-timeline: view();
-      animation-range: entry 5% cover 55%;
-    }
-    @keyframes draw {
-      from {
-        transform: scaleY(0.04);
-      }
-      to {
-        transform: scaleY(1);
-      }
-    }
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-
-/* Form */
-.field {
-  display: block;
-  font-size: 15px;
-  font-weight: 600;
-}
-.field input,
-.field textarea {
-  display: block;
-  width: 100%;
-  min-height: 48px;
-  margin-top: 6px;
-  padding: 12px;
-  background: var(--color-raised);
-  border: 1px solid var(--color-line);
-  border-radius: 2px;
-  color: var(--color-paper);
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 1.4;
-}
-.field [aria-invalid="true"] {
-  border-color: var(--accent);
-}
-.chip input {
-  position: absolute;
-  opacity: 0;
-}
-.chip span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0 14px;
-  border: 1px solid var(--color-line);
-  border-radius: 2px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.chip input:checked + span {
-  background: var(--color-paper);
-  border-color: var(--color-paper);
-  color: var(--color-night);
-}
-.chip input:focus-visible + span {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-
-/* The header switches to the full menu at 1101px, where the menu, language switch and theme switch fit on one line in both languages. */
-@media (min-width: 1101px) {
-  .menu-toggle {
-    display: none;
-  }
-}
-/*
-  On narrow phones the theme switch moves from the header into the phone menu.
-  Plain classes, because .btn sets display outside Tailwind's layers and would win over its utilities.
-*/
-.only-narrow {
-  display: none;
-}
-@media (max-width: 480px) {
-  .hide-narrow {
-    display: none;
-  }
-  .only-narrow {
-    display: inline-flex;
-  }
+  --bg: #f5f6fa;
+  --bg-soft: #edf0f6;
+  --surface: #ffffff;
+  --surface-2: #fafbfd;
+  --fg: #0b1220;
+  --muted: #4a566d; /* 6.9:1 on --bg */
+  --subtle: #5a667d; /* 5.4:1 on --bg */
+  --line: rgb(11 18 32 / 0.09);
+  --line-strong: rgb(11 18 32 / 0.17);
+  --accent: #c01530; /* 5.7:1 on --bg */
+  --ok: #059669;
+  --edge-hi: rgb(11 18 32 / 0.08);
+  --edge-lo: rgb(192 21 48 / 0.16);
+  --grid-line: rgb(11 18 32 / 0.05);
+  --glass: rgb(245 246 250 / 0.78);
+  --shadow-card: 0 1px 2px rgb(11 18 32 / 0.04), 0 24px 48px -28px rgb(11 18 32 / 0.22);
+  --shadow-pop: 0 24px 48px -24px rgb(11 18 32 / 0.28);
+  --text-grad: linear-gradient(100deg, #e2384b 0%, #c01530 55%, #9e0c24 100%);
 }
 
 @media (max-width: 1100px) {
-  /* Room for the phone action bar */
-  body {
-    padding-bottom: 68px;
+  :root {
+    --header-h: 64px;
   }
 }
 
-/*
-  Sinhala. Its letters carry marks above and below the line, so headings need
-  more line height than Latin, and the largest sizes come down a step so long words fit.
-*/
+/* ---------------------------------------------------------------------------
+   2. Base
+--------------------------------------------------------------------------- */
+@layer base {
+  html {
+    scroll-padding-top: calc(var(--header-h) + 24px);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: rgb(239 76 91 / 0.32);
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  p {
+    text-wrap: pretty;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   3. Components
+--------------------------------------------------------------------------- */
+@layer components {
+  .skip {
+    position: absolute;
+    left: 16px;
+    top: -80px;
+    z-index: 70;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 18px;
+    font-weight: 600;
+  }
+  .skip:focus {
+    top: 12px;
+  }
+
+  /* Layout */
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  /*
+    Sections below the opening skip layout and painting until they come near the screen,
+    so the first paint only does the work for what is visible. The size is a first guess
+    that the browser replaces with the real size once it has drawn the section.
+  */
+  .defer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto var(--defer-h, 900px);
+  }
+  /* Half the rhythm above and below, so two sections in a row sit one full step apart. */
+  .section {
+    position: relative;
+    padding-block: calc(var(--section-y) / 2);
+  }
+  .hairline {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-strong) 15%, var(--line-strong) 85%, transparent);
+  }
+
+  /* Type */
+  .display-hero,
+  .display-1,
+  .display-2,
+  .title {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+  .display-hero {
+    font-size: clamp(2.6rem, 1.2rem + 5.2vw, 5.6rem);
+    line-height: 0.98;
+    letter-spacing: -0.036em;
+    font-weight: 700;
+  }
+  .display-1 {
+    font-size: clamp(2.4rem, 1.45rem + 3.5vw, 4.6rem);
+    line-height: 1.01;
+    letter-spacing: -0.032em;
+    font-weight: 700;
+  }
+  .display-2 {
+    font-size: clamp(2rem, 1.35rem + 2.2vw, 3.35rem);
+    line-height: 1.05;
+    letter-spacing: -0.028em;
+    font-weight: 700;
+  }
+  .title {
+    font-size: clamp(1.35rem, 1.16rem + 0.65vw, 1.7rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+  .lead {
+    font-size: clamp(1.125rem, 1.03rem + 0.36vw, 1.3rem);
+    line-height: 1.6;
+  }
+  .text-gradient {
+    background: var(--text-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Keeps descenders and Sinhala marks inside the painted area. */
+    padding-block: 0.06em;
+    margin-block: -0.06em;
+  }
+
+  /* A small label above a heading. The folded mark echoes the logo's ribbon. */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .eyebrow::before {
+    content: "";
+    flex: none;
+    width: 10px;
+    height: 13px;
+    background: linear-gradient(var(--color-crimson-deep), var(--color-crimson));
+    clip-path: polygon(0 28%, 100% 0, 100% 72%, 0 100%);
+  }
+
+  /* Buttons. The main button uses white on deep crimson (4.8:1 or more across the gradient). */
+  .btn {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 999px;
+    font-size: 15.5px;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      transform 0.3s var(--ease-expo),
+      box-shadow 0.3s,
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
+  .btn-primary {
+    color: #fff;
+    background: linear-gradient(180deg, #d92d42, #b8142c);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.22),
+      inset 0 0 0 1px rgb(255 255 255 / 0.08),
+      0 12px 30px -12px rgb(239 76 91 / 0.7);
+  }
+  /* A light sweep crosses the button on hover. */
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.3) 50%, transparent 70%);
+    transform: translateX(-130%);
+    transition: transform 0.8s var(--ease-expo);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.25),
+      inset 0 0 0 1px rgb(255 255 255 / 0.1),
+      0 18px 40px -12px rgb(239 76 91 / 0.85);
+  }
+  .btn-primary:hover::before {
+    transform: translateX(130%);
+  }
+  .btn-secondary {
+    color: var(--fg);
+    background: color-mix(in oklab, var(--surface-2) 72%, transparent);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+  }
+  .btn-secondary:hover {
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fg) 32%, transparent);
+  }
+  .btn-sm {
+    min-height: 42px;
+    padding: 0 18px;
+    font-size: 14.5px;
+    white-space: nowrap;
+  }
+  .btn .arrow {
+    transition: transform 0.35s var(--ease-expo);
+  }
+  .btn:hover .arrow,
+  .link-arrow:hover .arrow {
+    transform: translateX(3px);
+  }
+  .btn:hover .arrow-ne,
+  .link-arrow:hover .arrow-ne {
+    transform: translate(2px, -2px);
+  }
+
+  /* Round icon button for the theme and language switches. */
+  .icon-btn {
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    min-width: 42px;
+    height: 42px;
+    padding: 0 10px;
+    border-radius: 999px;
+    color: var(--fg);
+    font-size: 14.5px;
+    font-weight: 600;
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+    transition:
+      background-color 0.2s,
+      box-shadow 0.2s,
+      transform 0.3s var(--ease-expo);
+  }
+  .icon-btn:hover {
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fg) 30%, transparent);
+  }
+  .icon-btn:active {
+    transform: scale(0.94);
+  }
+
+  /* A link with an arrow in a ring. */
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--fg);
+  }
+  .link-arrow .ring {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s,
+      color 0.3s;
+  }
+  .link-arrow:hover .ring {
+    background: var(--accent);
+    box-shadow: none;
+    color: #fff;
+  }
+
+  .link {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    transition: text-decoration-thickness 0.2s;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Small pills */
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    padding: 2px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--muted);
+    background: color-mix(in oklab, var(--surface-2) 70%, transparent);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .chip-mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.01em;
+  }
+  .dot {
+    position: relative;
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ok);
+  }
+  .dot-wait {
+    background: #f59e0b;
+  }
+  .dot-pulse::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: inherit;
+  }
+
+  /* Cards: a soft surface with a gradient edge. */
+  .card {
+    position: relative;
+    border: 1px solid transparent;
+    border-radius: 24px;
+    background:
+      linear-gradient(180deg, var(--surface-2), var(--surface)) padding-box,
+      linear-gradient(165deg, var(--edge-hi), var(--line) 35%, var(--line) 65%, var(--edge-lo)) border-box;
+    box-shadow: var(--shadow-card);
+  }
+  .glass {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    backdrop-filter: blur(16px) saturate(1.4);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      var(--shadow-pop);
+  }
+
+  /* Spotlight: a glow on the card edge that follows the pointer (set by Motion.tsx). */
+  .spot::before,
+  .spot::after {
+    content: "";
+    position: absolute;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .spot::before {
+    inset: -1px;
+    padding: 1px;
+    background: radial-gradient(340px circle at var(--sx, 50%) var(--sy, 0%), color-mix(in oklab, var(--accent) 85%, transparent), transparent 70%);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+  .spot::after {
+    inset: 0;
+    background: radial-gradient(520px circle at var(--sx, 50%) var(--sy, 0%), color-mix(in oklab, var(--accent) 8%, transparent), transparent 60%);
+  }
+  .spot:hover::before,
+  .spot:hover::after {
+    opacity: 1;
+  }
+
+  /* Faint blueprint grid used behind heroes. */
+  .grid-bg {
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  /* ----- Header ----- */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid transparent;
+    transition:
+      background-color 0.35s,
+      border-color 0.35s;
+  }
+  .site-header[data-scrolled],
+  .site-header[data-open] {
+    background: var(--glass);
+    border-bottom-color: var(--line);
+    -webkit-backdrop-filter: blur(18px) saturate(1.5);
+    backdrop-filter: blur(18px) saturate(1.5);
+  }
+  .site-header[data-open] {
+    background: var(--bg);
+  }
+  .nav-link {
+    position: relative;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--muted);
+    white-space: nowrap;
+    transition:
+      color 0.2s,
+      background-color 0.2s;
+  }
+  .nav-link:hover {
+    color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 6%, transparent);
+  }
+  .nav-link[aria-current="page"] {
+    color: var(--fg);
+  }
+  .nav-link[aria-current="page"]::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 1px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent);
+    translate: -50% 0;
+  }
+  /* The reading-progress ribbon along the bottom of the header. */
+  .progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--color-crimson-deep), var(--color-crimson), var(--color-coral));
+    pointer-events: none;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: var(--header-h) 0 0;
+    z-index: 45;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: var(--bg);
+    padding: 12px var(--gutter) calc(24px + env(safe-area-inset-bottom));
+  }
+  .mobile-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    font-size: clamp(1.75rem, 1.2rem + 3vw, 2.4rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+  .mobile-link[aria-current="page"] {
+    color: var(--accent);
+  }
+
+  /* Phone action bar: the two ways to get in touch, always within thumb reach. */
+  .phone-bar {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 40;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 999px;
+    transition:
+      transform 0.45s var(--ease-expo),
+      opacity 0.3s;
+  }
+  .phone-bar[data-hidden] {
+    transform: translateY(calc(100% + 24px));
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ----- Hero ----- */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    overflow: clip;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  /* The grid fades out toward the edges: a background-coloured gradient painted over the lines. */
+  .hero-bg .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 70% 75% at 72% 22%, transparent 10%, var(--bg) 72%),
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      56px 56px,
+      56px 56px;
+  }
+  .glow {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .glow-crimson {
+    background: radial-gradient(closest-side, rgb(239 76 91 / 0.24), rgb(239 76 91 / 0.06) 55%, transparent);
+  }
+  .glow-indigo {
+    background: radial-gradient(closest-side, rgb(91 104 230 / 0.18), transparent);
+  }
+  :root[data-theme="light"] .glow-crimson {
+    background: radial-gradient(closest-side, rgb(239 76 91 / 0.16), rgb(239 76 91 / 0.04) 55%, transparent);
+  }
+  :root[data-theme="light"] .glow-indigo {
+    background: radial-gradient(closest-side, rgb(91 104 230 / 0.12), transparent);
+  }
+
+  /* ----- 3D stage: real screens placed in depth, tilted toward the pointer ----- */
+  .stage-box {
+    position: relative;
+    container-type: inline-size;
+  }
+  .stage-persp {
+    position: absolute;
+    inset: 0;
+    perspective: 230cqw;
+  }
+  .stage {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    transform: rotateX(calc(var(--rx0, 0deg) + var(--ty, 0) * 1deg)) rotateY(calc(var(--ry0, 0deg) + var(--tx, 0) * 1deg));
+    transition: transform 1.2s var(--ease-expo);
+  }
+  .stage[data-active] {
+    transition-duration: 0.35s;
+  }
+  .layer {
+    position: absolute;
+    transform-style: preserve-3d;
+    transform: translateZ(var(--z, 0));
+  }
+  /* Floating uses the separate translate property, so it adds to the depth above. */
+  @keyframes bob {
+    from {
+      translate: 0 -1cqw;
+    }
+    to {
+      translate: 0 1cqw;
+    }
+  }
+  /* The ribbon band from the logo, as a light streak behind the screens. */
+  .ribbon {
+    position: absolute;
+    left: -16%;
+    right: -12%;
+    top: 61%;
+    height: 14%;
+    transform: translateZ(-14cqw) rotate(-16deg);
+    background: linear-gradient(90deg, transparent, var(--color-crimson-deep) 18%, var(--color-crimson) 55%, var(--color-coral) 82%, transparent);
+    clip-path: polygon(0 34%, 100% 0, 100% 66%, 0 100%);
+  }
+  /* The glow is a soft-edged gradient, not a blur filter, so it costs one cheap paint. */
+  .ribbon-glow {
+    top: 52%;
+    height: 32%;
+    clip-path: none;
+    background: radial-gradient(closest-side, rgb(239 76 91 / 0.5), rgb(239 76 91 / 0.18) 55%, transparent);
+  }
+  /* Cards floating inside a 3D stage. Browsers cannot blur behind elements in 3D, so these are solid. */
+  .float-card {
+    background: color-mix(in oklab, var(--surface-2) 94%, var(--fg) 6%);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      0 2cqw 5cqw -1cqw rgb(0 0 0 / 0.55);
+  }
+  :root[data-theme="light"] .float-card {
+    background: #fff;
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      0 2cqw 5cqw -1cqw rgb(11 18 32 / 0.25);
+  }
+
+  /* Device frames draw real hardware, so they keep dark bezels in both themes. */
+  .device {
+    position: relative;
+    box-shadow:
+      0 0 0 1px rgb(255 255 255 / 0.07),
+      0 2.4cqw 4.4cqw -1.6cqw rgb(0 0 0 / 0.6);
+  }
+  :root[data-theme="light"] .device {
+    box-shadow:
+      0 0 0 1px rgb(11 18 32 / 0.08),
+      0 2.4cqw 4.4cqw -1.6cqw rgb(11 18 32 / 0.35);
+  }
+  .device-browser {
+    overflow: hidden;
+    border-radius: max(8px, 1.5cqw);
+    background: #0b0f19;
+  }
+  /* The title bar: three window dots drawn as one background, no extra elements. */
+  .device-bar {
+    --dot: max(5px, 0.95cqw);
+    height: max(16px, 3.2cqw);
+    background:
+      radial-gradient(circle closest-side, #ef4c5b 96%, transparent) calc(max(8px, 1.5cqw)) 50% / var(--dot) var(--dot) no-repeat,
+      radial-gradient(circle closest-side, rgb(255 255 255 / 0.2) 96%, transparent) calc(max(8px, 1.5cqw) + var(--dot) * 1.8) 50% / var(--dot) var(--dot) no-repeat,
+      radial-gradient(circle closest-side, rgb(255 255 255 / 0.2) 96%, transparent) calc(max(8px, 1.5cqw) + var(--dot) * 3.6) 50% / var(--dot) var(--dot) no-repeat,
+      linear-gradient(#1b2335, #121929);
+    border-bottom: 1px solid rgb(255 255 255 / 0.06);
+  }
+  .device-phone {
+    padding: max(4px, 0.9cqw);
+    border-radius: max(18px, 5cqw);
+    background: linear-gradient(150deg, #2b3243, #0a0e17 38%, #171d2b);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.14),
+      0 3cqw 6cqw -2cqw rgb(0 0 0 / 0.55);
+  }
+  .device-phone .screen {
+    position: relative;
+    overflow: hidden;
+    border-radius: max(14px, 4.1cqw);
+    background: #05080f;
+  }
+  /* The camera island sits in its own status strip, so it never covers the app. */
+  .device-phone .status {
+    display: grid;
+    place-items: center;
+    height: max(10px, 2.6cqw);
+    background: #05080f;
+  }
+  .device-phone .status::before {
+    content: "";
+    width: 30%;
+    height: 56%;
+    border-radius: 999px;
+    background: #1a2131;
+  }
+  .device-wide {
+    padding: max(4px, 0.8cqw);
+    border-radius: max(16px, 3.4cqw);
+    background: linear-gradient(150deg, #2b3243, #0a0e17 38%, #171d2b);
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.14),
+      0 3cqw 6cqw -2cqw rgb(0 0 0 / 0.55);
+  }
+  .device-wide .screen {
+    overflow: hidden;
+    border-radius: max(12px, 2.7cqw);
+  }
+  /* Glass sheen on every screen, brighter where the pointer is. */
+  .screen {
+    position: relative;
+  }
+  .screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at var(--gx, 30%) var(--gy, 0%), rgb(255 255 255 / calc(var(--hover, 0) * 0.16)), transparent 55%),
+      linear-gradient(118deg, rgb(255 255 255 / 0.08), transparent 32%);
+  }
+
+  /* ----- Project cards ----- */
+  .project-card {
+    overflow: hidden;
+  }
+  .project-stage {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    border-radius: 18px;
+    background: color-mix(in oklab, var(--bg) 60%, var(--surface));
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .project-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse 65% 70% at 60% 60%, color-mix(in oklab, var(--tint) 34%, transparent), transparent 72%),
+      radial-gradient(ellipse 50% 50% at 15% 10%, rgb(239 76 91 / 0.12), transparent 70%);
+  }
+  .project-stage .grid-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image:
+      radial-gradient(ellipse 80% 80% at 50% 40%, transparent, color-mix(in oklab, var(--bg) 60%, var(--surface)) 80%),
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      56px 56px,
+      56px 56px;
+  }
+  /* The whole card is one link; the case study link stretches over it. */
+  .stretch::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    border-radius: inherit;
+  }
+
+  /* ----- Process steps: numbered nodes joined by lines that draw as you scroll ----- */
+  .step {
+    position: relative;
+    view-timeline: --step block;
+  }
+  .step-node {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fg);
+    background: var(--surface);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      0 0 0 6px var(--bg);
+  }
+  .step:first-child .step-node {
+    color: #fff;
+    background: linear-gradient(180deg, #d92d42, #b8142c);
+    box-shadow:
+      0 0 0 6px var(--bg),
+      0 10px 24px -8px rgb(239 76 91 / 0.7);
+  }
+  /* The line to the next step: down on phones, across on desktop. */
+  .step-link {
+    position: absolute;
+    left: 27px;
+    top: 62px;
+    bottom: -34px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, var(--color-crimson), color-mix(in oklab, var(--color-crimson) 12%, transparent));
+    transform-origin: 50% 0;
+  }
+  @media (min-width: 1024px) {
+    .step-link {
+      left: 66px;
+      right: -22px;
+      top: 27px;
+      bottom: auto;
+      width: auto;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-crimson), color-mix(in oklab, var(--color-crimson) 12%, transparent));
+      transform-origin: 0 50%;
+    }
+  }
+  .icon-tile {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 11%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 28%, transparent);
+  }
+  .num {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 10%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent);
+  }
+  /* The closing call to action: a panel with its own glow, and a grid in its top corner. */
+  .cta-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%;
+    height: 60%;
+    pointer-events: none;
+    opacity: 0.6;
+    background-image:
+      radial-gradient(ellipse 100% 100% at 0% 0%, transparent, var(--surface-2) 92%),
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:
+      100% 100%,
+      56px 56px,
+      56px 56px;
+  }
+  .cta-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 55% 65% at 100% 0%, rgb(239 76 91 / 0.17), transparent 62%),
+      radial-gradient(ellipse 45% 55% at 0% 100%, rgb(91 104 230 / 0.12), transparent 62%);
+  }
+
+  /* ----- Lab bars ----- */
+  .bars {
+    view-timeline: --bars block;
+  }
+  .bar-fill {
+    height: 8px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--color-crimson-deep), var(--color-crimson));
+    transform-origin: 0 50%;
+  }
+
+  /* ----- Count-up numbers ----- */
+  .count {
+    --num: var(--to);
+    counter-reset: num var(--num);
+    font-variant-numeric: tabular-nums;
+  }
+  .count::after {
+    content: counter(num);
+  }
+
+  /* ----- Form ----- */
+  .field-label {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .input {
+    display: block;
+    width: 100%;
+    min-height: 52px;
+    margin-top: 8px;
+    padding: 13px 16px;
+    border-radius: 14px;
+    border: 1px solid var(--line-strong);
+    background: color-mix(in oklab, var(--bg) 50%, var(--surface));
+    color: var(--fg);
+    font-size: 16.5px;
+    line-height: 1.45;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s,
+      background-color 0.2s;
+  }
+  .input:hover {
+    border-color: color-mix(in oklab, var(--fg) 30%, transparent);
+  }
+  .input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 22%, transparent);
+  }
+  .input[aria-invalid="true"] {
+    border-color: var(--accent);
+  }
+  textarea.input {
+    min-height: 136px;
+    resize: vertical;
+  }
+  .pick {
+    position: relative;
+  }
+  .pick input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .pick span {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--muted);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+    cursor: pointer;
+    transition:
+      color 0.2s,
+      background-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .pick span::before {
+    content: "";
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: inset 0 0 0 1.5px currentColor;
+    transition:
+      background-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .pick span:hover {
+    color: var(--fg);
+  }
+  .pick input:checked + span {
+    color: var(--fg);
+    background: color-mix(in oklab, var(--accent) 13%, transparent);
+    box-shadow: inset 0 0 0 1px var(--accent);
+  }
+  .pick input:checked + span::before {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
+  }
+  .pick input:focus-visible + span {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  .spinner {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid rgb(255 255 255 / 0.35);
+    border-top-color: #fff;
+    animation: spin 0.8s linear infinite;
+  }
+
+  /* ----- 3D brand mark: slices of the logo stacked in depth ----- */
+  .emblem {
+    perspective: 1000px;
+  }
+  .emblem-body {
+    position: relative;
+    aspect-ratio: 110 / 167;
+    transform-style: preserve-3d;
+    transform: rotateX(calc(6deg + var(--ty, 0) * 1deg)) rotateY(calc(-26deg + var(--tx, 0) * 1deg));
+    transition: transform 1.2s var(--ease-expo);
+  }
+  .emblem-body[data-active] {
+    transition-duration: 0.35s;
+  }
+  .emblem-spin {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+  }
+  .emblem-slice {
+    position: absolute;
+    inset: 0;
+    background: var(--c);
+    transform: translateZ(calc(var(--d) * var(--step, -1.6px)));
+    -webkit-mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
+    mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
+  }
+  .emblem-face {
+    background: linear-gradient(180deg, #a70b21 8%, #ef4c5b 92%);
+  }
+  .emblem-shine {
+    position: absolute;
+    inset: 0;
+    transform: translateZ(1px);
+    background: linear-gradient(125deg, rgb(255 255 255 / 0.32), transparent 28%, transparent 68%, rgb(255 255 255 / 0.1));
+    -webkit-mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
+    mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
+  }
+
+  /* ----- Footer ----- */
+  .foot-label {
+    margin-bottom: 1rem;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--subtle);
+  }
+  .wordmark-xl {
+    font-family: var(--font-brand);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 9.6vw, 9.2rem);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    background: linear-gradient(180deg, color-mix(in oklab, var(--fg) 16%, transparent), transparent 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    user-select: none;
+  }
+
+  /* ----- Legal and long text ----- */
+  .prose-doc h2 {
+    margin-top: 2.4rem;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+  }
+  .prose-doc p {
+    margin-top: 0.85rem;
+    color: var(--muted);
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   4. Motion. Everything moves only with transform and opacity, which the
+   browser can run on the GPU. Nothing moves for people who ask for less motion.
+--------------------------------------------------------------------------- */
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+@keyframes stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(5%) scale(0.95);
+  }
+}
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+}
+@keyframes grow-x {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes grow-y {
+  from {
+    transform: scaleY(0);
+  }
+}
+@keyframes count {
+  from {
+    --num: 0;
+  }
+}
+@keyframes ping {
+  from {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+@keyframes sway {
+  from {
+    transform: rotateY(-16deg) translateY(-2%);
+  }
+  to {
+    transform: rotateY(18deg) translateY(2%);
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: var(--len, 60);
+  }
+}
+@keyframes progress {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  .enter {
+    animation: enter 0.9s var(--ease-expo) both;
+    animation-delay: calc(var(--i, 0) * 90ms + 60ms);
+  }
+  .stage-enter {
+    animation: stage-in 1.5s var(--ease-expo) 0.2s both;
+  }
+  .bob {
+    animation: bob var(--bob-t, 9s) var(--ease-io) var(--bob-d, 0s) infinite alternate;
+  }
+  .dot-pulse::after {
+    animation: ping 2.2s var(--ease-expo) infinite;
+  }
+  .count {
+    animation: count 1.9s var(--ease-expo) 0.45s both;
+  }
+  .emblem-spin {
+    animation: sway 7s var(--ease-io) infinite alternate;
+  }
+  .mobile-menu {
+    animation: menu-in 0.35s var(--ease-expo);
+  }
+  .mobile-menu .stagger {
+    animation: enter 0.6s var(--ease-expo) both;
+    animation-delay: calc(var(--i, 0) * 45ms + 40ms);
+  }
+  .check-draw {
+    stroke-dasharray: var(--len, 60);
+    animation: draw 0.7s var(--ease-expo) 0.15s both;
+  }
+
+  /* Scroll-linked effects, where the browser supports them. Elsewhere everything simply shows. */
+  @supports (animation-timeline: view()) {
+    [data-reveal] {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry calc(200px + var(--i, 0) * 60px);
+    }
+    .step-link {
+      animation: grow-y linear both;
+      animation-timeline: --step;
+      animation-range: entry 70% cover 55%;
+    }
+    .bar-fill {
+      animation: grow-x linear both;
+      animation-timeline: --bars;
+      animation-range: entry calc(20% + var(--i, 0) * 4%) cover calc(48% + var(--i, 0) * 4%);
+    }
+    .progress {
+      animation: progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+}
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+  @supports (animation-timeline: view()) {
+    .step-link {
+      animation-name: grow-x;
+      animation-range: entry 90% cover 60%;
+    }
+  }
+}
+
+/* Page changes: the old page fades away and the new one rises in (React ViewTransition). */
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+::view-transition-old(.page-out) {
+  animation: 160ms ease-in both vt-out;
+}
+::view-transition-new(.page-in) {
+  animation: 440ms var(--ease-expo) 90ms both vt-in;
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+/* The theme switch reveals the new theme in a circle from the button (see ThemeToggle). */
+html.theme-vt .site-header {
+  view-transition-name: none !important;
+}
+html.theme-vt::view-transition-old(root),
+html.theme-vt::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   5. Responsive details
+--------------------------------------------------------------------------- */
+/* The header shows the full menu from 1101px, where it fits on one line in both languages. */
+@media (min-width: 1101px) {
+  .phone-only {
+    display: none !important;
+  }
+}
+@media (max-width: 1100px) {
+  .desktop-only {
+    display: none !important;
+  }
+  /* Room for the phone action bar. */
+  body {
+    padding-bottom: 84px;
+  }
+}
+@media (max-width: 480px) {
+  .hide-narrow {
+    display: none !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   6. Sinhala. Its letters carry marks above and below the line, so headings
+   need more line height, no negative letter spacing, and slightly smaller sizes
+   so long words fit. Yaldevi Sinhala has regular and semibold only, so headings
+   use semibold rather than a faked bold.
+--------------------------------------------------------------------------- */
+:lang(si) {
+  font-synthesis-weight: none;
+}
 :lang(si) body,
 body:lang(si) {
-  line-height: 1.75;
+  line-height: 1.8;
 }
-:lang(si) .display-xl {
-  font-size: clamp(40px, 5.6vw, 84px);
-  line-height: 1.25;
+:lang(si) :is(.display-hero, .display-1, .display-2, .title, .mobile-link) {
   letter-spacing: 0;
+  font-weight: 600;
 }
-:lang(si) .display-l {
-  font-size: clamp(32px, 4vw, 52px);
+:lang(si) .display-hero {
+  font-size: clamp(2.15rem, 1.2rem + 3.6vw, 4.3rem);
   line-height: 1.3;
 }
-:lang(si) .display-m {
-  font-size: clamp(26px, 2.8vw, 38px);
+:lang(si) .display-1 {
+  font-size: clamp(2rem, 1.25rem + 2.8vw, 3.6rem);
+  line-height: 1.3;
+}
+:lang(si) .display-2 {
+  font-size: clamp(1.7rem, 1.2rem + 1.9vw, 2.7rem);
   line-height: 1.35;
+}
+:lang(si) .title {
+  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.55rem);
+  line-height: 1.45;
 }
 :lang(si) .lead {
-  font-size: 19px;
-  line-height: 1.7;
+  line-height: 1.75;
 }
-:lang(si) .card-title {
-  font-size: 26px;
-  line-height: 1.35;
+:lang(si) .eyebrow {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
 }
-:lang(si) .closing-heading {
-  font-size: clamp(36px, 4vw, 56px);
-  line-height: 1.3;
+:lang(si) .foot-label {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
 }
-/* Sinhala letters look smaller than Latin at the same size, so the small sizes go up a step. */
+/*
+  On English pages the language switch says "සිංහල". It uses the phone's own Sinhala font,
+  so English visitors never download the Sinhala web font just for that one word.
+*/
+.lang-switch[lang="si"] {
+  font-family: system-ui, sans-serif;
+}
+:lang(si) .mobile-link {
+  font-size: clamp(1.5rem, 1.1rem + 2.4vw, 2rem);
+}
+/* Sinhala letters look smaller than Latin at the same size, so small text goes up a step. */
 :lang(si) .text-sm {
   font-size: 15px;
 }
@@ -394,37 +1444,4 @@ body:lang(si) {
 /* English names inside Sinhala pages keep the English settings. */
 :lang(si) [lang="en"] {
   letter-spacing: normal;
-}
-
-@media (max-width: 980px) {
-  :root {
-    --r: 24px;
-    --gutter: 16px;
-  }
-  .rows {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .rail,
-  .gut {
-    display: none;
-  }
-  .span-text {
-    grid-column: auto;
-  }
-  .hero {
-    min-height: 0;
-    padding-top: 40px;
-    padding-bottom: 24px;
-  }
-  .hero-mark {
-    display: none;
-  }
-  .fold {
-    min-height: 480px;
-  }
-  .panel-art {
-    right: 16px;
-    max-width: calc(100% - 32px);
-    max-height: 300px;
-  }
 }

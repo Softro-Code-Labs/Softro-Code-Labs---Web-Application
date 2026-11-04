@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { RibbonRow } from "@/components/Ribbon";
-import { ClosingEnquiry, ProjectRow } from "@/components/Sections";
+import { ClosingCTA, WorkList } from "@/components/Sections";
+import { Page, PageHero } from "@/components/ui";
 import { getContent } from "@/content";
 import { pageMetadata, resolveLang, type LangParams } from "@/i18n";
 
@@ -14,15 +14,14 @@ export default async function WorkPage({ params }: LangParams) {
   const lang = await resolveLang(params);
   const { ui, projects } = getContent(lang);
   return (
-    <>
-      <RibbonRow variant="first" className="pt-14 pb-14 min-[981px]:pt-20">
-        <h1 className="display-xl">{ui.work.heading}</h1>
-        <p className="lead mt-6 max-w-[620px] text-muted">{ui.work.lead}</p>
-      </RibbonRow>
-      {projects.map((project) => (
-        <ProjectRow key={project.slug} project={project} lang={lang} />
-      ))}
-      <ClosingEnquiry lang={lang} />
-    </>
+    <Page>
+      <PageHero eyebrow={ui.chrome.work} title={ui.work.heading} lead={ui.work.lead} />
+      <section className="section pt-0!">
+        <div className="wrap">
+          <WorkList projects={projects} lang={lang} as="h2" eagerFirst />
+        </div>
+      </section>
+      <ClosingCTA lang={lang} />
+    </Page>
   );
 }

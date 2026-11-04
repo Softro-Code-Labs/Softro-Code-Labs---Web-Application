@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 /** Shown for any address that matches no page, in either language. */
 export default function GlobalNotFound() {
   return (
-    <html lang="en" className={fontClasses} suppressHydrationWarning>
+    <html lang="en" className={fontClasses} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
