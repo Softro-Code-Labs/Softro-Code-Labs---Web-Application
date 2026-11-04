@@ -43,6 +43,30 @@ export type ShotText = Pick<Shot, "alt" | "caption">;
 export type Service = { name: string; short: string; long: string; example: { label: string; href: string } };
 export type Step = { name: string; text: string };
 
+/**
+ * The wider range of software we can build, beyond the core services.
+ * These are things we can build, not past projects: real projects belong in `projects` above.
+ */
+export type CapabilityId =
+  | "erp-crm"
+  | "business"
+  | "inventory-pos"
+  | "booking"
+  | "saas"
+  | "web-platforms"
+  | "lms"
+  | "cloud"
+  | "ai"
+  | "automation"
+  | "integrations"
+  | "custom"
+  | "desktop"
+  | "enterprise";
+export type CapabilityGroupId = "run" | "online" | "smarter" | "bespoke";
+export type CapabilityText = { name: string; text: string };
+export type Capability = CapabilityText & { id: CapabilityId };
+export type CapabilityGroup = CapabilityText & { id: CapabilityGroupId; items: Capability[] };
+
 const ola = {
   guide: { src: "/work/ola-kids-guide.webp", width: 1200, height: 470, frame: "phone-wide", alt: "Ola Kids Show Me guide drawing a capital B, with a large dot moving down the first stroke and the dots ahead still pale, beside a football picture and OlaSauras", caption: "Show Me: a moving dot draws each stroke in order before the child tries." },
   trace: { src: "/work/ola-kids-trace-g.webp", width: 1200, height: 470, frame: "phone-wide", alt: "Ola Kids tracing screen with a capital G traced in blue and a small g still to trace, beside a grapes picture and the OlaSauras mascot", caption: "Tracing. The capital G is done; the small g is next." },
@@ -172,34 +196,66 @@ export const studios = [
 
 export const services: Service[] = [
   {
-    name: "Websites",
-    short: "A clear site that explains your business and brings in enquiries or bookings.",
-    long: "For businesses that need to be found and trusted. You get a fast, mobile-friendly site with clear pages, search basics and contact routes such as WhatsApp.",
-    example: { label: "Tourvista Tours", href: "/work/tourvista-tours" },
-  },
-  {
-    name: "Online stores",
-    short: "Selling that suits your customers, from Sinhala pages to cash on delivery.",
-    long: "For sellers who want orders without a marketplace. You get product pages, a cart, guest checkout, delivery rules and order tracking.",
-    example: { label: "Baileyn", href: "/work/baileyn" },
-  },
-  {
     name: "Mobile apps",
-    short: "Android and iOS apps from one codebase, including apps that work offline.",
-    long: "For ideas that belong on a phone. You get one Flutter codebase for Android and iOS, with offline use and localisation where needed.",
+    short: "Android and iOS apps your customers will love to use, including apps that work offline.",
+    long: "For ideas that belong in your customers' hands. We build one app for both Android and iOS, with offline use and English or Sinhala wherever you need it.",
     example: { label: "Ola Kids", href: "/work/ola-kids" },
   },
   {
-    name: "Custom tools",
-    short: "Web tools built around a job your business needs done.",
-    long: "For a specific job that off-the-shelf software handles badly. We scope it, build it and make it simple to use.",
+    name: "Online stores",
+    short: "Stores that make buying easy, from Sinhala product pages to cash on delivery.",
+    long: "For sellers who want their own store instead of a marketplace. You get product pages, a cart, guest checkout, delivery rules and order tracking, all set up the way your customers like to buy.",
+    example: { label: "Baileyn", href: "/work/baileyn" },
+  },
+  {
+    name: "Websites and web apps",
+    short: "Fast, mobile-friendly websites and web apps that bring in enquiries, bookings and sales.",
+    long: "For businesses that want to be found, trusted and chosen. You get a fast site that works beautifully on phones, with clear pages, search basics and easy ways to get in touch, such as WhatsApp.",
+    example: { label: "Tourvista Tours", href: "/work/tourvista-tours" },
+  },
+  {
+    name: "Browser tools and custom software",
+    short: "Software shaped around the way your business works, from handy tools to complete systems.",
+    long: "For jobs that off-the-shelf software handles badly. We learn how you work, then build a tool or system that fits it, and keep it simple to use.",
     example: { label: "Swift Converter Hub", href: "/lab" },
   },
 ];
 
 export const steps: Step[] = [
-  { name: "We listen", text: "You tell us what the software has to do and who will use it." },
-  { name: "We design", text: "You see and approve the screens before we build them." },
-  { name: "We build", text: "You get a working preview to review as it grows." },
-  { name: "We launch", text: "We put it live, test it with real use and stay close afterwards." },
+  { name: "We listen", text: "You tell us about your idea, your customers and your goals. We ask the right questions." },
+  { name: "We design", text: "You see and approve every screen before we write any code." },
+  { name: "We build", text: "You get a working preview early, so you can try it as it grows." },
+  { name: "We launch", text: "We put it live, test it with real users and stay close afterwards." },
 ];
+
+/** Which capabilities sit in which group, in the order they appear. Their words are below and in si/projects.ts. */
+export const capabilityLayout: { id: CapabilityGroupId; items: CapabilityId[] }[] = [
+  { id: "run", items: ["erp-crm", "business", "inventory-pos", "booking"] },
+  { id: "online", items: ["saas", "web-platforms", "lms", "cloud"] },
+  { id: "smarter", items: ["ai", "automation", "integrations"] },
+  { id: "bespoke", items: ["custom", "desktop", "enterprise"] },
+];
+
+export const capabilityGroupText: Record<CapabilityGroupId, CapabilityText> = {
+  run: { name: "Run your business", text: "Systems that keep your sales, stock, customers and team in one place, so you spend less time on admin." },
+  online: { name: "Grow online", text: "Platforms that let you sell, teach or serve customers online, and grow right along with you." },
+  smarter: { name: "Work smarter", text: "AI and automation that take repetitive work off your plate and connect the tools you already use." },
+  bespoke: { name: "Made just for you", text: "When nothing off the shelf fits, we build software around the way you work." },
+};
+
+export const capabilityText: Record<CapabilityId, CapabilityText> = {
+  "erp-crm": { name: "ERP and CRM systems", text: "Manage customers, sales and operations from one dashboard." },
+  business: { name: "Business management systems", text: "Handle daily work like orders, staff and reports in one place." },
+  "inventory-pos": { name: "Inventory and POS systems", text: "Track stock and sell in store, with sales reports you can trust." },
+  booking: { name: "Booking and appointment systems", text: "Let customers book online at any time, with reminders built in." },
+  saas: { name: "SaaS platforms", text: "Turn your idea into an online product people can subscribe to." },
+  "web-platforms": { name: "Web-based platforms", text: "Portals, marketplaces and dashboards that work in any browser." },
+  lms: { name: "Learning management systems", text: "Run courses, lessons and quizzes online, with progress tracking." },
+  cloud: { name: "Cloud-based solutions", text: "Secure systems you can reach from anywhere, that grow with you." },
+  ai: { name: "AI-powered applications", text: "Chat assistants, smart search and tools that understand your data." },
+  automation: { name: "Automation tools", text: "Hand repetitive tasks, reminders and reports over to software." },
+  integrations: { name: "API and system integrations", text: "Connect payment gateways, SMS, WhatsApp and the systems you already use." },
+  custom: { name: "Custom software", text: "Built from scratch around your exact needs." },
+  desktop: { name: "Desktop applications", text: "Fast, reliable software for Windows, macOS and Linux." },
+  enterprise: { name: "Enterprise software", text: "Larger systems for bigger teams, built to stay secure and grow over time." },
+};

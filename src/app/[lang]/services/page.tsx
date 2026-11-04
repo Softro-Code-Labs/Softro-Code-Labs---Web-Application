@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ProjectStage } from "@/components/Devices";
 import { ArrowRight, Browser, Chat } from "@/components/icons";
-import { ClosingCTA, Process, serviceIcons } from "@/components/Sections";
-import { Page, PageHero, vars } from "@/components/ui";
+import { CapabilityGroups, ClosingCTA, IdeaCard, Process, serviceIcons } from "@/components/Sections";
+import { Page, PageHero, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { whatsapp } from "@/content/site";
 import { localize, pageMetadata, resolveLang, type LangParams } from "@/i18n";
@@ -75,6 +75,15 @@ export default async function ServicesPage({ params }: LangParams) {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      {/* Beyond the core: everything else we can build, with a line about each. */}
+      <section className="section defer" style={vars({ "--defer-h": "1500px" })} aria-labelledby="more-heading">
+        <div className="wrap">
+          <SectionHeader id="more-heading" eyebrow={ui.build.moreEyebrow} title={ui.build.moreHeading} lead={ui.build.moreLead} />
+          <CapabilityGroups lang={lang} detailed as="h3" />
+          <IdeaCard lang={lang} />
         </div>
       </section>
 

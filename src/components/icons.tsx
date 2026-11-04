@@ -149,3 +149,111 @@ export const Quote = (p: IconProps) => (
     <path d="M9.5 7C6.5 7.8 5 10 5 13v4h5v-5H7.3c.2-1.6 1-2.6 2.2-3.1L9.5 7ZM18.5 7c-3 .8-4.5 3-4.5 6v4h5v-5h-2.7c.2-1.6 1-2.6 2.2-3.1V7Z" />
   </Icon>
 );
+
+/* Capability icons: one per kind of software we build. */
+export const Briefcase = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3" y="7" width="18" height="13" rx="2.5" />
+    <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18" />
+  </Icon>
+);
+export const Globe = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <path d="M3 12h18M12 3c2.4 2.6 3.7 5.6 3.7 9s-1.3 6.4-3.7 9c-2.4-2.6-3.7-5.6-3.7-9S9.6 5.6 12 3Z" />
+  </Icon>
+);
+export const Sparkles = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M10 3.5 11.6 8.4 16.5 10 11.6 11.6 10 16.5 8.4 11.6 3.5 10 8.4 8.4Z" />
+    <path d="M18 14.5 18.8 16.7 21 17.5 18.8 18.3 18 20.5 17.2 18.3 15 17.5 17.2 16.7Z" />
+  </Icon>
+);
+export const Code = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m8.5 7.5-5 4.5 5 4.5M15.5 7.5l5 4.5-5 4.5M13.5 4.5l-3 15" />
+  </Icon>
+);
+export const Users = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="9" cy="8.5" r="3.5" />
+    <path d="M2.5 20a6.5 6.5 0 0 1 13 0M15.5 5.2a3.5 3.5 0 0 1 0 6.6M17.5 14.2a6.5 6.5 0 0 1 4 5.8" />
+  </Icon>
+);
+export const Building = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M4 21V5.5A1.5 1.5 0 0 1 5.5 4h8A1.5 1.5 0 0 1 15 5.5V21M15 10h3.5a1.5 1.5 0 0 1 1.5 1.5V21M2.5 21h19M8 8h3M8 12h3M8 16h3" />
+  </Icon>
+);
+export const Receipt = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M6 3.5h12v17l-2.5-1.5-2 1.5-1.5-1.5-1.5 1.5-2-1.5L6 20.5Z" />
+    <path d="M9 8h6M9 11.5h6M9 15h3.5" />
+  </Icon>
+);
+export const Calendar = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.5" y="5" width="17" height="15.5" rx="2.5" />
+    <path d="M3.5 10h17M8 3v4M16 3v4M8 14h2M12 14h2M8 17h2" />
+  </Icon>
+);
+export const Layers = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m12 3 9 5-9 5-9-5 9-5Z" />
+    <path d="m3 12.5 9 5 9-5M3 16.5l9 5 9-5" />
+  </Icon>
+);
+export const Dashboard = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.5" y="3.5" width="7" height="9" rx="1.5" />
+    <rect x="13.5" y="3.5" width="7" height="5" rx="1.5" />
+    <rect x="13.5" y="11.5" width="7" height="9" rx="1.5" />
+    <rect x="3.5" y="15.5" width="7" height="5" rx="1.5" />
+  </Icon>
+);
+export const GraduationCap = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="m12 4 10 5-10 5L2 9l10-5Z" />
+    <path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5M22 9v6" />
+  </Icon>
+);
+export const Cloud = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M7 18.5a4.5 4.5 0 0 1-.5-9A6 6 0 0 1 18 8.5a4 4 0 0 1-.5 10Z" />
+  </Icon>
+);
+export const Zap = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M13 2.5 4.5 13.5h6.5l-1 8 8.5-11h-6.5l1-8Z" />
+  </Icon>
+);
+export const Plug = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M9 3v4M15 3v4M7 7h10v4a5 5 0 0 1-10 0V7ZM12 16v5" />
+  </Icon>
+);
+export const Monitor = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="2.5" y="4" width="19" height="12.5" rx="2" />
+    <path d="M8.5 20.5h7M12 16.5v4" />
+  </Icon>
+);
+export const Server = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="3.5" y="3.5" width="17" height="7" rx="2" />
+    <rect x="3.5" y="13.5" width="17" height="7" rx="2" />
+    <path d="M7.5 7h.01M7.5 17h.01M11 7h5.5M11 17h5.5" />
+  </Icon>
+);
+export const Plus = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 5v14M5 12h14" />
+  </Icon>
+);
+export const LifeBuoy = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="3.5" />
+    <path d="m5.6 5.6 3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9" />
+  </Icon>
+);

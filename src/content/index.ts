@@ -1,8 +1,31 @@
 import type { Lang } from "@/i18n";
 import { legal as legalEn } from "./legal";
-import { labShots, projects, services, steps, studios, type Project, type Shot } from "./projects";
+import {
+  capabilityGroupText,
+  capabilityLayout,
+  capabilityText,
+  labShots,
+  projects,
+  services,
+  steps,
+  studios,
+  type CapabilityGroup,
+  type CapabilityGroupId,
+  type CapabilityId,
+  type CapabilityText,
+  type Project,
+  type Shot,
+} from "./projects";
 import { legal as legalSi } from "./si/legal";
-import { projectText, services as servicesSi, shotText, steps as stepsSi, studioNames } from "./si/projects";
+import {
+  capabilityGroupText as capabilityGroupTextSi,
+  capabilityText as capabilityTextSi,
+  projectText,
+  services as servicesSi,
+  shotText,
+  steps as stepsSi,
+  studioNames,
+} from "./si/projects";
 import { si } from "./si/ui";
 import { en } from "./ui";
 
@@ -25,8 +48,13 @@ function projectSi(project: Project): Project {
   };
 }
 
+/** The capability groups in one language: the shared layout filled with that language's words. */
+function capabilities(groups: Record<CapabilityGroupId, CapabilityText>, items: Record<CapabilityId, CapabilityText>): CapabilityGroup[] {
+  return capabilityLayout.map((group) => ({ id: group.id, ...groups[group.id], items: group.items.map((id) => ({ id, ...items[id] })) }));
+}
+
 const content = {
-  en: { ui: en, projects, labShots, studios, services, steps, legal: legalEn },
+  en: { ui: en, projects, labShots, studios, services, steps, capabilities: capabilities(capabilityGroupText, capabilityText), legal: legalEn },
   si: {
     ui: si,
     projects: projects.map(projectSi),
@@ -34,6 +62,7 @@ const content = {
     studios: studios.map((studio) => ({ ...studio, name: studioNames[studio.name] ?? studio.name })),
     services: servicesSi,
     steps: stepsSi,
+    capabilities: capabilities(capabilityGroupTextSi, capabilityTextSi),
     legal: legalSi,
   },
 };

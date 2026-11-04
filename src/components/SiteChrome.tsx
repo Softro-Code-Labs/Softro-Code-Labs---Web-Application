@@ -14,9 +14,10 @@ import { vars } from "./ui";
 type Chrome = UI["chrome"];
 
 export function navItems(lang: Lang, t: Chrome) {
+  // What we do first, then the proof.
   return [
-    { href: localize(lang, "/work"), label: t.work },
     { href: localize(lang, "/services"), label: t.services },
+    { href: localize(lang, "/work"), label: t.work },
     { href: localize(lang, "/lab"), label: t.lab },
     { href: localize(lang, "/about"), label: t.about },
   ];

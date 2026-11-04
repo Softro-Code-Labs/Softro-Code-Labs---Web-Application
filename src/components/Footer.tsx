@@ -9,10 +9,10 @@ import { vars } from "./ui";
 
 type Chrome = UI["chrome"];
 
-export function Footer({ lang, t, address, tagline }: { lang: Lang; t: Chrome; address: string; tagline: string }) {
+export function Footer({ lang, t, address }: { lang: Lang; t: Chrome; address: string }) {
   const pages = [
-    { href: localize(lang, "/work"), label: t.work },
     { href: localize(lang, "/services"), label: t.services },
+    { href: localize(lang, "/work"), label: t.work },
     { href: localize(lang, "/lab"), label: t.lab },
     { href: localize(lang, "/about"), label: t.about },
     { href: localize(lang, "/contact"), label: t.contact },
@@ -22,7 +22,7 @@ export function Footer({ lang, t, address, tagline }: { lang: Lang; t: Chrome; a
       <div className="wrap grid gap-x-10 gap-y-12 pt-16 pb-12 min-[640px]:grid-cols-2 min-[1024px]:grid-cols-[1.5fr_1fr_1.2fr_1fr]">
         <div className="max-w-[340px]">
           <Brand lang={lang} />
-          <p className="mt-5 text-[15px] leading-relaxed text-muted">{tagline}</p>
+          <p className="mt-5 text-[15px] leading-relaxed text-muted">{t.tagline}</p>
           <p className="mt-5 flex gap-2.5 text-[14px] leading-relaxed text-subtle">
             <Pin size={17} className="mt-0.5 flex-none" />
             {address}

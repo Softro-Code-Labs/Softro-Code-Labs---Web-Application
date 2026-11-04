@@ -18,9 +18,6 @@ export function Emphasis({ text }: { text: string }) {
   return <>{parts.map((part, index) => (index % 2 ? <span key={index} className="text-gradient">{part}</span> : part))}</>;
 }
 
-/** The same text without the highlight markers, for places that show it plainly. */
-export const plain = (text: string) => text.replaceAll("*", "");
-
 export function Eyebrow({ children, className = "" }: { children: ReactNode; className?: string }) {
   return <p className={`eyebrow ${className}`}>{children}</p>;
 }

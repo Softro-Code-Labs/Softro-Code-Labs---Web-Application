@@ -7,7 +7,6 @@ import { Footer } from "@/components/Footer";
 import { Header, PhoneBar } from "@/components/SiteChrome";
 import { ArrowRight } from "@/components/icons";
 import { Motion } from "@/components/Motion";
-import { plain } from "@/components/ui";
 import { si } from "@/content/si/ui";
 import { en } from "@/content/ui";
 import { langOf, localize, type Lang } from "@/i18n";
@@ -84,7 +83,7 @@ export function NotFoundShell() {
           <Emblem className="w-[150px] min-[1024px]:mr-16 min-[1024px]:w-[230px]" interactive />
         </div>
       </main>
-      <Footer lang={lang} t={ui.chrome} address={ui.address} tagline={plain(ui.home.heading)} />
+      <Footer lang={lang} t={ui.chrome} address={ui.address} />
       <PhoneBar lang={lang} t={ui.chrome} />
       <Motion />
     </>

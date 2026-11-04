@@ -40,7 +40,10 @@ Until these are set and the domain is verified in Resend, the form shows a messa
 | The home page numbers (3 projects, 46 tools and so on) | `home.stats` in `src/content/ui.ts` |
 | "Open for new projects" and the two lines under the home buttons | `home.availability` and `home.assurances` in `src/content/ui.ts` |
 | The three "What happens next" steps beside the enquiry form | `closing.next` in `src/content/ui.ts` |
-| Projects, screenshots, services and process (English) | `src/content/projects.ts` |
+| Projects, screenshots and process (English) | `src/content/projects.ts` |
+| The four core services and their real examples | `services` in `src/content/projects.ts` |
+| Everything else we can build (ERP, SaaS, AI and so on) and its groups | `capabilityLayout`, `capabilityGroupText` and `capabilityText` in `src/content/projects.ts` |
+| The "What we build" headings and the "Your idea could be next" card | `build` in `src/content/ui.ts` |
 | A project's badge ("Live") and the colour of the glow behind its screens | `status` and `tint` in `src/content/projects.ts` |
 | Privacy policy and terms (English) | `src/content/legal.ts` |
 | Client quotes | `src/content/testimonials.ts` |
@@ -50,16 +53,18 @@ In headings, words between `*asterisks*` are highlighted, as in the home heading
 
 The home page numbers must stay true. Change them when the facts change, and never round them up.
 
+The capability list says what we *can* build. Finished client work belongs in `projects`, with screenshots and a case study, so visitors can always tell the two apart. When a capability becomes a real project, add the project too.
+
 ## Sinhala version
 
 Every page also exists in Sinhala under `/si` (for example `/si/work`). The language button in the header switches between the two.
 
-All Sinhala wording is in `src/content/si/`. The newest lines (the home page numbers, "What happens next", the footer labels and the project badges) are a first draft, so have a Sinhala reader check them.
+All Sinhala wording is in `src/content/si/`. The newest lines are a first draft, so have a Sinhala reader check them: the home page message, the "What we build" section and capability list, the services, "What happens next", the form choices, the About page additions, the footer labels and the project badges.
 
 | File | Holds |
 | --- | --- |
 | `si/ui.ts` | Page wording, menu, form, address and reply time |
-| `si/projects.ts` | Case studies, services, process steps and screenshot captions |
+| `si/projects.ts` | Case studies, services, capabilities, process steps and screenshot captions |
 | `si/legal.ts` | Privacy policy and terms |
 
 Each Sinhala file must have the same items as its English file. If something is missing, `npm run typecheck` or `npm run build` names it.

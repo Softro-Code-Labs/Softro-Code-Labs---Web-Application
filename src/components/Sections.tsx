@@ -3,11 +3,41 @@ import type { ComponentType, SVGProps } from "react";
 import { ContactForm } from "@/components/ContactForm";
 import { BrowserFrame, HeroStage, ProjectStage, Stage } from "@/components/Devices";
 import { getContent } from "@/content";
-import type { Project, Step } from "@/content/projects";
+import type { CapabilityGroupId, CapabilityId, Project, Step } from "@/content/projects";
 import { site, whatsapp } from "@/content/site";
 import { testimonials } from "@/content/testimonials";
 import { fill, localize, type Lang } from "@/i18n";
-import { ArrowRight, ArrowUpRight, Bag, Browser, Chat, Check, Mail, Phone, Quote, Shield, Smartphone, Wrench } from "./icons";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Bag,
+  Briefcase,
+  Browser,
+  Building,
+  Calendar,
+  Chat,
+  Check,
+  Cloud,
+  Code,
+  Dashboard,
+  Globe,
+  GraduationCap,
+  Layers,
+  Mail,
+  Monitor,
+  Phone,
+  Plug,
+  Plus,
+  Quote,
+  Receipt,
+  Server,
+  Shield,
+  Smartphone,
+  Sparkles,
+  Users,
+  Wrench,
+  Zap,
+} from "./icons";
 import { Emphasis, Eyebrow, SectionHeader, StatusBadge, vars } from "./ui";
 
 type IconType = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
@@ -274,9 +304,9 @@ export function LabFeature({ lang, pageTitle = false }: { lang: Lang; pageTitle?
   );
 }
 
-/* ---------------------------------------------------------------- Services */
+/* ---------------------------------------------------------------- What we build */
 
-/** Each service's icon, keyed by the example it links to (the same in both languages). */
+/** Each core service's icon, keyed by the example it links to (the same in both languages). */
 export const serviceIcons: Record<string, IconType> = {
   "/work/tourvista-tours": Browser,
   "/work/baileyn": Bag,
@@ -284,48 +314,205 @@ export const serviceIcons: Record<string, IconType> = {
   "/lab": Wrench,
 };
 
-export function ServicesGrid({ lang }: { lang: Lang }) {
+const groupIcons: Record<CapabilityGroupId, IconType> = { run: Briefcase, online: Globe, smarter: Sparkles, bespoke: Code };
+
+const capabilityIcons: Record<CapabilityId, IconType> = {
+  "erp-crm": Users,
+  business: Building,
+  "inventory-pos": Receipt,
+  booking: Calendar,
+  saas: Layers,
+  "web-platforms": Dashboard,
+  lms: GraduationCap,
+  cloud: Cloud,
+  ai: Sparkles,
+  automation: Zap,
+  integrations: Plug,
+  custom: Code,
+  desktop: Monitor,
+  enterprise: Server,
+};
+
+/**
+ * Two bands naming everything we build, right under the opening. They slide sideways as the
+ * page scrolls (only while scrolling, never on their own). Decorative: the same list follows below.
+ */
+export function CapabilityRibbons({ lang }: { lang: Lang }) {
+  const { services, capabilities } = getContent(lang);
+  const names = [...services.map((service) => service.name), ...capabilities.flatMap((group) => group.items.map((item) => item.name))];
+  const half = Math.ceil(names.length / 2);
+  return (
+    <div className="ribbons defer" style={vars({ "--defer-h": "180px" })} aria-hidden="true">
+      {[names.slice(0, half), names.slice(half)].map((row, band) => (
+        <div key={band} className={`ribbon-band ${band ? "ribbon-band-alt" : ""}`}>
+          <div className="ribbon-track">
+            {[0, 1, 2].flatMap((copy) =>
+              row.map((name) => (
+                <span key={`${copy}-${name}`} className="ribbon-item">
+                  {name}
+                </span>
+              )),
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/** The core services: what we build every day, each with a real project to look at. */
+function ServiceCards({ lang }: { lang: Lang }) {
   const { ui, services } = getContent(lang);
   return (
-    <section className="section defer" style={vars({ "--defer-h": "1000px" })} aria-labelledby="services-heading">
+    <div className="grid gap-4 min-[768px]:grid-cols-2 min-[1024px]:gap-5">
+      {services.map((service, index) => {
+        const Icon = serviceIcons[service.example.href] ?? Browser;
+        return (
+          <article key={service.name} className="card spot flex flex-col p-7 min-[1024px]:p-9" data-spot data-reveal style={vars({ "--i": index % 2 })}>
+            <div className="flex items-start justify-between gap-4">
+              <span className="icon-tile">
+                <Icon size={22} />
+              </span>
+              <span className="font-mono text-[12px] tracking-[0.12em] text-subtle" aria-hidden="true">
+                0{index + 1}
+              </span>
+            </div>
+            <h3 className="title mt-8">{service.name}</h3>
+            <p className="mt-3 text-muted">{service.short}</p>
+            <p className="mt-auto pt-7 text-[15px] text-subtle">
+              {ui.services.example}{" "}
+              <Link className="link" href={localize(lang, service.example.href)}>
+                {service.example.label}
+              </Link>
+            </p>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+/**
+ * Everything else we can build, in four groups. Compact on the Home page (names only);
+ * `detailed` on the Services page adds a line about each.
+ */
+export function CapabilityGroups({ lang, detailed = false, as: Heading = "h4" }: { lang: Lang; detailed?: boolean; as?: "h3" | "h4" }) {
+  const { capabilities } = getContent(lang);
+  const ItemHeading = Heading === "h3" ? "h4" : "h5";
+  return (
+    <div className={`grid gap-4 min-[1024px]:gap-5 ${detailed ? "" : "min-[900px]:grid-cols-2"}`}>
+      {capabilities.map((group, index) => {
+        const Icon = groupIcons[group.id];
+        const intro = (
+          <div>
+            <div className="flex items-center gap-4">
+              <span className="icon-tile">
+                <Icon size={22} />
+              </span>
+              <Heading className="title">{group.name}</Heading>
+            </div>
+            <p className="mt-4 text-muted">{group.text}</p>
+          </div>
+        );
+        return detailed ? (
+          // Full width: the group on the left, a line about each kind of software on the right.
+          <article
+            key={group.id}
+            className="card spot grid items-start gap-x-10 gap-y-7 p-7 min-[1024px]:grid-cols-[minmax(0,0.75fr)_minmax(0,1.5fr)] min-[1024px]:p-9"
+            data-spot
+            data-reveal
+          >
+            {intro}
+            <ul className="grid gap-3 min-[640px]:grid-cols-2">
+              {group.items.map((item) => {
+                const ItemIcon = capabilityIcons[item.id];
+                return (
+                  <li key={item.id} className="cap-item">
+                    <span className="cap-icon">
+                      <ItemIcon size={18} />
+                    </span>
+                    <div className="min-w-0">
+                      <ItemHeading className="leading-snug font-semibold">{item.name}</ItemHeading>
+                      <p className="mt-1 text-[15px] leading-relaxed text-muted">{item.text}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </article>
+        ) : (
+          <article key={group.id} className="card spot p-7 min-[1024px]:p-9" data-spot data-reveal style={vars({ "--i": index % 2 })}>
+            {intro}
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {group.items.map((item) => {
+                const ItemIcon = capabilityIcons[item.id];
+                return (
+                  <li key={item.id} className="chip chip-cap">
+                    <ItemIcon size={15} className="flex-none text-accent" />
+                    {item.name}
+                  </li>
+                );
+              })}
+            </ul>
+          </article>
+        );
+      })}
+    </div>
+  );
+}
+
+/** The open slot at the end of the list: an invitation to bring any other idea. */
+export function IdeaCard({ lang }: { lang: Lang }) {
+  const { ui } = getContent(lang);
+  const t = ui.build;
+  return (
+    <div className="idea-card mt-5" data-reveal data-cta>
+      <span className="idea-plus" aria-hidden="true">
+        <Plus size={26} strokeWidth={2.2} />
+      </span>
+      <div className="min-w-0">
+        <p className="title">{t.ideaTitle}</p>
+        <p className="mt-2 max-w-[640px] text-muted">{t.ideaText}</p>
+      </div>
+      <Link href={localize(lang, "/contact")} className="btn btn-primary">
+        {t.ideaCta}
+        <ArrowRight size={18} className="arrow" />
+      </Link>
+    </div>
+  );
+}
+
+/** The Home page's "What we build": core services first, then the wider range, then the open invitation. */
+export function WhatWeBuild({ lang }: { lang: Lang }) {
+  const { ui } = getContent(lang);
+  const t = ui.build;
+  return (
+    <section id="what-we-build" className="section defer" style={vars({ "--defer-h": "2000px" })} aria-labelledby="build-heading">
       <div className="wrap">
         <SectionHeader
-          id="services-heading"
-          eyebrow={ui.chrome.services}
-          title={ui.home.servicesHeading}
+          id="build-heading"
+          eyebrow={t.eyebrow}
+          title={<Emphasis text={t.heading} />}
+          lead={t.lead}
           action={
             <Link className="link-arrow" href={localize(lang, "/services")}>
-              {ui.home.servicesLink}
+              {t.servicesLink}
               <span className="ring">
                 <ArrowRight size={16} className="arrow" />
               </span>
             </Link>
           }
         />
-        <div className="grid gap-4 min-[768px]:grid-cols-2 min-[1024px]:gap-5">
-          {services.map((service, index) => {
-            const Icon = serviceIcons[service.example.href] ?? Browser;
-            return (
-              <article key={service.name} className="card spot flex flex-col p-7 min-[1024px]:p-9" data-spot data-reveal style={vars({ "--i": index % 2 })}>
-                <div className="flex items-start justify-between gap-4">
-                  <span className="icon-tile">
-                    <Icon size={22} />
-                  </span>
-                  <span className="font-mono text-[12px] tracking-[0.12em] text-subtle" aria-hidden="true">
-                    0{index + 1}
-                  </span>
-                </div>
-                <h3 className="title mt-8">{service.name}</h3>
-                <p className="mt-3 text-muted">{service.short}</p>
-                <p className="mt-auto pt-7 text-[15px] text-subtle">
-                  {ui.services.example}{" "}
-                  <Link className="link" href={localize(lang, service.example.href)}>
-                    {service.example.label}
-                  </Link>
-                </p>
-              </article>
-            );
-          })}
+        <ServiceCards lang={lang} />
+
+        <div className="mt-20 min-[1024px]:mt-24">
+          <div className="mb-10 max-w-[720px]" data-reveal>
+            <Eyebrow>{t.moreEyebrow}</Eyebrow>
+            <h3 className="display-3 mt-4">{t.moreHeading}</h3>
+            <p className="lead mt-4 text-muted">{t.moreLead}</p>
+          </div>
+          <CapabilityGroups lang={lang} />
+          <IdeaCard lang={lang} />
         </div>
       </div>
     </section>
@@ -459,7 +646,7 @@ export function ClosingCTA({ lang }: { lang: Lang }) {
             <div className="px-1 pt-3 min-[640px]:px-0 min-[640px]:pt-0">
               <Eyebrow>{ui.chrome.contact}</Eyebrow>
               <h2 id="enquiry-heading" className="display-2 mt-4">
-                {t.heading}
+                <Emphasis text={t.heading} />
               </h2>
               <p className="lead mt-5 max-w-[480px] text-muted">{t.lead}</p>
               <div className="mt-10 grid gap-10">

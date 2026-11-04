@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Emblem } from "@/components/Emblem";
-import { ArrowRight, Chat, Puzzle, Shield } from "@/components/icons";
+import { ArrowRight, Chat, LifeBuoy, Puzzle, Shield } from "@/components/icons";
 import { ClosingCTA, Process } from "@/components/Sections";
 import { Eyebrow, Page, PageHero, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { localize, pageMetadata, resolveLang, type LangParams } from "@/i18n";
 
-/** Fit, care with data, plain speaking: in the order of about.values. */
-const valueIcons = [Puzzle, Shield, Chat];
+/** Fit, care with data, straight talk, long-run support: in the order of about.values. */
+const valueIcons = [Puzzle, Shield, Chat, LifeBuoy];
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const lang = await resolveLang(params);
@@ -75,7 +75,7 @@ export default async function AboutPage({ params }: LangParams) {
       <section className="section defer" style={vars({ "--defer-h": "600px" })} aria-labelledby="values-heading">
         <div className="wrap">
           <SectionHeader id="values-heading" eyebrow="02" title={t.valuesHeading} />
-          <div className="grid gap-5 min-[1024px]:grid-cols-3">
+          <div className="grid gap-5 min-[768px]:grid-cols-2 min-[1200px]:grid-cols-4">
             {t.values.map((value, index) => {
               const Icon = valueIcons[index] ?? Puzzle;
               return (

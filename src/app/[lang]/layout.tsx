@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { Footer } from "@/components/Footer";
 import { Motion } from "@/components/Motion";
 import { Header, PhoneBar } from "@/components/SiteChrome";
-import { plain } from "@/components/ui";
 import { getContent } from "@/content";
 import { site } from "@/content/site";
 import { isLang, langs, type Lang } from "@/i18n";
@@ -54,7 +53,7 @@ export default async function RootLayout({ children, params }: Props) {
         </a>
         <Header lang={lang} t={ui.chrome} whatsappLabel={ui.home.whatsapp} />
         <main id="main">{children}</main>
-        <Footer lang={lang} t={ui.chrome} address={ui.address} tagline={plain(ui.home.heading)} />
+        <Footer lang={lang} t={ui.chrome} address={ui.address} />
         <PhoneBar lang={lang} t={ui.chrome} />
         <Motion />
       </body>

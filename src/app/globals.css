@@ -193,12 +193,13 @@
   .display-hero,
   .display-1,
   .display-2,
+  .display-3,
   .title {
     font-family: var(--font-display);
     text-wrap: balance;
   }
   .display-hero {
-    font-size: clamp(2.6rem, 1.2rem + 5.2vw, 5.6rem);
+    font-size: clamp(2.5rem, 1.2rem + 4.6vw, 5.1rem);
     line-height: 0.98;
     letter-spacing: -0.036em;
     font-weight: 700;
@@ -213,6 +214,12 @@
     font-size: clamp(2rem, 1.35rem + 2.2vw, 3.35rem);
     line-height: 1.05;
     letter-spacing: -0.028em;
+    font-weight: 700;
+  }
+  .display-3 {
+    font-size: clamp(1.6rem, 1.2rem + 1.3vw, 2.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.024em;
     font-weight: 700;
   }
   .title {
@@ -1118,6 +1125,118 @@
     mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
   }
 
+  /* ----- Capability ribbons: everything we build, on two bands that slide as you scroll ----- */
+  .ribbons {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(40px, 5vw, 72px);
+  }
+  .ribbon-band {
+    position: relative;
+    z-index: 1;
+    margin-inline: -3%;
+    padding-block: clamp(12px, 1.3vw, 18px);
+    transform: rotate(-2deg);
+    color: #fff;
+    /* White text passes AA on every stop of this gradient (4.8:1 or more). */
+    background: linear-gradient(90deg, #a70b21, #c41a33 30%, #d92d42 50%, #c41a33 70%, #a70b21);
+    box-shadow: 0 18px 40px -18px rgb(239 76 91 / 0.55);
+  }
+  .ribbon-band-alt {
+    z-index: 0;
+    margin-top: clamp(-30px, -2.2vw, -16px);
+    transform: rotate(1.6deg);
+    color: var(--fg);
+    background: var(--surface-2);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
+  }
+  .ribbon-track {
+    display: flex;
+    width: max-content;
+  }
+  .ribbon-item {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(18px, 2vw, 28px);
+    padding-left: clamp(18px, 2vw, 28px);
+    font-size: clamp(15px, 1.25vw, 19px);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  /* The folded mark from the logo, between names. */
+  .ribbon-item::after {
+    content: "";
+    flex: none;
+    width: 9px;
+    height: 12px;
+    background: currentColor;
+    opacity: 0.55;
+    clip-path: polygon(0 28%, 100% 0, 100% 72%, 0 100%);
+  }
+
+  /* ----- What we build ----- */
+  .chip-cap {
+    min-height: 36px;
+    padding: 4px 14px 4px 11px;
+    font-size: 14px;
+    color: var(--fg);
+    background: color-mix(in oklab, var(--surface) 70%, transparent);
+  }
+  .cap-item {
+    display: flex;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 16px;
+    background: color-mix(in oklab, var(--bg) 40%, var(--surface));
+    box-shadow: inset 0 0 0 1px var(--line);
+    transition: box-shadow 0.25s;
+  }
+  .cap-item:hover {
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 45%, transparent);
+  }
+  .cap-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 11%, transparent);
+  }
+  /* The open slot at the end of the list: a dashed outline waiting for the visitor's idea. */
+  .idea-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px 28px;
+    padding: clamp(22px, 3vw, 34px);
+    border-radius: 24px;
+    border: 1.5px dashed color-mix(in oklab, var(--accent) 55%, transparent);
+    background: color-mix(in oklab, var(--accent) 6%, transparent);
+  }
+  .idea-plus {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    color: #fff;
+    background: linear-gradient(180deg, #d92d42, #b8142c);
+    box-shadow: 0 12px 28px -12px rgb(239 76 91 / 0.7);
+    transition: transform 0.6s var(--ease-expo);
+  }
+  .idea-card:hover .idea-plus {
+    transform: rotate(90deg);
+  }
+  @media (max-width: 767px) {
+    .idea-card {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: start;
+    }
+  }
+
   /* ----- Footer ----- */
   .foot-label {
     margin-bottom: 1rem;
@@ -1233,6 +1352,22 @@
     transform: scaleX(1);
   }
 }
+@keyframes ribbon-left {
+  from {
+    transform: translateX(-4%);
+  }
+  to {
+    transform: translateX(-18%);
+  }
+}
+@keyframes ribbon-right {
+  from {
+    transform: translateX(-18%);
+  }
+  to {
+    transform: translateX(-4%);
+  }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -1289,6 +1424,14 @@
     .progress {
       animation: progress linear both;
       animation-timeline: scroll(root);
+    }
+    .ribbon-track {
+      animation: ribbon-left linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    .ribbon-band-alt .ribbon-track {
+      animation-name: ribbon-right;
     }
   }
 }
@@ -1386,7 +1529,7 @@ html.theme-vt::view-transition-new(root) {
 body:lang(si) {
   line-height: 1.8;
 }
-:lang(si) :is(.display-hero, .display-1, .display-2, .title, .mobile-link) {
+:lang(si) :is(.display-hero, .display-1, .display-2, .display-3, .title, .mobile-link, .ribbon-item) {
   letter-spacing: 0;
   font-weight: 600;
 }
@@ -1401,6 +1544,10 @@ body:lang(si) {
 :lang(si) .display-2 {
   font-size: clamp(1.7rem, 1.2rem + 1.9vw, 2.7rem);
   line-height: 1.35;
+}
+:lang(si) .display-3 {
+  font-size: clamp(1.45rem, 1.15rem + 1vw, 2rem);
+  line-height: 1.4;
 }
 :lang(si) .title {
   font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.55rem);
