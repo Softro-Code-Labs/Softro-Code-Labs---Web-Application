@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/ContactForm";
+import { JsonLd } from "@/components/JsonLd";
 import { DirectContact, NextSteps } from "@/components/Sections";
 import { Eyebrow, Page, vars } from "@/components/ui";
 import { getContent } from "@/content";
-import { fill, pageMetadata, resolveLang, type LangParams } from "@/i18n";
+import { fill, resolveLang, type LangParams } from "@/i18n";
+import { breadcrumbJsonLd, pageMetadata } from "@/seo";
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const lang = await resolveLang(params);
@@ -16,6 +18,7 @@ export default async function ContactPage({ params }: LangParams) {
   const { ui } = getContent(lang);
   return (
     <Page>
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: ui.chrome.contact, path: "/contact" }])} />
       <section className="hero">
         <div className="hero-bg" aria-hidden="true">
           <div className="grid-bg" />

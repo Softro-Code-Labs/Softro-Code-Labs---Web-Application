@@ -4,11 +4,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectStage, ScreenGallery } from "@/components/Devices";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "@/components/icons";
+import { JsonLd } from "@/components/JsonLd";
 import { ClosingCTA } from "@/components/Sections";
 import { Eyebrow, Page, SectionHeader, StatusBadge, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { projects as allProjects } from "@/content/projects";
-import { fill, langs, localize, pageMetadata, resolveLang } from "@/i18n";
+import { fill, langs, localize, resolveLang } from "@/i18n";
+import { breadcrumbJsonLd, pageMetadata } from "@/seo";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
 
@@ -21,9 +23,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lang = await resolveLang(params);
   const { slug } = await params;
-  const project = getContent(lang).projects.find((item) => item.slug === slug);
+  const { ui, projects } = getContent(lang);
+  const project = projects.find((item) => item.slug === slug);
   if (!project) return {};
-  return pageMetadata(lang, `/work/${slug}`, project.name, project.summary);
+  return pageMetadata(lang, `/work/${slug}`, fill(ui.caseStudy.title, { name: project.name, kind: project.kind }), project.summary);
 }
 
 export default async function CaseStudy({ params }: Props) {
@@ -43,6 +46,12 @@ export default async function CaseStudy({ params }: Props) {
 
   return (
     <Page>
+      <JsonLd
+        data={breadcrumbJsonLd(lang, [
+          { name: ui.chrome.work, path: "/work" },
+          { name: project.name, path: `/work/${project.slug}` },
+        ])}
+      />
       <section className="hero" data-tilt-scope>
         <div className="hero-bg" aria-hidden="true">
           <div className="grid-bg" />

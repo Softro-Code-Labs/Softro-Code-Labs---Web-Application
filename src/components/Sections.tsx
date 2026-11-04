@@ -251,7 +251,7 @@ export function LabFeature({ lang, pageTitle = false }: { lang: Lang; pageTitle?
 
   const text = (
     <div>
-      <Eyebrow className={pageTitle ? "enter" : ""}>{t.title}</Eyebrow>
+      <Eyebrow className={pageTitle ? "enter" : ""}>{ui.chrome.lab}</Eyebrow>
       <Title className={`${pageTitle ? "display-1" : "display-2"} mt-5`}>{t.heading}</Title>
       <p className="lead mt-6 max-w-[540px] text-muted">{t.intro}</p>
       <div className="hairline my-9 max-w-[540px]" />
@@ -290,7 +290,7 @@ export function LabFeature({ lang, pageTitle = false }: { lang: Lang; pageTitle?
   }
 
   return (
-    <section id="lab" className="section defer" aria-label={t.title}>
+    <section id="lab" className="section defer" aria-label={ui.chrome.lab}>
       <div className="wrap">
         <div className="card relative overflow-hidden" data-tilt-scope data-reveal>
           <div className="cta-glow" aria-hidden="true" />

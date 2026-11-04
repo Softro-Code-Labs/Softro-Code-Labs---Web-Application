@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 /**
  * The site's two languages. English lives at the plain addresses (/work),
  * Sinhala under /si (/si/work). src/proxy.ts sends each request to the right one.
@@ -48,16 +46,6 @@ export type LangParams = { params: Promise<{ lang: string }> };
 export async function resolveLang(params: Promise<{ lang: string }>): Promise<Lang> {
   const { lang } = await params;
   return isLang(lang) ? lang : "en";
-}
-
-/** Title, description and language links for one page. */
-export function pageMetadata(lang: Lang, path: string, title: string | undefined, description: string): Metadata {
-  return {
-    ...(title ? { title } : {}),
-    description,
-    alternates: languageAlternates(lang, path),
-    openGraph: { url: localize(lang, path) },
-  };
 }
 
 /** Fills {name} style placeholders in a translated string. */

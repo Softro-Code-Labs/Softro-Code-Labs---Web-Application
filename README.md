@@ -30,6 +30,7 @@ Until these are set and the domain is verified in Resend, the form shows a messa
 3. Add `softrocodelabs.com` under Domains and follow the DNS steps.
 4. Verify the domain in Resend.
 5. Send a test enquiry and confirm that it arrives.
+6. Add the site to [Google Search Console](https://search.google.com/search-console) and [Bing Webmaster Tools](https://www.bing.com/webmasters), and submit `https://softrocodelabs.com/sitemap.xml` in both.
 
 ## Common edits
 
@@ -37,6 +38,8 @@ Until these are set and the domain is verified in Resend, the form shows a messa
 | --- | --- |
 | Email, phone and WhatsApp | `src/content/site.ts` |
 | English page wording, address and reply time | `src/content/ui.ts` |
+| What Google shows for each page | `title` and `description` in that page's part of `src/content/ui.ts` (the home page uses `meta.siteTitle` and `meta.description`) |
+| The address search engines read, and the sitemap's "last updated" date | `address` and `updated` in `src/content/site.ts` |
 | The home page numbers (3 projects, 46 tools and so on) | `home.stats` in `src/content/ui.ts` |
 | "Open for new projects" and the two lines under the home buttons | `home.availability` and `home.assurances` in `src/content/ui.ts` |
 | The three "What happens next" steps beside the enquiry form | `closing.next` in `src/content/ui.ts` |
@@ -88,6 +91,14 @@ Keep test banners, hosting badges and real customer details out of every screens
 ## Add a client quote
 
 Add real, approved words to `src/content/testimonials.ts`. The section appears on the Home page automatically.
+
+## Search engines
+
+- Each page's title and description are in the content files (see Common edits). " | Softro Code Labs" is added after every title except the home page's, so keep titles under about 40 characters and descriptions under about 155. Give every page its own.
+- When you publish new wording, projects or screenshots, change `updated` in `src/content/site.ts`. The sitemap passes that date to search engines.
+- The picture shown when a page is shared on WhatsApp, Facebook, LinkedIn or X is `public/og.png` (1200 × 630).
+- The business details search engines read (address, phone, services) and each page's breadcrumb trail are built in `src/seo.ts` from the content files.
+- The browser tab icon is `src/app/icon.svg`. `src/app/favicon.ico` (for older browsers) and `src/app/apple-icon.png` (for iPhone home screens) are made from it, so remake them if the logo changes.
 
 ## Keeping it fast
 

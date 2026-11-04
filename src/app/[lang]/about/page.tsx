@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Emblem } from "@/components/Emblem";
 import { ArrowRight, Chat, LifeBuoy, Puzzle, Shield } from "@/components/icons";
+import { JsonLd } from "@/components/JsonLd";
 import { ClosingCTA, Process } from "@/components/Sections";
 import { Eyebrow, Page, PageHero, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
-import { localize, pageMetadata, resolveLang, type LangParams } from "@/i18n";
+import { localize, resolveLang, type LangParams } from "@/i18n";
+import { breadcrumbJsonLd, pageMetadata } from "@/seo";
 
 /** Fit, care with data, straight talk, long-run support: in the order of about.values. */
 const valueIcons = [Puzzle, Shield, Chat, LifeBuoy];
@@ -23,6 +25,7 @@ export default async function AboutPage({ params }: LangParams) {
   const [opening, ...story] = t.story;
   return (
     <Page>
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: ui.chrome.about, path: "/about" }])} />
       <PageHero
         eyebrow={ui.chrome.about}
         title={t.heading}

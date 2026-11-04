@@ -6,6 +6,7 @@ import { Header, PhoneBar } from "@/components/SiteChrome";
 import { getContent } from "@/content";
 import { site } from "@/content/site";
 import { isLang, langs, type Lang } from "@/i18n";
+import { shareCard, shareImage } from "@/seo";
 import { fontClasses, themeScript } from "../fonts";
 import "../globals.css";
 
@@ -13,6 +14,12 @@ type Props = { children: ReactNode; params: Promise<{ lang: string }> };
 
 /** Both languages are built ahead of time. */
 export const generateStaticParams = () => langs.map((lang) => ({ lang }));
+
+/**
+ * Any other first part of an address is a real "page not found".
+ * Without this, a stray request such as /old-page.html would show the English home page instead.
+ */
+export const dynamicParams = false;
 
 /** src/proxy.ts only ever sends "en" or "si" here; anything else falls back to English. */
 const pick = (value: string): Lang => (isLang(value) ? value : "en");
@@ -24,8 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     metadataBase: new URL(site.url),
     title: { default: ui.meta.siteTitle, template: `%s | ${site.name}` },
     description: ui.meta.description,
-    openGraph: { siteName: site.name, type: "website", locale: ui.meta.locale, images: ["/og.png"] },
-    twitter: { card: "summary_large_image", images: ["/og.png"] },
+    openGraph: shareCard(lang),
+    twitter: { card: "summary_large_image", images: [shareImage] },
   };
 }
 

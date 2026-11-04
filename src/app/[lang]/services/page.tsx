@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ProjectStage } from "@/components/Devices";
 import { ArrowRight, Browser, Chat } from "@/components/icons";
+import { JsonLd } from "@/components/JsonLd";
 import { CapabilityGroups, ClosingCTA, IdeaCard, Process, serviceIcons } from "@/components/Sections";
 import { Page, PageHero, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { whatsapp } from "@/content/site";
-import { localize, pageMetadata, resolveLang, type LangParams } from "@/i18n";
+import { localize, resolveLang, type LangParams } from "@/i18n";
+import { breadcrumbJsonLd, pageMetadata } from "@/seo";
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const lang = await resolveLang(params);
@@ -27,6 +29,7 @@ export default async function ServicesPage({ params }: LangParams) {
 
   return (
     <Page>
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: ui.chrome.services, path: "/services" }])} />
       <PageHero eyebrow={ui.chrome.services} title={ui.services.heading} lead={ui.services.lead}>
         <div className="flex flex-wrap gap-3">
           <Link href={localize(lang, "/contact")} className="btn btn-primary">

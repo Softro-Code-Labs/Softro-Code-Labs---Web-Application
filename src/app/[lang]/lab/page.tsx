@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { ScreenGallery } from "@/components/Devices";
 import { Cpu, Download, Save } from "@/components/icons";
+import { JsonLd } from "@/components/JsonLd";
 import { ClosingCTA, LabFeature } from "@/components/Sections";
 import { Page, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
-import { pageMetadata, resolveLang, type LangParams } from "@/i18n";
+import { resolveLang, type LangParams } from "@/i18n";
+import { breadcrumbJsonLd, pageMetadata } from "@/seo";
 
 const stepIcons = [Download, Cpu, Save];
 
@@ -19,6 +21,7 @@ export default async function LabPage({ params }: LangParams) {
   const { ui, labShots } = getContent(lang);
   return (
     <Page>
+      <JsonLd data={breadcrumbJsonLd(lang, [{ name: ui.chrome.lab, path: "/lab" }])} />
       <LabFeature pageTitle lang={lang} />
 
       <section className="section defer" style={vars({ "--defer-h": "600px" })} aria-labelledby="how-heading">

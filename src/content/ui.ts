@@ -2,10 +2,15 @@
  * English wording for the site's pages and interface.
  * The Sinhala version in si/ui.ts must have exactly the same keys; the build fails if one is missing.
  * {name} style placeholders are filled in by the page. In headings, words between *asterisks* are highlighted.
+ *
+ * Search results: each page's `title` and `description` are what Google shows, and what appears when the page is shared.
+ * " | Softro Code Labs" is added after every title except the home page's, so keep titles under about 40 characters
+ * (60 for siteTitle) and descriptions under about 155.
  */
 export const en = {
   meta: {
-    siteTitle: "Softro Code Labs: custom software, apps and websites",
+    /** The home page's title, in full. */
+    siteTitle: "Software development company in Sri Lanka | Softro Code Labs",
     description:
       "Mobile apps, websites, business systems and custom software that help businesses grow. Tell Softro Code Labs your idea, and we'll bring it to life.",
     locale: "en_LK",
@@ -15,6 +20,8 @@ export const en = {
 
   chrome: {
     skip: "Skip to content",
+    /** The first step of the breadcrumb trail that search results show. */
+    home: "Home",
     work: "Work",
     services: "Services",
     lab: "The Lab",
@@ -75,7 +82,7 @@ export const en = {
   projectRow: { cta: "Read the case study", ctaLabel: "Read the {name} case study" },
 
   lab: {
-    title: "The Lab",
+    title: "The Lab: free file tools in your browser",
     description: "Our own products, including Swift Converter Hub: 46 free file tools that run right in your browser.",
     heading: "What we build when nobody asks",
     intro: "The Lab is where we build our own products. It keeps our skills sharp and lets us try new ideas with real people.",
@@ -136,14 +143,14 @@ export const en = {
   },
 
   contact: {
-    title: "Contact",
+    title: "Contact us: get a quote for your project",
     description: "Tell Softro Code Labs about your idea. Send a message, email us or chat on WhatsApp, and we'll reply within 2 working days.",
     heading: "Let's talk about your idea",
     lead: "Big or small, tell us what you have in mind. A few lines is enough, and we'll reply within {time}.",
   },
 
   services: {
-    title: "Services",
+    title: "Web, app & software development services",
     description: "Mobile apps, websites, online stores, business systems, SaaS platforms, AI tools and custom software, built by one team from idea to launch.",
     heading: "Whatever you need, we can build it",
     lead: "Start with one of our core services, each backed by a real project you can look at. Or bring us something new: our skills reach well beyond what you see here.",
@@ -151,13 +158,15 @@ export const en = {
   },
 
   work: {
-    title: "Work",
+    title: "Portfolio: apps and websites we've built",
     description: "Client projects by Softro Code Labs, including Ola Kids, Baileyn and Tourvista Tours. See what we built, and why.",
     heading: "Work we're proud of",
     lead: "Every project had a different audience and a different problem to solve. Here's what we built, and why.",
   },
 
   caseStudy: {
+    /** The title of each case study page, such as "Baileyn: Online store". */
+    title: "{name}: {kind}",
     allWork: "All work",
     needed: "The challenge",
     stands: "Where it is now",
@@ -170,7 +179,7 @@ export const en = {
   },
 
   about: {
-    title: "About",
+    title: "About us: a software company in Sri Lanka",
     description: "Softro Code Labs is a software company in Balapitiya, Sri Lanka. We build mobile apps, websites, business systems and custom software that help businesses grow.",
     heading: "The team that turns ideas into software",
     lead: "Softro Code Labs is a software company based in Balapitiya, Sri Lanka. We design and build mobile apps, websites, business systems and custom software that work in real life, for real people.",

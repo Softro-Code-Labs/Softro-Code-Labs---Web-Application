@@ -1,13 +1,16 @@
 /**
  * The privacy policy and terms, in English. The Sinhala versions are in si/legal.ts.
  * Each block is a heading ("h") or a paragraph ("p"). {name} and {email} are filled in by the page.
+ * The description is what search results show for the page.
  */
-export type LegalDoc = { title: string; blocks: ["h" | "p", string][] };
+export type LegalDoc = { title: string; description: string; blocks: ["h" | "p", string][] };
 export type Legal = { privacy: LegalDoc; terms: LegalDoc };
 
 export const legal: Legal = {
   privacy: {
     title: "Privacy policy",
+    description:
+      "What {name} collects when you send an enquiry, how we use it, and how to see or delete your details. No advertising or tracking cookies.",
     blocks: [
       ["p", "This policy explains what {name} collects through this website and how we use it."],
       ["h", "What we collect"],
@@ -24,6 +27,7 @@ export const legal: Legal = {
   },
   terms: {
     title: "Terms of use",
+    description: "The terms for using the {name} website, including who owns its content and how a project's scope, price and timing are agreed.",
     blocks: [
       ["p", "By using this website, you agree to these terms."],
       ["h", "Content"],
