@@ -1,5 +1,7 @@
+export type Slug = "ola-kids" | "baileyn" | "tourvista-tours";
+
 export type Project = {
-  slug: "ola-kids" | "baileyn" | "tourvista-tours";
+  slug: Slug;
   name: string;
   kind: string;
   summary: string;
@@ -30,6 +32,12 @@ export type Shot = {
   /** Show larger (three quarters of the gallery width, beside a phone), for screens with lots of small text. */
   wide?: boolean;
 };
+
+/** The translatable parts of a project and a screenshot, used by si/projects.ts. */
+export type ProjectText = Pick<Project, "kind" | "summary" | "tech" | "need" | "built" | "stands"> & { linkLabel?: string };
+export type ShotText = Pick<Shot, "alt" | "caption">;
+export type Service = { name: string; short: string; long: string; example: { label: string; href: string } };
+export type Step = { name: string; text: string };
 
 const ola = {
   guide: { src: "/work/ola-kids-guide.webp", width: 1200, height: 470, frame: "phone-wide", alt: "Ola Kids Show Me guide drawing a capital B, with a large dot moving down the first stroke and the dots ahead still pale, beside a football picture and OlaSauras", caption: "Show Me: a moving dot draws each stroke in order before the child tries." },
@@ -152,7 +160,7 @@ export const studios = [
   { name: "Video", tools: 5 },
 ];
 
-export const services = [
+export const services: Service[] = [
   {
     name: "Websites",
     short: "A clear site that explains your business and brings in enquiries or bookings.",
@@ -179,7 +187,7 @@ export const services = [
   },
 ];
 
-export const steps = [
+export const steps: Step[] = [
   { name: "We listen", text: "You tell us what the software has to do and who will use it." },
   { name: "We design", text: "You see and approve the screens before we build them." },
   { name: "We build", text: "You get a working preview to review as it grows." },

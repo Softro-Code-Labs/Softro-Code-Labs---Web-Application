@@ -35,10 +35,27 @@ Until these are set and the domain is verified in Resend, the form shows a messa
 
 | To change | Edit |
 | --- | --- |
-| Contact details and reply time | `src/content/site.ts` |
-| Projects, screenshots, services and process | `src/content/projects.ts` |
+| Email, phone and WhatsApp | `src/content/site.ts` |
+| English page wording, address and reply time | `src/content/ui.ts` |
+| Projects, screenshots, services and process (English) | `src/content/projects.ts` |
+| Privacy policy and terms (English) | `src/content/legal.ts` |
 | Client quotes | `src/content/testimonials.ts` |
 | Colours for the dark and light themes | `src/app/globals.css` |
+
+## Sinhala version
+
+Every page also exists in Sinhala under `/si` (for example `/si/work`). The language button in the header switches between the two.
+
+All Sinhala wording is in `src/content/si/`:
+
+| File | Holds |
+| --- | --- |
+| `si/ui.ts` | Page wording, menu, form, address and reply time |
+| `si/projects.ts` | Case studies, services, process steps and screenshot captions |
+| `si/legal.ts` | Privacy policy and terms |
+
+Each Sinhala file must have the same items as its English file. If something is missing, `npm run typecheck` or `npm run build` names it.
+When you add a screenshot, add its Sinhala caption to `si/projects.ts` too.
 
 ## Add or change a screenshot
 

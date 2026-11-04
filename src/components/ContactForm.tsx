@@ -3,12 +3,13 @@
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
 import { flushSync } from "react-dom";
-import { site } from "@/content/site";
+import { site, whatsapp } from "@/content/site";
+import type { UI } from "@/content/ui";
+import { fill, localize, type Lang } from "@/i18n";
 
-const kinds = ["Website", "Online store", "Mobile app", "Custom tool", "Not sure yet"];
 type Errors = Partial<Record<"name" | "contact" | "message", string>>;
 
-export function ContactForm() {
+export function ContactForm({ lang, t, replyTime }: { lang: Lang; t: UI["form"]; replyTime: string }) {
   // "offline": the request never reached us. "failed": it reached us but could not be delivered.
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed" | "offline">("idle");
   const [errors, setErrors] = useState<Errors>({});
@@ -19,9 +20,9 @@ export function ContactForm() {
     const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
 
     const found: Errors = {};
-    if (!data.name?.trim()) found.name = "Enter your name.";
-    if (!data.contact?.trim()) found.contact = "Enter an email address or WhatsApp number so we can reply.";
-    if (!data.message?.trim()) found.message = "Tell us a little about what you want to build.";
+    if (!data.name?.trim()) found.name = t.nameError;
+    if (!data.contact?.trim()) found.contact = t.contactError;
+    if (!data.message?.trim()) found.message = t.messageError;
     flushSync(() => setErrors(found));
     if (Object.keys(found).length) {
       form.querySelector<HTMLElement>("[aria-invalid='true']")?.focus();
@@ -33,7 +34,8 @@ export function ContactForm() {
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        // The language tells us which language to reply in.
+        body: JSON.stringify({ ...data, lang }),
       });
       setStatus(response.ok ? "sent" : "failed");
     } catch {
@@ -44,31 +46,32 @@ export function ContactForm() {
   if (status === "sent") {
     return (
       <div role="status" className="border-t border-line pt-6">
-        <p className="display-m">Enquiry sent.</p>
-        <p className="mt-3 text-muted">We&apos;ll reply within {site.replyTime}.</p>
+        <p className="display-m">{t.sentHeading}</p>
+        <p className="mt-3 text-muted">{fill(t.sentText, { time: replyTime })}</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={submit} noValidate aria-label="Start a project" className="space-y-5">
-      <Field label="Your name" name="name" autoComplete="name" error={errors.name} />
-      <Field label="Email or WhatsApp number" name="contact" error={errors.contact} />
+    <form onSubmit={submit} noValidate aria-label={t.label} className="space-y-5">
+      <Field label={t.name} name="name" autoComplete="name" error={errors.name} />
+      <Field label={t.contact} name="contact" error={errors.contact} />
 
       <fieldset>
-        <legend className="text-[15px] font-semibold">What do you need?</legend>
+        <legend className="text-[15px] font-semibold">{t.kindLegend}</legend>
         <div className="mt-2 flex flex-wrap gap-2">
-          {kinds.map((kind, index) => (
-            <label key={kind} className="chip relative">
-              <input type="radio" name="kind" value={kind} defaultChecked={index === 4} />
-              <span>{kind}</span>
+          {t.kinds.map((kind, index) => (
+            <label key={kind.value} className="chip relative">
+              <input type="radio" name="kind" value={kind.value} defaultChecked={index === t.kinds.length - 1} />
+              <span>{kind.label}</span>
             </label>
           ))}
         </div>
       </fieldset>
 
       <label className="field">
-        What do you want to build?
+        {t.message}
+        {t.messageHint && <span className="mt-1 block text-sm font-normal text-muted">{t.messageHint}</span>}
         <textarea
           name="message"
           rows={4}
@@ -88,27 +91,25 @@ export function ContactForm() {
 
       {(status === "failed" || status === "offline") && (
         <p role="alert" className="text-[15px]">
-          {status === "offline"
-            ? "Your enquiry didn't send. Check your connection and try again, or email us at "
-            : "Sorry, our form isn't working right now. Please email us at "}
+          {status === "offline" ? t.offline : t.failed}{" "}
           <a className="link" href={`mailto:${site.email}`}>
             {site.email}
           </a>{" "}
-          or{" "}
-          <a className="link" href={site.whatsapp}>
-            message us on WhatsApp
+          {t.or}{" "}
+          <a className="link" href={whatsapp(lang)}>
+            {t.whatsappLink}
           </a>
           .
         </p>
       )}
 
       <button type="submit" className="btn" disabled={status === "sending"}>
-        {status === "sending" ? "Sending enquiry" : "Send enquiry"}
+        {status === "sending" ? t.sending : t.send}
       </button>
       <p className="text-sm text-muted">
-        We only use your details to reply.{" "}
-        <Link className="underline underline-offset-2 hover:text-paper" href="/privacy">
-          Privacy policy
+        {t.privacyNote}{" "}
+        <Link className="underline underline-offset-2 hover:text-paper" href={localize(lang, "/privacy")}>
+          {t.privacyLink}
         </Link>
       </p>
     </form>

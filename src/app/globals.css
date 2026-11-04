@@ -20,6 +20,14 @@
   --font-sans: var(--font-schibsted), "Yaldevi Sinhala", system-ui, sans-serif;
 }
 
+/* Sinhala letters use Yaldevi: regular for body text, semibold for headings and labels. */
+@font-face {
+  font-family: "Yaldevi Sinhala";
+  src: url("/fonts/yaldevi-sinhala-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+  unicode-range: U+0D80-0DFF, U+200C-200D;
+}
 @font-face {
   font-family: "Yaldevi Sinhala";
   src: url("/fonts/yaldevi-sinhala-600-normal.woff2") format("woff2");
@@ -313,10 +321,79 @@ body {
   outline-offset: 2px;
 }
 
-@media (min-width: 981px) {
+/* The header switches to the full menu at 1101px, where the menu, language switch and theme switch fit on one line in both languages. */
+@media (min-width: 1101px) {
   .menu-toggle {
     display: none;
   }
+}
+/*
+  On narrow phones the theme switch moves from the header into the phone menu.
+  Plain classes, because .btn sets display outside Tailwind's layers and would win over its utilities.
+*/
+.only-narrow {
+  display: none;
+}
+@media (max-width: 480px) {
+  .hide-narrow {
+    display: none;
+  }
+  .only-narrow {
+    display: inline-flex;
+  }
+}
+
+@media (max-width: 1100px) {
+  /* Room for the phone action bar */
+  body {
+    padding-bottom: 68px;
+  }
+}
+
+/*
+  Sinhala. Its letters carry marks above and below the line, so headings need
+  more line height than Latin, and the largest sizes come down a step so long words fit.
+*/
+:lang(si) body,
+body:lang(si) {
+  line-height: 1.75;
+}
+:lang(si) .display-xl {
+  font-size: clamp(40px, 5.6vw, 84px);
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+:lang(si) .display-l {
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.3;
+}
+:lang(si) .display-m {
+  font-size: clamp(26px, 2.8vw, 38px);
+  line-height: 1.35;
+}
+:lang(si) .lead {
+  font-size: 19px;
+  line-height: 1.7;
+}
+:lang(si) .card-title {
+  font-size: 26px;
+  line-height: 1.35;
+}
+:lang(si) .closing-heading {
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.3;
+}
+/* Sinhala letters look smaller than Latin at the same size, so the small sizes go up a step. */
+:lang(si) .text-sm {
+  font-size: 15px;
+}
+:lang(si) .text-\[15px\],
+:lang(si) .link {
+  font-size: 16px;
+}
+/* English names inside Sinhala pages keep the English settings. */
+:lang(si) [lang="en"] {
+  letter-spacing: normal;
 }
 
 @media (max-width: 980px) {
@@ -349,9 +426,5 @@ body {
     right: 16px;
     max-width: calc(100% - 32px);
     max-height: 300px;
-  }
-  /* Room for the phone action bar */
-  body {
-    padding-bottom: 68px;
   }
 }

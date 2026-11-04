@@ -2,28 +2,34 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { FoldRow } from "@/components/Ribbon";
 import { ProjectScreen, ScreenGallery } from "@/components/ProjectScreen";
+import { FoldRow } from "@/components/Ribbon";
 import { ClosingEnquiry } from "@/components/Sections";
-import { projects } from "@/content/projects";
+import { getContent } from "@/content";
+import { projects as allProjects } from "@/content/projects";
+import { fill, langs, localize, pageMetadata, resolveLang } from "@/i18n";
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ lang: string; slug: string }> };
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return projects.map((project) => ({ slug: project.slug }));
+  return langs.flatMap((lang) => allProjects.map((project) => ({ lang, slug: project.slug })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const lang = await resolveLang(params);
   const { slug } = await params;
-  const project = projects.find((item) => item.slug === slug);
+  const project = getContent(lang).projects.find((item) => item.slug === slug);
   if (!project) return {};
-  return { title: project.name, description: project.summary, alternates: { canonical: `/work/${slug}` } };
+  return pageMetadata(lang, `/work/${slug}`, project.name, project.summary);
 }
 
 export default async function CaseStudy({ params }: Props) {
+  const lang = await resolveLang(params);
   const { slug } = await params;
+  const { ui, projects } = getContent(lang);
+  const t = ui.caseStudy;
   const index = projects.findIndex((item) => item.slug === slug);
   if (index < 0) notFound();
   const project = projects[index];
@@ -36,8 +42,8 @@ export default async function CaseStudy({ params }: Props) {
         text={
           <>
             <p className="text-[15px]">
-              <Link className="link" href="/work">
-                All work
+              <Link className="link" href={localize(lang, "/work")}>
+                {t.allWork}
               </Link>
             </p>
             <div className="mt-6 flex items-center gap-4">
@@ -61,17 +67,17 @@ export default async function CaseStudy({ params }: Props) {
       <div className="on-paper bg-paper px-(--gutter) py-16 text-night min-[981px]:py-24">
         <div className="grid max-w-[1194px] gap-x-16 gap-y-12 min-[981px]:grid-cols-2">
           <section>
-            <h2 className="display-m">What it needed</h2>
+            <h2 className="display-m">{t.needed}</h2>
             {project.need.map((text) => (
               <p key={text} className="mt-4 max-w-[60ch]">
                 {text}
               </p>
             ))}
-            <h2 className="display-m mt-12">Where it stands</h2>
+            <h2 className="display-m mt-12">{t.stands}</h2>
             <p className="mt-4 max-w-[60ch]">{project.stands}</p>
           </section>
           <section>
-            <h2 className="display-m">What we built</h2>
+            <h2 className="display-m">{t.built}</h2>
             <ul className="mt-4">
               {project.built.map((item) => (
                 <li key={item} className="border-t border-muted-paper/40 py-3">
@@ -86,18 +92,18 @@ export default async function CaseStudy({ params }: Props) {
       <section aria-labelledby="screens" className="px-(--gutter) py-16 min-[981px]:py-24">
         <div className="max-w-[1194px]">
           <h2 id="screens" className="display-m mb-10">
-            Screens from the {project.slug === "ola-kids" ? "app" : "site"}
+            {project.slug === "ola-kids" ? t.screensApp : t.screensSite}
           </h2>
           <ScreenGallery shots={project.gallery} />
           <p className="mt-14">
-            <Link className="link" href={`/work/${next.slug}`}>
-              Next project: {next.name}
+            <Link className="link" href={localize(lang, `/work/${next.slug}`)}>
+              {fill(t.next, { name: next.name })}
             </Link>
           </p>
         </div>
       </section>
 
-      <ClosingEnquiry />
+      <ClosingEnquiry lang={lang} />
     </>
   );
 }

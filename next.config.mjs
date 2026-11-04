@@ -8,6 +8,8 @@ const headers = [
 
 export default {
   poweredByHeader: false,
+  // One 404 page for both languages (src/app/global-not-found.tsx), because the page layout sits inside the language folder.
+  experimental: { globalNotFound: true },
   async headers() {
     return [{ source: "/(.*)", headers }];
   },

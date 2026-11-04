@@ -2,22 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { RibbonRow } from "@/components/Ribbon";
 import { ClosingEnquiry } from "@/components/Sections";
-import { services } from "@/content/projects";
+import { getContent } from "@/content";
+import { localize, pageMetadata, resolveLang, type LangParams } from "@/i18n";
 
-export const metadata: Metadata = {
-  title: "Services",
-  description: "Websites, online stores, mobile apps and custom web tools, each backed by a real project you can see.",
-  alternates: { canonical: "/services" },
-};
+export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
+  const lang = await resolveLang(params);
+  const { services } = getContent(lang).ui;
+  return pageMetadata(lang, "/services", services.title, services.description);
+}
 
-export default function ServicesPage() {
+export default async function ServicesPage({ params }: LangParams) {
+  const lang = await resolveLang(params);
+  const { ui, services } = getContent(lang);
   return (
     <>
       <RibbonRow variant="first" className="pt-14 pb-10 min-[981px]:pt-20">
-        <h1 className="display-xl max-w-[900px]">What you can hire us for</h1>
-        <p className="lead mt-6 max-w-[620px] text-muted">
-          Every service below comes from work we&apos;ve already shipped, so you can see a real example before you talk to us.
-        </p>
+        <h1 className="display-xl max-w-[900px]">{ui.services.heading}</h1>
+        <p className="lead mt-6 max-w-[620px] text-muted">{ui.services.lead}</p>
       </RibbonRow>
       <RibbonRow className="pb-16">
         {services.map((service) => (
@@ -26,8 +27,8 @@ export default function ServicesPage() {
             <div>
               <p>{service.long}</p>
               <p className="mt-4 text-[15px] text-muted">
-                Example:{" "}
-                <Link className="link" href={service.example.href}>
+                {ui.services.example}{" "}
+                <Link className="link" href={localize(lang, service.example.href)}>
                   {service.example.label}
                 </Link>
               </p>
@@ -35,7 +36,7 @@ export default function ServicesPage() {
           </section>
         ))}
       </RibbonRow>
-      <ClosingEnquiry />
+      <ClosingEnquiry lang={lang} />
     </>
   );
 }

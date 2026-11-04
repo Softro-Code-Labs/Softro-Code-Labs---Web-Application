@@ -32,6 +32,8 @@ export async function POST(request: Request) {
   const contact = clean(body.contact, 160);
   const kind = clean(body.kind, 40) || "Not given";
   const message = clean(body.message, 4000);
+  // Which version of the site they used, so the reply can be in the same language.
+  const language = body.lang === "si" ? "Sinhala" : "English";
   if (!name || !contact || !message) return NextResponse.json({ error: "Missing details." }, { status: 400 });
 
   const key = process.env.RESEND_API_KEY;
@@ -46,8 +48,8 @@ export async function POST(request: Request) {
       from,
       to,
       reply_to: contact.includes("@") ? contact : undefined,
-      subject: `New enquiry from ${name}`,
-      text: `Name: ${name}\nContact: ${contact}\nNeeds: ${kind}\n\n${message}`,
+      subject: `New enquiry from ${name}${language === "Sinhala" ? " (Sinhala)" : ""}`,
+      text: `Name: ${name}\nContact: ${contact}\nNeeds: ${kind}\nSite language: ${language}\n\n${message}`,
     }),
   });
 
