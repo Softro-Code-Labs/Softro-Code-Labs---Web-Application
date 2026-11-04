@@ -1,0 +1,103 @@
+import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { FoldRow } from "@/components/Ribbon";
+import { ProjectScreen, ScreenGallery } from "@/components/ProjectScreen";
+import { ClosingEnquiry } from "@/components/Sections";
+import { projects } from "@/content/projects";
+
+type Props = { params: Promise<{ slug: string }> };
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return projects.map((project) => ({ slug: project.slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const project = projects.find((item) => item.slug === slug);
+  if (!project) return {};
+  return { title: project.name, description: project.summary, alternates: { canonical: `/work/${slug}` } };
+}
+
+export default async function CaseStudy({ params }: Props) {
+  const { slug } = await params;
+  const index = projects.findIndex((item) => item.slug === slug);
+  if (index < 0) notFound();
+  const project = projects[index];
+  const next = projects[(index + 1) % projects.length];
+
+  return (
+    <>
+      <FoldRow
+        art={<ProjectScreen project={project} />}
+        text={
+          <>
+            <p className="text-[15px]">
+              <Link className="link" href="/work">
+                All work
+              </Link>
+            </p>
+            <div className="mt-6 flex items-center gap-4">
+              {project.slug === "ola-kids" && <Image className="rounded-2xl" src="/work/ola-kids-icon.webp" width={64} height={64} alt="" />}
+              <h1 className="display-l">{project.name}</h1>
+            </div>
+            <p className="mt-2 text-sm text-muted">{project.kind}</p>
+            <p className="lead mt-6 max-w-[460px]">{project.summary}</p>
+            <p className="mt-6 text-sm text-muted">{project.tech.join(", ")}</p>
+            {project.link && (
+              <p className="mt-6">
+                <a className="link" href={project.link.href}>
+                  {project.link.label}
+                </a>
+              </p>
+            )}
+          </>
+        }
+      />
+
+      <div className="on-paper bg-paper px-(--gutter) py-16 text-night min-[981px]:py-24">
+        <div className="grid max-w-[1194px] gap-x-16 gap-y-12 min-[981px]:grid-cols-2">
+          <section>
+            <h2 className="display-m">What it needed</h2>
+            {project.need.map((text) => (
+              <p key={text} className="mt-4 max-w-[60ch]">
+                {text}
+              </p>
+            ))}
+            <h2 className="display-m mt-12">Where it stands</h2>
+            <p className="mt-4 max-w-[60ch]">{project.stands}</p>
+          </section>
+          <section>
+            <h2 className="display-m">What we built</h2>
+            <ul className="mt-4">
+              {project.built.map((item) => (
+                <li key={item} className="border-t border-muted-paper/40 py-3">
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </div>
+
+      <section aria-labelledby="screens" className="px-(--gutter) py-16 min-[981px]:py-24">
+        <div className="max-w-[1194px]">
+          <h2 id="screens" className="display-m mb-10">
+            Screens from the {project.slug === "ola-kids" ? "app" : "site"}
+          </h2>
+          <ScreenGallery shots={project.gallery} />
+          <p className="mt-14">
+            <Link className="link" href={`/work/${next.slug}`}>
+              Next project: {next.name}
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      <ClosingEnquiry />
+    </>
+  );
+}
