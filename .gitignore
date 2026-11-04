@@ -1,0 +1,8 @@
+node_modules
+.next
+# Secrets: never commit real env files
+.env
+.env.local
+.env*
+*.tsbuildinfo
+next-env.d.ts
