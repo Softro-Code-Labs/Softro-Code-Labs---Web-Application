@@ -25,7 +25,7 @@ export default async function ServicesPage({ params }: LangParams) {
   const example = (href: string) => {
     const project = projects.find((item) => `/work/${item.slug}` === href);
     if (project) return { screen: project.screen, accent: project.accent, tint: project.tint };
-    return { screen: labShots.phone, accent: labShots.convert, tint: "#ef4c5b" };
+    return { screen: labShots.convert, accent: labShots.home, tint: "#ef4c5b" };
   };
 
   return (

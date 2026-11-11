@@ -52,7 +52,7 @@ export default async function LabPage({ params }: LangParams) {
       <section className="section defer" style={vars({ "--defer-h": "1600px" })} aria-labelledby="screens">
         <div className="wrap">
           <SectionHeader id="screens" title={ui.lab.screensHeading} />
-          <ScreenGallery shots={[labShots.menu, labShots.phone, labShots.convert, labShots.password]} />
+          <ScreenGallery shots={[labShots.home, labShots.menu, labShots.privacy, labShots.docs, labShots.search, labShots.nav, labShots.convert, labShots.password]} />
         </div>
       </section>
 

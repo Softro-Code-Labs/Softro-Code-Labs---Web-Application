@@ -201,7 +201,7 @@ export function LabFeature({ lang, pageTitle = false }: { lang: Lang; pageTitle?
       tilt={7}
       layers={[
         {
-          node: <BrowserFrame shot={labShots.convert} sizes="(max-width: 1023px) 84vw, 520px" eager={pageTitle} />,
+          node: <BrowserFrame shot={labShots.home} sizes="(max-width: 1023px) 84vw, 520px" eager={pageTitle} />,
           place: { left: "0%", top: "4%", width: "84%" },
           z: "0cqw",
           bob: [11, -4],

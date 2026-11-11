@@ -158,25 +158,38 @@ export const shotText: Record<string, ShotText> = {
     caption: "සෑම ස්ථානයකටම තමන්ගේම කාඩ්පතක් සහ පිටුවක් ඇත.",
   },
   "/work/sch-home.webp": {
-    alt: "Convert files without uploading them සිරස්තලය, ගොනු දැමීමේ කොටස සහ වැඩිපුරම භාවිත වන මෙවලම් සහිත Swift Converter Hub මුල් පිටුව",
+    alt: "Convert files without uploading them සිරස්තලය, රූප, ශ්‍රව්‍ය, වීඩියෝ, PDF, Office ගොනු සහ දත්ත පිළිගන්නා ගොනු දැමීමේ කොටස සහ පහළින් වැඩිපුරම භාවිත වන මෙවලම් සහිත Swift Converter Hub මුල් පිටුව",
     caption: "ඕනෑම ගොනුවක් දැමූ විට, එය විවෘත කළ හැකි සෑම මෙවලමක්ම පෙන්වයි.",
-  },
-  "/work/sch-tool-convert.webp": {
-    alt: "PNG ගොනුවක් WebP බවට පරිවර්තනය කර, 82.95 KB සිට 17.38 KB දක්වා කුඩා වූ බව සහ Download බොත්තම පෙන්වන Swift Converter Hub තිරය",
-    caption: "සැබෑ පරිවර්තනයක්: බ්‍රවුසරයෙන් පිටතට නොගොස් 83 KB සිට 17 KB දක්වා.",
   },
   "/work/sch-menu-dark.webp": {
     alt: "රූප, ශ්‍රව්‍ය, වීඩියෝ, ලේඛන, දත්ත සහ පෙළ යන ස්ටුඩියෝ හයේ සියලු මෙවලම් ලැයිස්තු කරන Swift Converter Hub All tools මෙනුව",
     caption: "එක් මෙනුවක, ස්ටුඩියෝ හයකට බෙදූ මෙවලම් 46ම ඇත.",
   },
+  "/work/sch-privacy.webp": {
+    alt: "මෙවලම බ්‍රවුසරයට පූරණය වීම, ඔබේ උපාංගය වැඩ කිරීම සහ ප්‍රතිඵලය නැවත ඔබේ උපාංගයට සුරැකීම යන පියවර තුන සහිත, How your files stay on your device නම් Swift Converter Hub කොටස",
+    caption: "ගොනු පරිශීලකයාගේ උපාංගයේම රැඳෙන ආකාරය සහ එය පරීක්ෂා කරන ආකාරය වෙබ් අඩවිය පැහැදිලි කරයි.",
+  },
+  "/work/sch-docs.webp": {
+    alt: "Merge PDF Files, Split PDF Pages සහ Compress PDF කාඩ්පත් ඇතුළු මෙවලම් 8ක් සහ පෙරහන් කොටුවක් සහිත Swift Converter Hub Document Suite පිටුව",
+    caption: "සෑම ස්ටුඩියෝවකටම තමන්ගේම පිටුවක් ඇත. Document Suite හි PDF සහ Office මෙවලම් 8ක් ඇත.",
+  },
+  "/work/sch-phone-search.webp": {
+    alt: "Password Generator සහ Image to PDF වැනි මෑතකදී භාවිත කළ මෙවලම් සහ ජනප්‍රිය මෙවලම් ලැයිස්තු කරන, දුරකථනයක Swift Converter Hub සෙවුම",
+    caption: "සෙවුම ඕනෑම මෙවලමක් සොයා දෙන අතර මෑතකදී භාවිත කළ ඒවා මතක තබා ගනී.",
+  },
+  "/work/sch-phone-menu.webp": {
+    alt: "මෙවලම් 8 පෙන්වමින් විවෘත කළ Image Studio සහ මෙවලම් ගණන සමඟ අනෙක් ස්ටුඩියෝ පහ සහිත, දුරකථනයක Swift Converter Hub මෙනුව",
+    caption: "දුරකථනයක, ස්ටුඩියෝ එකින් එක විවෘත වේ.",
+  },
+  "/work/sch-tool-convert.webp": {
+    alt: "Runs on your device, nothing is uploaded සටහන සහ JPG සිට PNG, HEIC සිට JPG වැනි ජනප්‍රිය පරිවර්තන සහිත, දුරකථනයක Swift Converter Hub Image Format Converter",
+    caption: "රූප පරිවර්තකය දුරකථනයේම ආකෘති 155ක් හසුරුවයි.",
+  },
   "/work/sch-tool-password.webp": {
-    alt: "වර්ණවත් මුරපදයක්, Very strong ශ්‍රේණිගත කිරීම සහ Password, Passphrase, PIN ක්‍රම සහිත Swift Converter Hub මුරපද උත්පාදකය",
-    caption: "පෙළ මෙවලම් 13න් එකක් වන මුරපද උත්පාදකය. අඳුරු තේමාව පරිශීලකයාගේ සැකසුම අනුගමනය කරයි.",
+    alt: "වර්ණවත් මුරපදයක්, Copy සහ New password බොත්තම් සහ Very strong ශ්‍රේණිගත කිරීම සහිත, දුරකථනයක Swift Converter Hub මුරපද උත්පාදකය",
+    caption: "පෙළ මෙවලම් 13න් එකක් වන මුරපද උත්පාදකය.",
   },
-  "/work/sch-phone.webp": {
-    alt: "සිරස්තලය සහ ගොනු දැමීමේ කොටස සහිත Swift Converter Hub මුල් පිටුව දුරකථනයක",
-    caption: "එය දුරකථනයේද එලෙසම ක්‍රියා කරයි.",
-  },
+
 };
 
 export const studioNames: Record<string, string> = {
