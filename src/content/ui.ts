@@ -84,10 +84,12 @@ export const en = {
   projectRow: { cta: "Read the case study", ctaLabel: "Read the {name} case study" },
 
   lab: {
-    title: "The Lab: free file tools in your browser",
-    description: "Our own products, including Swift Converter Hub: 46 free file tools that run right in your browser.",
+    title: "The Lab: our own software products",
+    description: "Our own products: Swift Converter Hub, 46 free file tools in your browser, and Surelane, an AI agent that finds open jobs.",
     heading: "What we build when nobody asks",
-    intro: "The Lab is where we build our own products. It keeps our skills sharp and lets us try new ideas with real people.",
+    intro: "The Lab is where we build our own products, from free tools anyone can use to commercial software. It keeps our skills sharp and lets us try new ideas with real people.",
+    /** The switch between the Lab's products, on The Lab page, the home page and each product's page. */
+    products: { label: "Our products", free: "Free", commercial: "Commercial" },
     productLead: "46 free file tools that run right in your browser, so your files never leave your device.",
     tryIt: "Try Swift Converter Hub",
     chip: "Runs on your device. Nothing is uploaded.",
@@ -99,6 +101,51 @@ export const en = {
       { title: "The result saves back to your device", text: "There's no server copy to delete, because there never was one." },
     ],
     screensHeading: "A look inside Swift Converter Hub",
+  },
+
+  /** Surelane, our commercial job-search agent: its own page at /lab/surelane, and a section on The Lab page. */
+  surelane: {
+    title: "Surelane: AI job-search agent",
+    description: "Surelane searches job sites three times a day, checks each vacancy is still open, ranks it against your CV and emails the new matches.",
+    kind: "Commercial product",
+    tagline: "AI job-search agent",
+    lead: "Upload a CV once. Three times a day, Surelane searches permitted job sites, checks that each vacancy is still open, ranks it against the CV and emails the new matches.",
+    note: "Surelane is commercial software. To use it, send us a message and we'll set it up for you.",
+    ask: "Ask about Surelane",
+    more: "See how Surelane works",
+    facts: [
+      { label: "Searches", value: "Three times a day, even when your computer is off" },
+      { label: "Job sources", value: "Sri Lankan, government and global job sites, plus company career pages" },
+      { label: "AI", value: "Open-source Qwen 3, with a built-in engine that works on its own" },
+    ],
+    stepsHeading: "A job search that runs itself",
+    steps: [
+      { title: "Upload a CV once", text: "Surelane reads the roles, skills and experience in it, and keeps the CV encrypted." },
+      { title: "It searches three times a day", text: "At 8:00 AM, 12:30 PM and 5:00 PM Sri Lanka time, even when the computer is off." },
+      { title: "Only open jobs, ranked", text: "Every vacancy is checked to be still open, then scored out of 100 against the CV." },
+      { title: "New matches by email", text: "Local and global jobs arrive in separate sections, and no job is ever sent twice." },
+    ],
+    doesHeading: "What it does",
+    does: [
+      "Searches Sri Lankan, government and global job sites, plus company career pages",
+      "Shows the skills a job shares with the CV, and the ones to add",
+      "Gives a second opinion on the best matches with open-source AI",
+      "Helps tailor a cover letter to any job",
+      "Tracks each application from saved to offer",
+      "Builds ready-made searches for sites it can't read, such as LinkedIn",
+      "Works in a phone's browser and can be added to the home screen",
+    ],
+    trustHeading: "Built to be trusted",
+    trust: [
+      "Only reads job sites that allow it, and says plainly which ones it can't",
+      "Recommends a job only if its source confirmed it in the last 3 days",
+      "Keeps the CV encrypted, and never puts it in an email",
+      "Deletes job data after 30 days",
+      "Keeps working on its built-in engine if the AI can't start",
+    ],
+    screensHeading: "A look inside Surelane",
+    ctaHeading: "Want to use Surelane?",
+    ctaText: "Tell us a little about who will use it. We'll reply within {time} and talk you through getting started.",
   },
 
   testimonialsHeading: "What our clients say",
@@ -142,6 +189,10 @@ export const en = {
       { value: "Custom software", label: "Custom software" },
       { value: "Not sure yet", label: "Not sure yet" },
     ],
+    /** Extra choices that appear only when a page links to the form with ?interest=..., already picked. */
+    interests: {
+      surelane: { value: "Surelane", label: "Surelane" },
+    },
   },
 
   contact: {

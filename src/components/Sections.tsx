@@ -1,9 +1,10 @@
 import Link from "next/link";
-import type { ComponentType, SVGProps } from "react";
+import type { ComponentProps, ComponentType, SVGProps } from "react";
 import { ContactForm } from "@/components/ContactForm";
 import { BrowserFrame, ProjectStage, Stage } from "@/components/Devices";
 import { Hero3D } from "@/components/Hero3D";
 import { Iso, serviceArt } from "@/components/Iso";
+import { LabProducts } from "@/components/LabProducts";
 import { getContent } from "@/content";
 import type { CapabilityGroupId, CapabilityId, Project, Step } from "@/content/projects";
 import { site, whatsapp } from "@/content/site";
@@ -247,6 +248,7 @@ export function LabFeature({ lang, pageTitle = false }: { lang: Lang; pageTitle?
       <Eyebrow className={pageTitle ? "enter" : ""}>{ui.chrome.lab}</Eyebrow>
       <Title className={`${pageTitle ? "display-1" : "display-2"} mt-5`}>{t.heading}</Title>
       <p className="lead mt-6 max-w-[540px] text-muted">{t.intro}</p>
+      <LabProducts lang={lang} current="swift" className="mt-8" />
       <div className="hairline my-9 max-w-[540px]" />
       <Name className="title" lang="en">
         Swift Converter Hub
@@ -614,7 +616,21 @@ export function DirectContact({ lang, showAddress = false }: { lang: Lang; showA
   );
 }
 
-export function ClosingCTA({ lang }: { lang: Lang }) {
+/**
+ * The enquiry section at the foot of most pages. A product page passes its own heading and lead,
+ * and an `interest` so the form opens with that product already picked.
+ */
+export function ClosingCTA({
+  lang,
+  heading,
+  lead,
+  interest,
+}: {
+  lang: Lang;
+  heading?: string;
+  lead?: string;
+  interest?: ComponentProps<typeof ContactForm>["interest"];
+}) {
   const { ui } = getContent(lang);
   const t = ui.closing;
   return (
@@ -623,16 +639,16 @@ export function ClosingCTA({ lang }: { lang: Lang }) {
         <div data-reveal>
           <Eyebrow>{ui.chrome.contact}</Eyebrow>
           <h2 id="enquiry-heading" className="display-1 mt-5">
-            <Emphasis text={t.heading} />
+            <Emphasis text={heading ?? t.heading} />
           </h2>
-          <p className="lead mt-6 max-w-[480px] text-muted">{t.lead}</p>
+          <p className="lead mt-6 max-w-[480px] text-muted">{lead ?? t.lead}</p>
           <div className="mt-12 grid gap-10">
             <NextSteps lang={lang} />
             <DirectContact lang={lang} />
           </div>
         </div>
         <div className="card self-start p-5 min-[640px]:p-8 min-[1024px]:sticky min-[1024px]:top-[calc(var(--header-h)+24px)] min-[1024px]:p-10" data-reveal style={vars({ "--i": 1 })}>
-          <ContactForm lang={lang} t={ui.form} replyTime={ui.replyTime} />
+          <ContactForm lang={lang} t={ui.form} replyTime={ui.replyTime} interest={interest} />
         </div>
       </div>
     </section>

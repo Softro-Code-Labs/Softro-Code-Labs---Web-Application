@@ -194,6 +194,18 @@ export const labShots = {
   password: { src: "/work/sch-tool-password.webp", width: 355, height: 798, frame: "phone", alt: "Swift Converter Hub password generator on a phone with a coloured password, Copy and New password buttons, and a Very strong rating", caption: "The password generator, one of the 13 text tools." },
 } satisfies Record<string, Shot>;
 
+/** Surelane, our commercial job-search agent, shown on The Lab page. */
+export const surelaneShots = {
+  today: { src: "/work/surelane-today.webp", width: 1200, height: 575, frame: "browser", alt: "Surelane Today page with the next search time, a timeline of the 8:00 AM, 12:30 PM and 5:00 PM searches all marked Searched, counts of jobs found, new today, strong, good and potential matches, and the best match at 90%", caption: "Today: the next search, the day's three searches and the best matches." },
+  applications: { src: "/work/surelane-applications.webp", width: 1200, height: 575, frame: "browser", alt: "Surelane Applications page with counts for Saved, Interested, Applied, Interview, Shortlisted and Offer Received, and a Full-Stack Developer job marked 80% Strong with a stage menu and a Move to Applied button", caption: "Each application moves from saved to offer, with a note at every step." },
+  sources: { src: "/work/surelane-sources.webp", width: 1200, height: 575, frame: "browser", alt: "Surelane Job sources page listing ITPro.lk, Jobpal.lk, Govjobs.lk, Govdoc Jobs and Himalayas, each marked Checked with the number of listings and when they were read", caption: "Every source is shown with what happened last time, and what is never read." },
+  storage: { src: "/work/surelane-storage.webp", width: 1200, height: 575, frame: "browser", alt: "Surelane Storage page showing database usage, stored job records, the last and next daily cleanup, and a 30 day retention period", caption: "Job data is deleted after 30 days, and the page shows exactly when." },
+  jobs: { src: "/work/surelane-phone-jobs.webp", width: 355, height: 798, frame: "phone", alt: "Surelane Jobs for you on a phone, with 14 open vacancies, match filters, a panel to search more job sites with the CV, and an iOS Developer Intern job matched at 90% Strong", caption: "Jobs for you: only open vacancies, each ranked against the CV." },
+  match: { src: "/work/surelane-phone-match.webp", width: 355, height: 798, frame: "phone", alt: "Surelane job details on a phone with the job facts, a How you match note, the skills the person has in green and the skills to add in amber, and an Apply on site button", caption: "Each job shows the skills you share, and the ones to add." },
+  insights: { src: "/work/surelane-phone-insights.webp", width: 355, height: 798, frame: "phone", alt: "Surelane Career insights on a phone, listing the skills matching jobs ask for most, such as Communication, Problem Solving and Linux, with links to free courses", caption: "Career insights point to free courses for the skills jobs ask for most." },
+  settings: { src: "/work/surelane-phone-settings.webp", width: 355, height: 798, frame: "phone", alt: "Surelane Search settings on a phone with switches for the Surelane agent, local job opportunities, global job opportunities and match emails", caption: "Switches for local and global jobs, and for the email alerts." },
+} satisfies Record<string, Shot>;
+
 export const studios = [
   { name: "Text", tools: 13 },
   { name: "Image", tools: 8 },

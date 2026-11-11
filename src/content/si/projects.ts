@@ -157,6 +157,38 @@ export const shotText: Record<string, ShotText> = {
     alt: "හික්කඩුව, තල්පෙ, මිරිස්ස, උණවටුන, වැලිගම සහ බෙන්තොට සඳහා කාඩ්පත් සහිත Tourvista වෙරළ කොටස",
     caption: "සෑම ස්ථානයකටම තමන්ගේම කාඩ්පතක් සහ පිටුවක් ඇත.",
   },
+  "/work/surelane-today.webp": {
+    alt: "ඊළඟ සෙවුමේ වේලාව, Searched ලෙස සලකුණු කළ පෙ.ව. 8:00, ප.ව. 12:30 සහ ප.ව. 5:00 සෙවුම් කාලරේඛාවක්, සොයාගත් රැකියා සහ ගැළපීම් ගණන්, සහ 90% හොඳම ගැළපීම සහිත Surelane Today පිටුව",
+    caption: "Today: ඊළඟ සෙවුම, දවසේ සෙවුම් තුන සහ හොඳම ගැළපීම්.",
+  },
+  "/work/surelane-applications.webp": {
+    alt: "Saved, Interested, Applied, Interview, Shortlisted සහ Offer Received ගණන්, සහ අදියර මෙනුවක් හා Move to Applied බොත්තමක් සහිත 80% Strong ලෙස සලකුණු කළ Full-Stack Developer රැකියාවක් ඇති Surelane Applications පිටුව",
+    caption: "සෑම අයදුම්පතක්ම සුරැකීමේ සිට රැකියා දීමනාව දක්වා ගමන් කරයි, සෑම පියවරකදීම සටහනක් සමඟ.",
+  },
+  "/work/surelane-sources.webp": {
+    alt: "ලැයිස්තුගත කිරීම් ගණන සහ කියවූ වේලාව සමඟ Checked ලෙස සලකුණු කළ ITPro.lk, Jobpal.lk, Govjobs.lk, Govdoc Jobs සහ Himalayas ලැයිස්තු කරන Surelane Job sources පිටුව",
+    caption: "සෑම මූලාශ්‍රයක්ම පසුගිය වතාවේ සිදු වූ දේ සමඟ පෙන්වයි, කිසිදා නොකියවන ඒවා ද සමඟ.",
+  },
+  "/work/surelane-storage.webp": {
+    alt: "දත්ත ගබඩා භාවිතය, ගබඩා කළ රැකියා වාර්තා, පසුගිය සහ ඊළඟ දෛනික පිරිසිදු කිරීම සහ දින 30ක රඳවා ගැනීමේ කාලය පෙන්වන Surelane Storage පිටුව",
+    caption: "රැකියා දත්ත දින 30කට පසු මකා දමයි, එය සිදුවන්නේ කවදාදැයි පිටුව හරියටම පෙන්වයි.",
+  },
+  "/work/surelane-phone-jobs.webp": {
+    alt: "විවෘත පුරප්පාඩු 14ක්, ගැළපීම් පෙරහන්, CV එකෙන් තවත් රැකියා වෙබ් අඩවි සෙවීමේ කොටසක් සහ 90% Strong ලෙස ගැළපුණු iOS Developer Intern රැකියාවක් සහිත, දුරකථනයක Surelane Jobs for you පිටුව",
+    caption: "Jobs for you: විවෘත පුරප්පාඩු පමණක්, සෑම එකක්ම CV එකට සසඳා ශ්‍රේණිගත කර.",
+  },
+  "/work/surelane-phone-match.webp": {
+    alt: "රැකියා තොරතුරු, How you match සටහනක්, කොළ පැහැයෙන් ඇති කුසලතා සහ ඇම්බර් පැහැයෙන් එක් කළ යුතු කුසලතා, සහ Apply on site බොත්තමක් සහිත, දුරකථනයක Surelane රැකියා විස්තර",
+    caption: "සෑම රැකියාවක්ම ඔබට ඇති කුසලතා සහ එක් කළ යුතු කුසලතා පෙන්වයි.",
+  },
+  "/work/surelane-phone-insights.webp": {
+    alt: "Communication, Problem Solving සහ Linux වැනි, ගැළපෙන රැකියා වැඩිපුරම ඉල්ලන කුසලතා නොමිලේ පාඨමාලා සබැඳි සමඟ ලැයිස්තු කරන, දුරකථනයක Surelane Career insights",
+    caption: "රැකියා වැඩිපුරම ඉල්ලන කුසලතා සඳහා Career insights නොමිලේ පාඨමාලා පෙන්වයි.",
+  },
+  "/work/surelane-phone-settings.webp": {
+    alt: "Surelane නියෝජිතයා, දේශීය රැකියා අවස්ථා, ගෝලීය රැකියා අවස්ථා සහ ගැළපීම් ඊමේල් සඳහා ස්විච සහිත, දුරකථනයක Surelane Search settings",
+    caption: "දේශීය සහ ගෝලීය රැකියා සඳහා සහ ඊමේල් ඇඟවීම් සඳහා ස්විච.",
+  },
   "/work/sch-home.webp": {
     alt: "Convert files without uploading them සිරස්තලය, රූප, ශ්‍රව්‍ය, වීඩියෝ, PDF, Office ගොනු සහ දත්ත පිළිගන්නා ගොනු දැමීමේ කොටස සහ පහළින් වැඩිපුරම භාවිත වන මෙවලම් සහිත Swift Converter Hub මුල් පිටුව",
     caption: "ඕනෑම ගොනුවක් දැමූ විට, එය විවෘත කළ හැකි සෑම මෙවලමක්ම පෙන්වයි.",
