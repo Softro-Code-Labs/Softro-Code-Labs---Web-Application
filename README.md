@@ -4,7 +4,7 @@ The company website for **Softro Code Labs**, a software company in Balapitiya, 
 
 > New here? Start with **[SYSTEM-OVERVIEW.md](SYSTEM-OVERVIEW.md)**. It explains the whole project in plain words.
 
-**Built with:** Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · Resend · Vercel
+**Built with:** Next.js 16 · React 19 · TypeScript · Tailwind CSS v4 · three.js · Resend · Vercel
 
 ---
 
@@ -32,7 +32,9 @@ Before a release, run `npm run typecheck` and `npm run build`.
 | Change a page's layout | `src/app/[lang]/` (one folder per page) |
 | Change shared sections (hero, services, work list, Lab, closing call to action) | `src/components/Sections.tsx` |
 | Change the header, menu, phone bar or footer | `src/components/SiteChrome.tsx` and `src/components/Footer.tsx` |
-| Change the 3D screen frames and the screenshot gallery | `src/components/Devices.tsx` |
+| Change the phone and browser frames and the screenshot gallery | `src/components/Devices.tsx` |
+| Change the 3D logo on the home page | `src/components/Hero3D.tsx` |
+| Change or add a block illustration | `src/components/Iso.tsx` |
 | Change colours, type sizes and motion for both themes | `src/app/globals.css` (tokens at the top) |
 | Change the enquiry email | `src/app/api/contact/route.ts` |
 | Change search details (share card, business details, breadcrumbs) | `src/seo.ts` |
@@ -56,7 +58,7 @@ Before a release, run `npm run typecheck` and `npm run build`.
 | Privacy policy and terms | `src/content/legal.ts` |
 | Client quotes | `src/content/testimonials.ts` |
 
-In headings, words between `*asterisks*` are highlighted, as in the home heading "We build the \*software\* your business needs."
+In headings, words between `*asterisks*` are set in the crimson serif italic, as in the home heading "We build the \*software\* your business needs."
 
 **Keep it true:**
 - The home page numbers are real counts. Change them when the facts change, and never round them up.
@@ -118,7 +120,8 @@ The design is built to stay quick on ordinary phones. When you add to it:
 
 - Animate only `transform` and `opacity`. Everything that moves already respects the phone's "reduce motion" setting.
 - Give long sections lower down a page the `defer` class (see `globals.css`), so the browser skips them until they are near the screen.
-- Use only the font weights 400, 500, 600 and 700. Each extra weight costs time before the first paint.
+- Keep to the three fonts in `src/app/fonts.ts`. Each extra font file costs time before the first paint.
+- The 3D logo downloads its library (three.js, about 80 kB) only after the page is idle, draws only while it is on screen, and stands still for visitors who ask for less motion. Keep any new 3D to the same rules, and keep it off the inner pages.
 - Keep screenshots in WebP at the sizes above. The site serves them as AVIF or WebP, resized for each screen.
 - Avoid `filter: blur()` and masks on large areas near the top of a page. Soft glows are drawn with gradients instead.
 
@@ -143,6 +146,8 @@ The design is built to stay quick on ordinary phones. When you add to it:
 ## Good to know
 
 - **Addresses:** English pages live at plain addresses (`/work`) and are served from `/en` behind the scenes by `src/proxy.ts`. Any `/en/...` link redirects to the plain address, so each page has one address. Unknown addresses show one "page not found" page for both languages (`src/app/global-not-found.tsx`).
+- **Logo:** the logo files are in `public/brand/` and `src/app/icon.svg`. Its outline is also written out in `src/brand/mark.ts`, which the header logo and the 3D model draw from. If the logo ever changes, update that file too.
+- **Ink panels:** add the `ink` class to a panel to keep it dark in the light theme too, as the footer and the Lab panel do.
 - **Themes:** dark is the default. The site follows the device's light or dark setting until the visitor picks one with the header button, then remembers it.
 - **Spam:** the form has a hidden field that only bots fill in, and accepts at most 5 enquiries in 10 minutes from one address. That limit is kept in server memory, so it is a light guard, not a firewall.
 - **No database, no admin panel, no analytics, no tracking cookies.** Every change goes through the content files and a redeploy.

@@ -11,7 +11,7 @@ A plain-words tour of the whole project: what the site is for, who uses it, and 
 **The website** (softrocodelabs.com) is the company's shop window:
 
 - 🧭 **What we build.** Four core services, each backed by a real project, plus 14 more kinds of software in four groups: *Run your business*, *Grow online*, *Work smarter* and *Made just for you*.
-- 💼 **Real work.** Case studies for Ola Kids (mobile app), Baileyn (online store) and Tourvista Tours (travel website), with screenshots that open full screen.
+- 💼 **Real work.** Case studies for Ola Kids (mobile app), Baileyn (online store) and Tourvista Tours (travel website), each with a gallery of its real screens.
 - 🧪 **The Lab.** Our own product, Swift Converter Hub: 46 free file tools that run inside the browser, so files never leave the device.
 - 💬 **Easy to reach.** An enquiry form, WhatsApp with a greeting already typed, and a phone number, never more than a tap away.
 - 🇱🇰 **English and Sinhala**, switchable from the header on every page.
@@ -44,9 +44,9 @@ Every page exists in both languages: `/work` in English, `/si/work` in Sinhala.
 
 ## A visitor's story
 
-1. **Discover.** The home page opens on *"We build the software your business needs."* Beside it, real screens from three client projects float at different depths and turn gently toward the pointer. Below, the real numbers count up: 3 client projects, 46 free tools, 2 languages, 2 working days to reply.
-2. **Explore.** They see the four core services and the wider list of systems we can build. Each core service links to a real project, so nothing is just a promise.
-3. **Trust.** A case study shows the problem, what we built and where it stands today. They can open any screenshot full screen and swipe or use the arrow keys to move through them. The four-step process (*We listen, We design, We build, We launch*) shows how we would work with them.
+1. **Discover.** The home page opens on *"We build the software your business needs."* Beside it the Softro logo turns slowly as a solid 3D object, with small building blocks drifting round it. It follows the pointer, and can be dragged round or tapped to spin. Below, the real numbers count up: 3 client projects, 46 free tools, 2 languages, 2 working days to reply.
+2. **Explore.** A line of large type slides past with everything we build. Then come the four core services, each with its own block illustration, and the wider list of systems we can build. Each core service links to a real project, so nothing is just a promise.
+3. **Trust.** A case study shows the problem, what we built and where it stands today. On the home page the projects are large panels that slide over one another as the page scrolls, each showing its real screens in phone and browser frames. The four-step process (*We listen, We design, We build, We launch*) shows how we would work with them.
 4. **Get in touch.** The form asks for four things: their name, an email or WhatsApp number, what they'd like to build, and a few lines about the idea. Or they tap WhatsApp, which opens with a greeting already written in their language. On phones, a small bar with **Start your project** and **WhatsApp** slides up once the page's own buttons scroll out of view.
 5. **Hear back.** The team replies within 2 working days, in the language the visitor used.
 
@@ -106,29 +106,29 @@ flowchart LR
 
 ## Look and feel
 
-The design comes from the logo: a crimson mark on deep night blue, with faint grid lines and soft glows, like a lab working late. Project screens sit in browser and phone frames that float in 3D.
+The design starts from the logo: its crimson, and its corner-on, built-from-blocks shape. Around it everything is kept quiet: near-black ink or warm bone paper, large tight headings with one phrase picked out in a crimson serif italic, thin ruled lines, and small monospace labels on dotted paper, like the notes on a lab drawing. The illustrations are drawn from blocks in the same corner-on view as the logo.
 
 | Colour | Used for |
 |---|---|
-| Night blue `#070b14` | Page background in the dark theme (the default) |
-| Paper `#f5f6fa` | Page background in the light theme |
-| Crimson `#ef4c5b` | Main buttons, links and highlighted words |
+| Ink `#0b0b0d` | Page background in the dark theme (the default), and the footer in both themes |
+| Bone `#f4f1eb` | Page background in the light theme, and text in the dark theme |
+| Crimson `#ef4c5b` | The logo, links and highlighted words. Main buttons use a deeper `#cf1d38`, so white text stays easy to read |
 | Deep crimson `#a70b21` | The logo's gradient, with crimson |
 | Mint `#34d399` | Status dots, such as "Open for new projects" and "Live" |
 
-**Fonts:** Schibsted Grotesk (text and headings), Yaldevi (the Softro wordmark), Yaldevi Sinhala (Sinhala).
+**Fonts:** Geist (text and headings), Instrument Serif Italic (the highlighted words in headings), Geist Mono (small labels), Yaldevi Sinhala (Sinhala).
 
-The site works on phones first: the menu opens full screen, the phone bar keeps the next step close, and the 3D tilt only follows a mouse or trackpad. It respects "reduce motion", keeps text contrast at 5.4:1 or better in both themes, and every screenshot has a description for screen readers.
+The site works on phones first: the menu opens full screen, the phone bar keeps the next step close, and the 3D logo is lighter on phones and only draws while it is on screen. It respects "reduce motion" (the 3D logo then stands still), keeps text contrast at 5:1 or better in both themes, and every screenshot has a description for screen readers.
 
-**Also made in this project:** the logo mark in colour and two single-colour versions, the browser tab and iPhone icons, and the link-share image.
+**Also in this project:** the logo mark in colour and two single-colour versions, the browser tab and iPhone icons, the link-share image, the 3D model of the logo and the four block illustrations.
 
 ---
 
 ## Built with
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Resend · Vercel
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · three.js · Resend · Vercel
 
-No other runtime packages: the motion, 3D frames, gallery and icons are all written in the project.
+three.js draws the 3D logo and is the only extra runtime package. It is downloaded after the page has appeared, so it never slows the first view. The scroll effects, device frames, illustrations and icons are all written in the project.
 
 ## Where to find things
 
@@ -136,7 +136,9 @@ No other runtime packages: the motion, 3D frames, gallery and icons are all writ
 |---|---|
 | Pages (one folder each) | `src/app/[lang]/` |
 | Enquiry email | `src/app/api/contact/route.ts` |
-| Shared sections, header, footer, 3D frames | `src/components/` |
+| Shared sections, header, footer, device frames | `src/components/` |
+| The 3D logo, the block illustrations | `src/components/Hero3D.tsx`, `src/components/Iso.tsx` |
+| The logo's outline, used by the header logo and the 3D model | `src/brand/mark.ts` |
 | All wording, projects and services | `src/content/` (Sinhala in `src/content/si/`) |
 | Email, phone, WhatsApp, address | `src/content/site.ts` |
 | Search details and share card | `src/seo.ts` |
@@ -153,4 +155,5 @@ Setup, settings, common edits and going live are in the **[README](README.md)**.
 - **Ola Kids** is a test build being prepared for Google Play and the App Store. **Baileyn** and **Tourvista Tours** are live. Update each project's badge when that changes.
 - The client quotes section is **hidden** until real, approved quotes are added.
 - The newest **Sinhala** wording is a first draft. A native speaker should check it before launch.
+- The **logo is unchanged**. The header, footer and 3D model all draw it from one outline, so they always match the logo files.
 - **Built by Softro Code Labs**, November 2026.

@@ -50,6 +50,8 @@ export const en = {
     lead: "From mobile apps and websites to advanced business platforms and custom software, we build digital solutions that help businesses grow. Whatever your idea, we have the technology and creativity to bring it to life.",
     whatsapp: "Chat on WhatsApp",
     seeWork: "See our work",
+    /** The small note under the 3D logo on the home page. */
+    dragHint: "Drag to turn",
     assurances: ["We reply within {time}", "One team from idea to launch", "English or Sinhala, your choice"],
     /** Only real numbers. Each value counts up from zero when the page opens. */
     stats: [
