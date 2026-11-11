@@ -711,13 +711,13 @@
     background: radial-gradient(closest-side, rgb(232 40 63 / 0.2), rgb(232 40 63 / 0.05) 55%, transparent);
   }
   /* A second, cooler light. Kept very faint so crimson stays the only colour. */
-  .glow-indigo {
+  .glow-soft {
     background: radial-gradient(closest-side, rgb(243 239 232 / 0.05), transparent);
   }
   :root[data-theme="light"] .glow-crimson {
     background: radial-gradient(closest-side, rgb(232 40 63 / 0.13), rgb(232 40 63 / 0.03) 55%, transparent);
   }
-  :root[data-theme="light"] .glow-indigo {
+  :root[data-theme="light"] .glow-soft {
     background: radial-gradient(closest-side, rgb(255 255 255 / 0.7), transparent);
   }
 
@@ -1560,14 +1560,6 @@
   .foot-link:hover {
     color: var(--fg);
   }
-  .foot-cta {
-    display: block;
-    font-size: clamp(2.05rem, 1.3rem + 2.7vw, 3.9rem);
-    font-weight: 600;
-    line-height: 1.02;
-    letter-spacing: -0.04em;
-    text-wrap: balance;
-  }
   .wordmark-xl {
     font-weight: 650;
     font-size: clamp(1.9rem, 9.1vw, 8.9rem);
@@ -1871,10 +1863,10 @@ body:lang(si) {
   line-height: 1.8;
   letter-spacing: 0;
 }
-:lang(si) :is(.display-hero, .display-1, .display-2, .display-3, .title, .mobile-link, .ribbon-item, .lead, .btn, .nav-link, .link-arrow, .foot-cta, .cap-list li) {
+:lang(si) :is(.display-hero, .display-1, .display-2, .display-3, .title, .mobile-link, .ribbon-item, .lead, .btn, .nav-link, .link-arrow, .cap-list li) {
   letter-spacing: 0;
 }
-:lang(si) :is(.display-hero, .display-1, .display-2, .display-3, .title, .mobile-link, .ribbon-item, .foot-cta) {
+:lang(si) :is(.display-hero, .display-1, .display-2, .display-3, .title, .mobile-link, .ribbon-item) {
   font-weight: 600;
 }
 :lang(si) .em {
@@ -1893,7 +1885,7 @@ body:lang(si) {
   font-size: clamp(2rem, 1.2rem + 3.1vw, 4rem);
   line-height: 1.3;
 }
-:lang(si) :is(.display-2, .foot-cta) {
+:lang(si) .display-2 {
   font-size: clamp(1.7rem, 1.2rem + 2vw, 2.9rem);
   line-height: 1.35;
 }

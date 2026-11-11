@@ -7,19 +7,10 @@ import { Footer } from "@/components/Footer";
 import { Header, PhoneBar } from "@/components/SiteChrome";
 import { ArrowRight } from "@/components/icons";
 import { Motion } from "@/components/Motion";
+import { Backdrop } from "@/components/ui";
 import { si } from "@/content/si/ui";
 import { en } from "@/content/ui";
 import { langOf, localize, type Lang } from "@/i18n";
-
-function Backdrop() {
-  return (
-    <div className="hero-bg" aria-hidden="true">
-      <div className="grid-bg" />
-      <div className="glow glow-crimson top-[-30%] right-[-10%] h-[70vw] max-h-[900px] w-[70vw] max-w-[900px]" />
-      <div className="glow glow-indigo bottom-[-30%] left-[-20%] h-[50vw] max-h-[700px] w-[50vw] max-w-[700px]" />
-    </div>
-  );
-}
 
 /**
  * The 404 page. It is built once for every unknown address, so the server cannot

@@ -2,7 +2,7 @@ import { getContent } from "@/content";
 import type { LegalDoc } from "@/content/legal";
 import { site } from "@/content/site";
 import { fill, type Lang } from "@/i18n";
-import { Page } from "./ui";
+import { Backdrop, Page } from "./ui";
 
 export function Legal({ doc, lang }: { doc: LegalDoc; lang: Lang }) {
   const { ui } = getContent(lang);
@@ -10,10 +10,7 @@ export function Legal({ doc, lang }: { doc: LegalDoc; lang: Lang }) {
   return (
     <Page>
       <section className="hero">
-        <div className="hero-bg" aria-hidden="true">
-          <div className="grid-bg" />
-          <div className="glow glow-crimson top-[-35%] right-[-15%] h-[60vw] max-h-[800px] w-[60vw] max-w-[800px]" />
-        </div>
+        <Backdrop />
         <div className="wrap pt-14 pb-24 min-[1024px]:pt-20 min-[1024px]:pb-32">
           <div className="mx-auto max-w-[760px]">
             <h1 className="display-1">{doc.title}</h1>

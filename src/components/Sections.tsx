@@ -36,7 +36,7 @@ import {
   Users,
   Zap,
 } from "./icons";
-import { Emphasis, Eyebrow, SectionHeader, StatusBadge, vars } from "./ui";
+import { Backdrop, Emphasis, Eyebrow, SectionHeader, StatusBadge, vars } from "./ui";
 
 type IconType = ComponentType<SVGProps<SVGSVGElement> & { size?: number }>;
 
@@ -47,10 +47,7 @@ export function Hero({ lang }: { lang: Lang }) {
   const t = ui.home;
   return (
     <section className="hero">
-      <div className="hero-bg" aria-hidden="true">
-        <div className="grid-bg" />
-        <div className="glow glow-indigo top-[-30%] left-[-20%] h-[60vw] max-h-[800px] w-[60vw] max-w-[800px]" />
-      </div>
+      <Backdrop light={false} />
 
       <div className="wrap hero-grid">
         <div>
@@ -272,10 +269,7 @@ export function LabFeature({ lang, pageTitle = false }: { lang: Lang; pageTitle?
   if (pageTitle) {
     return (
       <section className="hero" data-tilt-scope>
-        <div className="hero-bg" aria-hidden="true">
-          <div className="grid-bg" />
-          <div className="glow glow-crimson top-[-25%] right-[-12%] h-[70vw] max-h-[960px] w-[70vw] max-w-[960px]" />
-        </div>
+        <Backdrop />
         <div className="wrap grid items-center gap-x-14 gap-y-14 pt-12 pb-20 min-[1024px]:grid-cols-2 min-[1024px]:pt-24 min-[1024px]:pb-28">
           {text}
           <div className="stage-enter">{stage}</div>

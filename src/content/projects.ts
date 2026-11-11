@@ -73,6 +73,8 @@ const ola = {
   celebrate: { src: "/work/ola-kids-celebrate-g.webp", width: 1200, height: 470, frame: "phone-wide", alt: "Ola Kids celebration screen saying You did it, with confetti, a grapes picture, the word Grapes and OlaSauras jumping", caption: "A finished letter earns a star and a celebration." },
   traceSinhala: { src: "/work/ola-kids-trace-sinhala.webp", width: 1200, height: 470, frame: "phone-wide", alt: "Ola Kids tracing screen for the Sinhala letter අ with dotted guides, a mango picture and Sinhala captions", caption: "The same tracing in Sinhala, with every caption translated." },
   home: { src: "/work/ola-kids-home.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids home screen greeting the child by name, with a star count and Letters and Numbers activities", caption: "Home: a greeting, stars earned and the activities." },
+  welcome: { src: "/work/ola-kids-welcome.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids welcome screen with the Trace the O app icon, the heading Welcome to OlaKids! and a Next button", caption: "Welcome: the first screen a new child sees." },
+  mascot: { src: "/work/ola-kids-mascot.webp", width: 540, height: 1142, frame: "phone", alt: "OlaSauras, a friendly green dinosaur, introducing himself in a speech bubble and inviting the child on a letter adventure", caption: "OlaSauras says hello and invites the child on a letter adventure." },
   profile: { src: "/work/ola-kids-profile.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids profile screen where a child picks an animal friend, enters a name and chooses English or Sinhala", caption: "Each child picks an animal, a name and a language." },
 } satisfies Record<string, Shot>;
 
@@ -118,7 +120,7 @@ export const projects: Project[] = [
     tint: "#8b5cf6",
     screen: ola.home,
     accent: ola.guide,
-    gallery: [ola.guide, ola.trace, ola.celebrate, ola.traceSinhala, ola.profile],
+    gallery: [ola.guide, ola.trace, ola.celebrate, ola.traceSinhala, ola.welcome, ola.mascot, ola.profile],
   },
   {
     slug: "baileyn",

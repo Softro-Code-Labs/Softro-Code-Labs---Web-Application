@@ -22,6 +22,23 @@ export function Eyebrow({ children, className = "" }: { children: ReactNode; cla
   return <p className={`eyebrow ${className}`}>{children}</p>;
 }
 
+/**
+ * The backdrop behind a page's opening: faint dot paper, and a soft crimson light in the top corner.
+ * The home page passes `light={false}`, because its 3D logo brings its own glow.
+ */
+export function Backdrop({ light = true }: { light?: boolean }) {
+  return (
+    <div className="hero-bg" aria-hidden="true">
+      <div className="grid-bg" />
+      {light ? (
+        <div className="glow glow-crimson top-[-30%] right-[-12%] h-[70vw] max-h-[940px] w-[70vw] max-w-[940px]" />
+      ) : (
+        <div className="glow glow-soft top-[-30%] left-[-20%] h-[60vw] max-h-[800px] w-[60vw] max-w-[800px]" />
+      )}
+    </div>
+  );
+}
+
 /** Eyebrow, heading and optional lead for a section, with an optional link on the right. */
 export function SectionHeader({
   eyebrow,
@@ -74,10 +91,7 @@ export function PageHero({
   return (
     // With a visual beside the text, the whole opening is the area that tilts it.
     <section className="hero" data-tilt-scope={aside ? "" : undefined}>
-      <div className="hero-bg" aria-hidden="true">
-        <div className="grid-bg" />
-        <div className="glow glow-crimson -top-[34%] right-[-12%] h-[70vw] max-h-[900px] w-[70vw] max-w-[900px]" />
-      </div>
+      <Backdrop />
       <div
         className={`wrap grid items-center gap-x-16 gap-y-12 pt-12 pb-16 min-[1024px]:pt-24 min-[1024px]:pb-28 ${aside ? "min-[1024px]:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]" : ""}`}
       >
