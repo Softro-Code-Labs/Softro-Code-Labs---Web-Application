@@ -74,16 +74,20 @@ const ola = {
   traceSinhala: { src: "/work/ola-kids-trace-sinhala.webp", width: 1200, height: 470, frame: "phone-wide", alt: "Ola Kids tracing screen for the Sinhala letter අ with dotted guides, a mango picture and Sinhala captions", caption: "The same tracing in Sinhala, with every caption translated." },
   home: { src: "/work/ola-kids-home.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids home screen greeting the child by name, with a star count and Letters and Numbers activities", caption: "Home: a greeting, stars earned and the activities." },
   welcome: { src: "/work/ola-kids-welcome.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids welcome screen with the Trace the O app icon, the heading Welcome to OlaKids! and a Next button", caption: "Welcome: the first screen a new child sees." },
-  mascot: { src: "/work/ola-kids-mascot.webp", width: 540, height: 1142, frame: "phone", alt: "OlaSauras, a friendly green dinosaur, introducing himself in a speech bubble and inviting the child on a letter adventure", caption: "OlaSauras says hello and invites the child on a letter adventure." },
+  meet: { src: "/work/ola-kids-meet.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids screen titled Meet OlaSauras!, with the friendly green dinosaur beside a waving hand above a card about how he will learn with the child", caption: "Meet OlaSauras, the little dinosaur who learns alongside the child." },
+  homeLion: { src: "/work/ola-kids-home-lion.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids home screen with a lion avatar and the greeting Good evening, a My Stars bar at 0 of 35, Letters and Numbers cards with Start buttons, Writing and Listening marked Coming soon, and OlaSauras below", caption: "Each child's home screen shows their animal, their stars and what to learn next." },
   profile: { src: "/work/ola-kids-profile.webp", width: 540, height: 1142, frame: "phone", alt: "Ola Kids profile screen where a child picks an animal friend, enters a name and chooses English or Sinhala", caption: "Each child picks an animal, a name and a language." },
 } satisfies Record<string, Shot>;
 
 const baileyn = {
-  phone: { src: "/work/baileyn-phone.webp", width: 540, height: 1169, frame: "phone", alt: "Baileyn store home page on a phone, with English and Sinhala language buttons, the cart and an Order now button", caption: "On a phone, where most customers order." },
-  pressing: { src: "/work/baileyn-pressing.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn home page chapter At the mill: a 3D bottle tilted as oil pours into it, beside the headline Pressed the traditional way, then filtered", caption: "The home page tells the oil's story with a 3D bottle that moves as you scroll." },
-  product: { src: "/work/baileyn-cart.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn cart page showing the delivery fee for the chosen district before anyone orders", caption: "The cart shows the delivery fee for the chosen district before anyone orders." },
-  checkout: { src: "/work/baileyn-checkout.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn checkout with steps for cart, details and confirmation, fields for name, mobile number and district, and an order summary with a Place order button", caption: "Guest checkout: a mobile number and a district, then pay on delivery." },
-  sinhala: { src: "/work/baileyn-track.webp", width: 1200, height: 750, frame: "browser", alt: "Baileyn order tracking page with fields for order number and mobile number, and a one-time SMS code", caption: "Order tracking: the order number and mobile number, then a one-time SMS code." },
+  phone: { src: "/work/baileyn-phone.webp", width: 335, height: 751, frame: "phone", alt: "Baileyn store home page on a phone, with English and Sinhala language buttons, the cart, a 3D bottle between two coconuts and an Order now button", caption: "On a phone, where most customers order." },
+  pressing: { src: "/work/baileyn-pressing.webp", width: 1200, height: 549, frame: "browser", alt: "Baileyn home page with the headline From our palms to your pan, Order now and Order on WhatsApp buttons, and a glowing 3D bottle of white coconut oil between two coconuts", caption: "The home page opens with a 3D bottle that follows the oil's story as you scroll." },
+  estate: { src: "/work/baileyn-estate.webp", width: 355, height: 798, frame: "phone", alt: "Baileyn home page chapter From the estate on a phone, with the 3D bottle between two halves of a coconut above the headline One ingredient: coconut, and a bar with WhatsApp and Order now buttons", caption: "Scroll on and the bottle turns to each chapter, starting on the estate." },
+  product: { src: "/work/baileyn-cart.webp", width: 355, height: 798, frame: "phone", alt: "Baileyn cart on a phone with a 1 litre bottle of white coconut oil and an order summary showing the delivery fee for Colombo and the total to pay on delivery", caption: "The cart shows the delivery fee for the chosen district before anyone orders." },
+  checkout: { src: "/work/baileyn-checkout.webp", width: 1200, height: 549, frame: "browser", alt: "Baileyn checkout with steps for cart, details and confirmation, fields for name, mobile number, email and district, and an order summary with a Place order button", caption: "Guest checkout: a mobile number and a district, then pay on delivery." },
+  sinhala: { src: "/work/baileyn-track.webp", width: 355, height: 798, frame: "phone", alt: "Baileyn order tracking page on a phone with fields for order number and mobile number, and a Send code button for a one-time SMS code", caption: "Order tracking: the order number and mobile number, then a one-time SMS code." },
+  dashboard: { src: "/work/baileyn-admin-dashboard.webp", width: 1200, height: 549, frame: "browser", alt: "Baileyn store admin dashboard with a sales chart, orders counted by status from New to Cancelled, a low stock panel and message alerts", caption: "The store admin: sales, orders by status, low stock and failed messages at a glance." },
+  order: { src: "/work/baileyn-admin-order.webp", width: 1200, height: 549, frame: "browser", alt: "Baileyn admin order page with buttons to start preparing or mark dispatched, a status menu open with Processing, Dispatched and Cancelled, the items and the order history", caption: "Staff move each order along, with an optional note at every step. Customer details are blurred here." },
 } satisfies Record<string, Shot>;
 
 const tourvista = {
@@ -120,7 +124,7 @@ export const projects: Project[] = [
     tint: "#8b5cf6",
     screen: ola.home,
     accent: ola.guide,
-    gallery: [ola.guide, ola.trace, ola.celebrate, ola.traceSinhala, ola.welcome, ola.mascot, ola.profile],
+    gallery: [ola.guide, ola.trace, ola.celebrate, ola.traceSinhala, ola.welcome, ola.meet, ola.profile, ola.homeLion],
   },
   {
     slug: "baileyn",
@@ -148,7 +152,7 @@ export const projects: Project[] = [
     link: { href: "https://baileynstore.com/", label: "Visit the Baileyn store" },
     screen: baileyn.phone,
     accent: baileyn.pressing,
-    gallery: [baileyn.pressing, baileyn.product, baileyn.checkout, baileyn.sinhala, baileyn.phone],
+    gallery: [baileyn.pressing, baileyn.checkout, baileyn.dashboard, baileyn.order, baileyn.phone, baileyn.estate, baileyn.product, baileyn.sinhala],
   },
   {
     slug: "tourvista-tours",
