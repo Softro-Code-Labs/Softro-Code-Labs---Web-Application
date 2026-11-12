@@ -9,6 +9,7 @@ import {
   services,
   steps,
   studios,
+  surelaneShots,
   type CapabilityGroup,
   type CapabilityGroupId,
   type CapabilityId,
@@ -54,11 +55,12 @@ function capabilities(groups: Record<CapabilityGroupId, CapabilityText>, items: 
 }
 
 const content = {
-  en: { ui: en, projects, labShots, studios, services, steps, capabilities: capabilities(capabilityGroupText, capabilityText), legal: legalEn },
+  en: { ui: en, projects, labShots, surelaneShots, studios, services, steps, capabilities: capabilities(capabilityGroupText, capabilityText), legal: legalEn },
   si: {
     ui: si,
     projects: projects.map(projectSi),
     labShots: Object.fromEntries(Object.entries(labShots).map(([key, shot]) => [key, shotSi(shot)])) as typeof labShots,
+    surelaneShots: Object.fromEntries(Object.entries(surelaneShots).map(([key, shot]) => [key, shotSi(shot)])) as typeof surelaneShots,
     studios: studios.map((studio) => ({ ...studio, name: studioNames[studio.name] ?? studio.name })),
     services: servicesSi,
     steps: stepsSi,

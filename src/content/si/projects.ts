@@ -92,29 +92,54 @@ export const shotText: Record<string, ShotText> = {
     alt: "දරුවාගේ නමින් ආචාර කරන, තරු ගණන සහ අකුරු හා ඉලක්කම් ක්‍රියාකාරකම් සහිත Ola Kids මුල් තිරය",
     caption: "මුල් තිරය: ආචාරයක්, ලැබූ තරු සහ ක්‍රියාකාරකම්.",
   },
+  "/work/ola-kids-welcome.webp": {
+    alt: "Trace the O යෙදුම් නිරූපකය, Welcome to OlaKids! සිරස්තලය සහ Next බොත්තම සහිත Ola Kids පිළිගැනීමේ තිරය",
+    caption: "පිළිගැනීම: අලුත් දරුවෙකුට පළමුව පෙනෙන තිරය.",
+  },
+  "/work/ola-kids-meet.webp": {
+    alt: "අත වනන ලකුණක් අසල සිටින මිත්‍රශීලී කොළ පැහැති ඩයිනසෝරයා සහ ඔහු දරුවා සමඟ ඉගෙන ගන්නා ආකාරය ගැන කාඩ්පතක් සහිත, Meet OlaSauras! නම් Ola Kids තිරය",
+    caption: "දරුවා සමඟම ඉගෙන ගන්නා පුංචි ඩයිනසෝරයා, OlaSauras හමුවන්න.",
+  },
+
+  "/work/ola-kids-home-lion.webp": {
+    alt: "සිංහ අවතාරයක් සහ Good evening ආචාරය, 35න් 0ක් පෙන්වන My Stars තීරුවක්, Start බොත්තම් සහිත Letters සහ Numbers කාඩ්පත්, Coming soon ලෙස සලකුණු කළ Writing සහ Listening, සහ පහළින් OlaSauras සහිත Ola Kids මුල් තිරය",
+    caption: "සෑම දරුවෙකුගේම මුල් තිරයේ ඔවුන්ගේ සතා, තරු සහ ඊළඟට ඉගෙන ගත යුතු දේ පෙන්වයි.",
+  },
   "/work/ola-kids-profile.webp": {
     alt: "දරුවා සත්ව යහළුවෙකු, නමක් සහ ඉංග්‍රීසි හෝ සිංහල භාෂාව තෝරන Ola Kids පැතිකඩ තිරය",
     caption: "සෑම දරුවෙක්ම සතෙක්, නමක් සහ භාෂාවක් තෝරා ගනී.",
   },
   "/work/baileyn-phone.webp": {
-    alt: "ඉංග්‍රීසි සහ සිංහල භාෂා බොත්තම්, කරත්තය සහ Order now බොත්තම සහිත Baileyn මුල් පිටුව දුරකථනයක",
+    alt: "ඉංග්‍රීසි සහ සිංහල භාෂා බොත්තම්, කරත්තය, පොල් ගෙඩි දෙකක් අතර ත්‍රිමාණ බෝතලයක් සහ Order now බොත්තම සහිත Baileyn මුල් පිටුව දුරකථනයක",
     caption: "බොහෝ පාරිභෝගිකයන් ඇණවුම් කරන්නේ දුරකථනයෙනි.",
   },
   "/work/baileyn-pressing.webp": {
-    alt: "පොල්තෙල් වත් කෙරෙන ඇල වූ ත්‍රිමාණ බෝතලයක් සහ Pressed the traditional way, then filtered සිරස්තලය සහිත Baileyn මුල් පිටුවේ කොටස",
-    caption: "ඔබ පහළට යන විට චලනය වන ත්‍රිමාණ බෝතලයකින් මුල් පිටුව පොල්තෙල්වල කතාව කියයි.",
+    alt: "From our palms to your pan සිරස්තලය, Order now සහ Order on WhatsApp බොත්තම් සහ පොල් ගෙඩි දෙකක් අතර දිලිසෙන ත්‍රිමාණ සුදු පොල්තෙල් බෝතලයක් සහිත Baileyn මුල් පිටුව",
+    caption: "ඔබ පහළට යන විට පොල්තෙල්වල කතාව අනුගමනය කරන ත්‍රිමාණ බෝතලයකින් මුල් පිටුව ආරම්භ වේ.",
+  },
+  "/work/baileyn-estate.webp": {
+    alt: "One ingredient: coconut සිරස්තලයට ඉහළින් පොල් ගෙඩියක භාග දෙකක් අතර ත්‍රිමාණ බෝතලය සහ WhatsApp සහ Order now බොත්තම් සහිත තීරුවක් ඇති, දුරකථනයක Baileyn මුල් පිටුවේ From the estate කොටස",
+    caption: "තවත් පහළට යන විට බෝතලය එක් එක් කොටසට හැරෙයි, වත්තෙන් ආරම්භ කරමින්.",
   },
   "/work/baileyn-cart.webp": {
-    alt: "තෝරාගත් දිස්ත්‍රික්කයට අදාළ බෙදාහැරීමේ ගාස්තුව, ඇණවුම් කිරීමට පෙරම පෙන්වන Baileyn කරත්ත පිටුව",
+    alt: "ලීටර් 1 සුදු පොල්තෙල් බෝතලයක් සහ කොළඹ සඳහා බෙදාහැරීමේ ගාස්තුව හා භාණ්ඩ ලැබුණු විට ගෙවිය යුතු මුළු මුදල පෙන්වන ඇණවුම් සාරාංශය සහිත, දුරකථනයක Baileyn කරත්තය",
     caption: "ඇණවුම් කිරීමට පෙරම, තෝරාගත් දිස්ත්‍රික්කයට අදාළ බෙදාහැරීමේ ගාස්තුව කරත්තයේ පෙන්වයි.",
   },
   "/work/baileyn-checkout.webp": {
-    alt: "නම, ජංගම අංකය සහ දිස්ත්‍රික්කය සඳහා ක්ෂේත්‍ර සහ Place order බොත්තම සහිත Baileyn ඇණවුම් පිටුව",
+    alt: "කරත්තය, විස්තර සහ තහවුරු කිරීම යන පියවර, නම, ජංගම අංකය, ඊමේල් සහ දිස්ත්‍රික්කය සඳහා ක්ෂේත්‍ර සහ Place order බොත්තම සහිත Baileyn ඇණවුම් පිටුව",
     caption: "ගිණුමක් නැතිව ඇණවුම: ජංගම අංකයක් සහ දිස්ත්‍රික්කයක්, ඉන්පසු භාණ්ඩ ලැබුණු විට ගෙවීම.",
   },
   "/work/baileyn-track.webp": {
-    alt: "ඇණවුම් අංකය සහ ජංගම අංකය සඳහා ක්ෂේත්‍ර සහ එක් වරක් පමණක් භාවිත කළ හැකි SMS කේතයක් සහිත Baileyn ඇණවුම් ලුහුබැඳීමේ පිටුව",
+    alt: "ඇණවුම් අංකය සහ ජංගම අංකය සඳහා ක්ෂේත්‍ර සහ එක් වරක් පමණක් භාවිත කළ හැකි SMS කේතයක් යැවීමට Send code බොත්තම සහිත, දුරකථනයක Baileyn ඇණවුම් ලුහුබැඳීමේ පිටුව",
     caption: "ඇණවුම් ලුහුබැඳීම: ඇණවුම් අංකය සහ ජංගම අංකය, ඉන්පසු එක් වරක් පමණක් භාවිත කළ හැකි SMS කේතයක්.",
+  },
+  "/work/baileyn-admin-dashboard.webp": {
+    alt: "විකුණුම් ප්‍රස්ථාරයක්, New සිට Cancelled දක්වා තත්ත්වය අනුව ඇණවුම් ගණන, අඩු තොග කොටසක් සහ පණිවිඩ ඇඟවීම් සහිත Baileyn වෙළඳසැල් පාලක පුවරුව",
+    caption: "වෙළඳසැල් පාලනය: විකුණුම්, තත්ත්වය අනුව ඇණවුම්, අඩු තොග සහ අසාර්ථක පණිවිඩ එකවර.",
+  },
+  "/work/baileyn-admin-order.webp": {
+    alt: "සූදානම් කිරීම ආරම්භ කිරීමට හෝ යැවූ බව සටහන් කිරීමට බොත්තම්, Processing, Dispatched සහ Cancelled සහිත විවෘත තත්ත්ව මෙනුවක්, භාණ්ඩ සහ ඇණවුම් ඉතිහාසය සහිත Baileyn පාලක ඇණවුම් පිටුව",
+    caption: "කාර්ය මණ්ඩලය සෑම පියවරකදීම අවශ්‍ය නම් සටහනක් සමඟ ඇණවුම ඉදිරියට ගෙන යයි. පාරිභෝගික විස්තර මෙහි බොඳ කර ඇත.",
   },
   "/work/tourvista-home.webp": {
     alt: "Your Journey to Serendipity Starts Here සිරස්තලය සහ ස්ථාන සෙවුම් කොටුව සහිත Tourvista Tours මුල් පිටුව",
@@ -132,26 +157,71 @@ export const shotText: Record<string, ShotText> = {
     alt: "හික්කඩුව, තල්පෙ, මිරිස්ස, උණවටුන, වැලිගම සහ බෙන්තොට සඳහා කාඩ්පත් සහිත Tourvista වෙරළ කොටස",
     caption: "සෑම ස්ථානයකටම තමන්ගේම කාඩ්පතක් සහ පිටුවක් ඇත.",
   },
-  "/work/sch-home.webp": {
-    alt: "Convert files without uploading them සිරස්තලය, ගොනු දැමීමේ කොටස සහ වැඩිපුරම භාවිත වන මෙවලම් සහිත Swift Converter Hub මුල් පිටුව",
-    caption: "ඕනෑම ගොනුවක් දැමූ විට, එය විවෘත කළ හැකි සෑම මෙවලමක්ම පෙන්වයි.",
+  "/work/surelane-today.webp": {
+    alt: "ඊළඟ සෙවුමේ වේලාව, Searched ලෙස සලකුණු කළ පෙ.ව. 8:00, ප.ව. 12:30 සහ ප.ව. 5:00 සෙවුම් කාලරේඛාවක්, සොයාගත් රැකියා සහ ගැළපීම් ගණන්, සහ 90% හොඳම ගැළපීම සහිත Surelane Today පිටුව",
+    caption: "Today: ඊළඟ සෙවුම, දවසේ සෙවුම් තුන සහ හොඳම ගැළපීම්.",
   },
-  "/work/sch-tool-convert.webp": {
-    alt: "PNG ගොනුවක් WebP බවට පරිවර්තනය කර, 82.95 KB සිට 17.38 KB දක්වා කුඩා වූ බව සහ Download බොත්තම පෙන්වන Swift Converter Hub තිරය",
-    caption: "සැබෑ පරිවර්තනයක්: බ්‍රවුසරයෙන් පිටතට නොගොස් 83 KB සිට 17 KB දක්වා.",
+  "/work/surelane-applications.webp": {
+    alt: "Saved, Interested, Applied, Interview, Shortlisted සහ Offer Received ගණන්, සහ අදියර මෙනුවක් හා Move to Applied බොත්තමක් සහිත 80% Strong ලෙස සලකුණු කළ Full-Stack Developer රැකියාවක් ඇති Surelane Applications පිටුව",
+    caption: "සෑම අයදුම්පතක්ම සුරැකීමේ සිට රැකියා දීමනාව දක්වා ගමන් කරයි, සෑම පියවරකදීම සටහනක් සමඟ.",
+  },
+  "/work/surelane-sources.webp": {
+    alt: "ලැයිස්තුගත කිරීම් ගණන සහ කියවූ වේලාව සමඟ Checked ලෙස සලකුණු කළ ITPro.lk, Jobpal.lk, Govjobs.lk, Govdoc Jobs සහ Himalayas ලැයිස්තු කරන Surelane Job sources පිටුව",
+    caption: "සෑම මූලාශ්‍රයක්ම පසුගිය වතාවේ සිදු වූ දේ සමඟ පෙන්වයි, කිසිදා නොකියවන ඒවා ද සමඟ.",
+  },
+  "/work/surelane-storage.webp": {
+    alt: "දත්ත ගබඩා භාවිතය, ගබඩා කළ රැකියා වාර්තා, පසුගිය සහ ඊළඟ දෛනික පිරිසිදු කිරීම සහ දින 30ක රඳවා ගැනීමේ කාලය පෙන්වන Surelane Storage පිටුව",
+    caption: "රැකියා දත්ත දින 30කට පසු මකා දමයි, එය සිදුවන්නේ කවදාදැයි පිටුව හරියටම පෙන්වයි.",
+  },
+  "/work/surelane-phone-jobs.webp": {
+    alt: "විවෘත පුරප්පාඩු 14ක්, ගැළපීම් පෙරහන්, CV එකෙන් තවත් රැකියා වෙබ් අඩවි සෙවීමේ කොටසක් සහ 90% Strong ලෙස ගැළපුණු iOS Developer Intern රැකියාවක් සහිත, දුරකථනයක Surelane Jobs for you පිටුව",
+    caption: "Jobs for you: විවෘත පුරප්පාඩු පමණක්, සෑම එකක්ම CV එකට සසඳා ශ්‍රේණිගත කර.",
+  },
+  "/work/surelane-phone-match.webp": {
+    alt: "රැකියා තොරතුරු, How you match සටහනක්, කොළ පැහැයෙන් ඇති කුසලතා සහ ඇම්බර් පැහැයෙන් එක් කළ යුතු කුසලතා, සහ Apply on site බොත්තමක් සහිත, දුරකථනයක Surelane රැකියා විස්තර",
+    caption: "සෑම රැකියාවක්ම ඔබට ඇති කුසලතා සහ එක් කළ යුතු කුසලතා පෙන්වයි.",
+  },
+  "/work/surelane-phone-insights.webp": {
+    alt: "Communication, Problem Solving සහ Linux වැනි, ගැළපෙන රැකියා වැඩිපුරම ඉල්ලන කුසලතා නොමිලේ පාඨමාලා සබැඳි සමඟ ලැයිස්තු කරන, දුරකථනයක Surelane Career insights",
+    caption: "රැකියා වැඩිපුරම ඉල්ලන කුසලතා සඳහා Career insights නොමිලේ පාඨමාලා පෙන්වයි.",
+  },
+  "/work/surelane-phone-settings.webp": {
+    alt: "Surelane නියෝජිතයා, දේශීය රැකියා අවස්ථා, ගෝලීය රැකියා අවස්ථා සහ ගැළපීම් ඊමේල් සඳහා ස්විච සහිත, දුරකථනයක Surelane Search settings",
+    caption: "දේශීය සහ ගෝලීය රැකියා සඳහා සහ ඊමේල් ඇඟවීම් සඳහා ස්විච.",
+  },
+  "/work/sch-home.webp": {
+    alt: "Convert files without uploading them සිරස්තලය, රූප, ශ්‍රව්‍ය, වීඩියෝ, PDF, Office ගොනු සහ දත්ත පිළිගන්නා ගොනු දැමීමේ කොටස සහ පහළින් වැඩිපුරම භාවිත වන මෙවලම් සහිත Swift Converter Hub මුල් පිටුව",
+    caption: "ඕනෑම ගොනුවක් දැමූ විට, එය විවෘත කළ හැකි සෑම මෙවලමක්ම පෙන්වයි.",
   },
   "/work/sch-menu-dark.webp": {
     alt: "රූප, ශ්‍රව්‍ය, වීඩියෝ, ලේඛන, දත්ත සහ පෙළ යන ස්ටුඩියෝ හයේ සියලු මෙවලම් ලැයිස්තු කරන Swift Converter Hub All tools මෙනුව",
     caption: "එක් මෙනුවක, ස්ටුඩියෝ හයකට බෙදූ මෙවලම් 46ම ඇත.",
   },
+  "/work/sch-privacy.webp": {
+    alt: "මෙවලම බ්‍රවුසරයට පූරණය වීම, ඔබේ උපාංගය වැඩ කිරීම සහ ප්‍රතිඵලය නැවත ඔබේ උපාංගයට සුරැකීම යන පියවර තුන සහිත, How your files stay on your device නම් Swift Converter Hub කොටස",
+    caption: "ගොනු පරිශීලකයාගේ උපාංගයේම රැඳෙන ආකාරය සහ එය පරීක්ෂා කරන ආකාරය වෙබ් අඩවිය පැහැදිලි කරයි.",
+  },
+  "/work/sch-docs.webp": {
+    alt: "Merge PDF Files, Split PDF Pages සහ Compress PDF කාඩ්පත් ඇතුළු මෙවලම් 8ක් සහ පෙරහන් කොටුවක් සහිත Swift Converter Hub Document Suite පිටුව",
+    caption: "සෑම ස්ටුඩියෝවකටම තමන්ගේම පිටුවක් ඇත. Document Suite හි PDF සහ Office මෙවලම් 8ක් ඇත.",
+  },
+  "/work/sch-phone-search.webp": {
+    alt: "Password Generator සහ Image to PDF වැනි මෑතකදී භාවිත කළ මෙවලම් සහ ජනප්‍රිය මෙවලම් ලැයිස්තු කරන, දුරකථනයක Swift Converter Hub සෙවුම",
+    caption: "සෙවුම ඕනෑම මෙවලමක් සොයා දෙන අතර මෑතකදී භාවිත කළ ඒවා මතක තබා ගනී.",
+  },
+  "/work/sch-phone-menu.webp": {
+    alt: "මෙවලම් 8 පෙන්වමින් විවෘත කළ Image Studio සහ මෙවලම් ගණන සමඟ අනෙක් ස්ටුඩියෝ පහ සහිත, දුරකථනයක Swift Converter Hub මෙනුව",
+    caption: "දුරකථනයක, ස්ටුඩියෝ එකින් එක විවෘත වේ.",
+  },
+  "/work/sch-tool-convert.webp": {
+    alt: "Runs on your device, nothing is uploaded සටහන සහ JPG සිට PNG, HEIC සිට JPG වැනි ජනප්‍රිය පරිවර්තන සහිත, දුරකථනයක Swift Converter Hub Image Format Converter",
+    caption: "රූප පරිවර්තකය දුරකථනයේම ආකෘති 155ක් හසුරුවයි.",
+  },
   "/work/sch-tool-password.webp": {
-    alt: "වර්ණවත් මුරපදයක්, Very strong ශ්‍රේණිගත කිරීම සහ Password, Passphrase, PIN ක්‍රම සහිත Swift Converter Hub මුරපද උත්පාදකය",
-    caption: "පෙළ මෙවලම් 13න් එකක් වන මුරපද උත්පාදකය. අඳුරු තේමාව පරිශීලකයාගේ සැකසුම අනුගමනය කරයි.",
+    alt: "වර්ණවත් මුරපදයක්, Copy සහ New password බොත්තම් සහ Very strong ශ්‍රේණිගත කිරීම සහිත, දුරකථනයක Swift Converter Hub මුරපද උත්පාදකය",
+    caption: "පෙළ මෙවලම් 13න් එකක් වන මුරපද උත්පාදකය.",
   },
-  "/work/sch-phone.webp": {
-    alt: "සිරස්තලය සහ ගොනු දැමීමේ කොටස සහිත Swift Converter Hub මුල් පිටුව දුරකථනයක",
-    caption: "එය දුරකථනයේද එලෙසම ක්‍රියා කරයි.",
-  },
+
 };
 
 export const studioNames: Record<string, string> = {

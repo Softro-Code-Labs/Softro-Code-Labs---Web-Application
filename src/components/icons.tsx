@@ -99,23 +99,6 @@ export const Browser = (p: IconProps) => (
     <path d="M7 13h6M7 16h9" />
   </Icon>
 );
-export const Bag = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M5 8h14l-1.2 11.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9L5 8Z" />
-    <path d="M9 10V7a3 3 0 0 1 6 0v3" />
-  </Icon>
-);
-export const Smartphone = (p: IconProps) => (
-  <Icon {...p}>
-    <rect x="6" y="2.5" width="12" height="19" rx="3" />
-    <path d="M10.5 18.5h3" />
-  </Icon>
-);
-export const Wrench = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M14.7 6.3a4 4 0 0 0 5 5L21 10a5.5 5.5 0 0 1-7.6 5.6L7 22l-3-3 6.4-6.4A5.5 5.5 0 0 1 16 5l-1.3 1.3Z" />
-  </Icon>
-);
 export const Shield = (p: IconProps) => (
   <Icon {...p}>
     <path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.3 7.5 9.5 4.3-1.2 7.5-4.9 7.5-9.5V6L12 3Z" />

@@ -93,7 +93,6 @@ export function Stage({
   rx = "6deg",
   ry = "-10deg",
   tilt = 7,
-  ribbon = false,
   className = "",
   children,
 }: {
@@ -102,7 +101,6 @@ export function Stage({
   rx?: string;
   ry?: string;
   tilt?: number;
-  ribbon?: boolean;
   className?: string;
   children?: ReactNode;
 }) {
@@ -110,12 +108,6 @@ export function Stage({
     <div className={`stage-box ${className}`} style={{ aspectRatio: ratio }}>
       <div className="stage-persp">
         <div className="stage" data-tilt={tilt} style={vars({ "--rx0": rx, "--ry0": ry })}>
-          {ribbon && (
-            <>
-              <div className="ribbon ribbon-glow" aria-hidden="true" />
-              <div className="ribbon" aria-hidden="true" />
-            </>
-          )}
           {layers.map((layer, index) => (
             <div
               key={index}
@@ -182,52 +174,6 @@ export function ProjectStage({
   }
 
   return <Stage layers={layers} ratio="1 / 0.74" rx="5deg" ry={flip ? "9deg" : "-9deg"} tilt={6} className={className} />;
-}
-
-/** The home page hero: three real projects in one composition, with the live store's address. */
-export function HeroStage({ projects }: { projects: Project[] }) {
-  const find = (slug: string) => projects.find((project) => project.slug === slug);
-  const ola = find("ola-kids");
-  const baileyn = find("baileyn");
-  const tourvista = find("tourvista-tours");
-  if (!ola || !baileyn || !tourvista) return null;
-  const store = baileyn.link ? new URL(baileyn.link.href).host : "";
-
-  const layers: Layer[] = [
-    {
-      node: <BrowserFrame shot={tourvista.screen} sizes="(max-width: 1023px) 62vw, 400px" eager decorative />,
-      place: { left: "34%", top: "1%", width: "64%" },
-      z: "-9cqw",
-      bob: [12, -7],
-    },
-    {
-      node: <BrowserFrame shot={baileyn.accent ?? baileyn.screen} sizes="(max-width: 1023px) 72vw, 460px" eager decorative />,
-      place: { left: "0%", top: "23%", width: "74%" },
-      z: "0cqw",
-      bob: [10, -3],
-    },
-    {
-      node: <PhoneFrame shot={ola.screen} sizes="(max-width: 1023px) 26vw, 170px" eager decorative />,
-      place: { right: "3%", top: "27%", width: "26%" },
-      z: "11cqw",
-      bob: [8, -1],
-    },
-  ];
-  if (store) {
-    layers.push({
-      node: (
-        <span className="float-card inline-flex items-center gap-[1.4cqw] rounded-full px-[2.6cqw] py-[1.5cqw] text-[max(11px,2.3cqw)] font-semibold whitespace-nowrap text-fg">
-          <span className="dot dot-pulse" />
-          <span lang="en">{store}</span>
-        </span>
-      ),
-      place: { left: "6%", top: "79%" },
-      z: "17cqw",
-      bob: [7, -4],
-    });
-  }
-
-  return <Stage layers={layers} ratio="1 / 0.88" rx="8deg" ry="-14deg" tilt={7} ribbon className="stage-enter" />;
 }
 
 /** A gallery of every screen for a case study or product, with captions. */

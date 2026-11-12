@@ -3,6 +3,7 @@ import { ScreenGallery } from "@/components/Devices";
 import { Cpu, Download, Save } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
 import { ClosingCTA, LabFeature } from "@/components/Sections";
+import { SurelaneTeaser } from "@/components/Surelane";
 import { Page, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { resolveLang, type LangParams } from "@/i18n";
@@ -52,9 +53,11 @@ export default async function LabPage({ params }: LangParams) {
       <section className="section defer" style={vars({ "--defer-h": "1600px" })} aria-labelledby="screens">
         <div className="wrap">
           <SectionHeader id="screens" title={ui.lab.screensHeading} />
-          <ScreenGallery shots={[labShots.menu, labShots.phone, labShots.convert, labShots.password]} />
+          <ScreenGallery shots={[labShots.home, labShots.menu, labShots.privacy, labShots.docs, labShots.search, labShots.nav, labShots.convert, labShots.password]} />
         </div>
       </section>
+
+      <SurelaneTeaser lang={lang} />
 
       <ClosingCTA lang={lang} />
     </Page>

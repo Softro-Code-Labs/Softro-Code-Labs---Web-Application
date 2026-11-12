@@ -2,13 +2,14 @@ import Link from "next/link";
 import { site, whatsapp } from "@/content/site";
 import type { UI } from "@/content/ui";
 import { localize, type Lang } from "@/i18n";
-import { Emblem } from "./Emblem";
-import { ArrowUp, Chat, Mail, Phone, Pin } from "./icons";
+import { ArrowRight, ArrowUp, Chat, Mail, Phone, Pin } from "./icons";
+import { Mark } from "./Logo";
 import { Brand } from "./SiteChrome";
 import { vars } from "./ui";
 
 type Chrome = UI["chrome"];
 
+/** The footer keeps the dark "ink" colours in both themes, so every page ends on the same note. */
 export function Footer({ lang, t, address }: { lang: Lang; t: Chrome; address: string }) {
   const pages = [
     { href: localize(lang, "/services"), label: t.services },
@@ -18,68 +19,75 @@ export function Footer({ lang, t, address }: { lang: Lang; t: Chrome; address: s
     { href: localize(lang, "/contact"), label: t.contact },
   ];
   return (
-    <footer id="site-footer" className="defer relative overflow-hidden border-t border-line bg-bg-soft" style={vars({ "--defer-h": "700px" })}>
-      <div className="wrap grid gap-x-10 gap-y-12 pt-16 pb-12 min-[640px]:grid-cols-2 min-[1024px]:grid-cols-[1.5fr_1fr_1.2fr_1fr]">
-        <div className="max-w-[340px]">
+    <footer id="site-footer" className="site-footer ink defer" style={vars({ "--defer-h": "760px" })}>
+      <div className="wrap grid gap-x-16 gap-y-14 pt-16 pb-14 min-[1024px]:grid-cols-[minmax(0,1.1fr)_minmax(0,1.3fr)] min-[1024px]:pt-24">
+        <div className="max-w-[480px]">
           <Brand lang={lang} />
-          <p className="mt-5 text-[15px] leading-relaxed text-muted">{t.tagline}</p>
-          <p className="mt-5 flex gap-2.5 text-[14px] leading-relaxed text-subtle">
-            <Pin size={17} className="mt-0.5 flex-none" />
-            {address}
-          </p>
+          <p className="lead mt-6 text-muted">{t.tagline}</p>
+          <Link href={localize(lang, "/contact")} className="btn btn-primary mt-8">
+            {t.start}
+            <ArrowRight size={18} className="arrow" />
+          </Link>
         </div>
-        <nav aria-label={t.footerPages}>
-          <p className="foot-label">{t.footerPages}</p>
-          <ul className="space-y-2.5 text-[15px]">
-            {pages.map((page) => (
-              <li key={page.href}>
-                <Link className="text-muted transition-colors hover:text-fg" href={page.href}>
-                  {page.label}
+
+        <div className="grid gap-x-8 gap-y-10 min-[560px]:grid-cols-3">
+          <nav aria-label={t.footerPages}>
+            <p className="foot-label">{t.footerPages}</p>
+            <ul className="space-y-2.5 text-[15.5px]">
+              {pages.map((page) => (
+                <li key={page.href}>
+                  <Link className="foot-link" href={page.href}>
+                    {page.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div>
+            <p className="foot-label">{t.contact}</p>
+            <ul className="space-y-2.5 text-[15.5px]">
+              <li>
+                <a className="foot-link inline-flex items-center gap-2.5" href={whatsapp(lang)}>
+                  <Chat size={17} /> WhatsApp
+                </a>
+              </li>
+              <li>
+                <a className="foot-link inline-flex items-center gap-2.5 break-all" href={`mailto:${site.email}`}>
+                  <Mail size={17} className="flex-none" /> {site.email}
+                </a>
+              </li>
+              <li>
+                <a className="foot-link inline-flex items-center gap-2.5" href={`tel:${site.phoneIntl}`}>
+                  <Phone size={17} /> {site.phoneDisplay}
+                </a>
+              </li>
+              <li className="flex gap-2.5 pt-1 text-[14.5px] leading-relaxed text-subtle">
+                <Pin size={17} className="mt-0.5 flex-none" />
+                {address}
+              </li>
+            </ul>
+          </div>
+          <div>
+            <p className="foot-label">{t.footerLegal}</p>
+            <ul className="space-y-2.5 text-[15.5px]">
+              <li>
+                <Link className="foot-link" href={localize(lang, "/privacy")}>
+                  {t.privacy}
                 </Link>
               </li>
-            ))}
-          </ul>
-        </nav>
-        <div>
-          <p className="foot-label">{t.contact}</p>
-          <ul className="space-y-2.5 text-[15px]">
-            <li>
-              <a className="inline-flex items-center gap-2.5 text-muted transition-colors hover:text-fg" href={whatsapp(lang)}>
-                <Chat size={17} /> WhatsApp
-              </a>
-            </li>
-            <li>
-              <a className="inline-flex items-center gap-2.5 text-muted transition-colors hover:text-fg" href={`mailto:${site.email}`}>
-                <Mail size={17} /> {site.email}
-              </a>
-            </li>
-            <li>
-              <a className="inline-flex items-center gap-2.5 text-muted transition-colors hover:text-fg" href={`tel:${site.phoneIntl}`}>
-                <Phone size={17} /> {site.phoneDisplay}
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div>
-          <p className="foot-label">{t.footerLegal}</p>
-          <ul className="space-y-2.5 text-[15px]">
-            <li>
-              <Link className="text-muted transition-colors hover:text-fg" href={localize(lang, "/privacy")}>
-                {t.privacy}
-              </Link>
-            </li>
-            <li>
-              <Link className="text-muted transition-colors hover:text-fg" href={localize(lang, "/terms")}>
-                {t.terms}
-              </Link>
-            </li>
-          </ul>
+              <li>
+                <Link className="foot-link" href={localize(lang, "/terms")}>
+                  {t.terms}
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      {/* The brand, large: the 3D mark beside the wordmark. Decorative; the name is in the header and above. */}
-      <div className="wrap flex items-end gap-[2.4vw] pb-2" aria-hidden="true">
-        <Emblem className="w-[min(7.6vw,112px)] flex-none" />
+      {/* The brand, as large as the page allows. Decorative; the name is in the header and above. */}
+      <div className="wrap flex items-end gap-[2.2vw] pb-4" aria-hidden="true">
+        <Mark height={150} className="h-[min(10.5vw,150px)] w-auto flex-none" />
         <p className="wordmark-xl">{site.name}</p>
       </div>
 
@@ -88,7 +96,7 @@ export function Footer({ lang, t, address }: { lang: Lang; t: Chrome; address: s
           <p>
             © {new Date().getFullYear()} <span lang="en">{site.name}</span>
           </p>
-          <a href="#main" className="inline-flex items-center gap-2 transition-colors hover:text-fg">
+          <a href="#main" className="foot-link inline-flex items-center gap-2">
             {t.backToTop}
             <ArrowUp size={16} />
           </a>

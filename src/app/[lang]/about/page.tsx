@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Emblem } from "@/components/Emblem";
+import { LogoModel } from "@/components/Hero3D";
 import { ArrowRight, Chat, LifeBuoy, Puzzle, Shield } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
 import { ClosingCTA, Process } from "@/components/Sections";
@@ -32,7 +32,7 @@ export default async function AboutPage({ params }: LangParams) {
         lead={t.lead}
         aside={
           <div className="stage-enter flex justify-center py-4 min-[1024px]:py-0">
-            <Emblem interactive className="w-[min(40vw,230px)] min-[1024px]:w-[250px]" />
+            <LogoModel solo className="w-[min(56vw,300px)] min-[1024px]:w-[340px]" />
           </div>
         }
       >

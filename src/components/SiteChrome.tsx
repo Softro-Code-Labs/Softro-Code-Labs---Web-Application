@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type MouseEvent } from "react";
@@ -9,6 +8,7 @@ import { site, whatsapp } from "@/content/site";
 import type { UI } from "@/content/ui";
 import { localize, otherLanguagePath, visiblePath, type Lang } from "@/i18n";
 import { ArrowRight, Chat, Close, Mail, Menu, Moon, Sun } from "./icons";
+import { Mark } from "./Logo";
 import { vars } from "./ui";
 
 type Chrome = UI["chrome"];
@@ -25,18 +25,14 @@ export function navItems(lang: Lang, t: Chrome) {
 
 const isCurrent = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
+/** The mark and the name. The first word carries the weight; "Code Labs" sits lighter beside it. */
 export function Brand({ lang }: { lang: Lang }) {
+  const [first, ...rest] = site.name.split(" ");
   return (
     <Link href={localize(lang, "/")} className="group flex min-h-11 shrink-0 items-center gap-2.5">
-      <Image
-        src="/brand/softro-mark.svg"
-        alt=""
-        width={22}
-        height={33}
-        className="transition-transform duration-500 ease-expo group-hover:-rotate-6 group-hover:scale-110"
-      />
-      <span className="font-brand text-[21px] leading-none font-semibold max-[400px]:text-[18px]" lang="en">
-        {site.name}
+      <Mark height={34} className="transition-transform duration-500 ease-expo group-hover:scale-110 group-hover:-rotate-6" />
+      <span className="brand-name max-[400px]:text-[17px]!" lang="en">
+        {first} <span>{rest.join(" ")}</span>
       </span>
     </Link>
   );
@@ -132,7 +128,7 @@ export function Header({ lang, t, whatsappLabel }: { lang: Lang; t: Chrome; what
 
   useEffect(() => setOpen(false), [pathname]);
 
-  // The header turns to frosted glass once the page has scrolled. Written straight to the
+  // The header bar turns into a floating glass pill once the page has scrolled. Written straight to the
   // element, so scrolling never re-renders React.
   useEffect(() => {
     const header = headerRef.current;
@@ -183,33 +179,35 @@ export function Header({ lang, t, whatsappLabel }: { lang: Lang; t: Chrome; what
   return (
     <>
       <header ref={headerRef} className="site-header" data-open={open ? "" : undefined} style={{ viewTransitionName: "site-header" }}>
-        <div className="wrap flex h-(--header-h) items-center justify-between gap-4">
-          <Brand lang={lang} />
-          <nav aria-label={t.mainNav} className="desktop-only flex items-center gap-1">
-            {nav.map((item) => (
-              <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined} className="nav-link">
-                {item.label}
+        <div className="wrap">
+          <div className="header-bar">
+            <Brand lang={lang} />
+            <nav aria-label={t.mainNav} className="desktop-only flex items-center gap-1">
+              {nav.map((item) => (
+                <Link key={item.href} href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined} className="nav-link">
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="flex items-center gap-2">
+              <LanguageSwitch lang={lang} t={t} />
+              <ThemeToggle t={t} className="hide-narrow" />
+              <Link href={contact} className="btn btn-primary btn-sm desktop-only ml-1">
+                {t.start}
+                <ArrowRight size={16} className="arrow" />
               </Link>
-            ))}
-          </nav>
-          <div className="flex items-center gap-2">
-            <LanguageSwitch lang={lang} t={t} />
-            <ThemeToggle t={t} className="hide-narrow" />
-            <Link href={contact} className="btn btn-primary btn-sm desktop-only ml-1">
-              {t.start}
-              <ArrowRight size={16} className="arrow" />
-            </Link>
-            <button
-              ref={toggleRef}
-              type="button"
-              className="icon-btn phone-only"
-              aria-expanded={open}
-              aria-controls="phone-menu"
-              aria-label={open ? t.close : t.menu}
-              onClick={() => setOpen((value) => !value)}
-            >
-              {open ? <Close size={20} /> : <Menu size={20} />}
-            </button>
+              <button
+                ref={toggleRef}
+                type="button"
+                className="icon-btn phone-only"
+                aria-expanded={open}
+                aria-controls="phone-menu"
+                aria-label={open ? t.close : t.menu}
+                onClick={() => setOpen((value) => !value)}
+              >
+                {open ? <Close size={20} /> : <Menu size={20} />}
+              </button>
+            </div>
           </div>
         </div>
         <span className="progress" aria-hidden="true" />
@@ -223,7 +221,7 @@ export function Header({ lang, t, whatsappLabel }: { lang: Lang; t: Chrome; what
               <li key={item.href} className="stagger" style={vars({ "--i": index })}>
                 <Link href={item.href} aria-current={isCurrent(pathname, item.href) ? "page" : undefined} className="mobile-link">
                   {item.label}
-                  <ArrowRight size={22} className="text-subtle" />
+                  <span className="label" aria-hidden="true">0{index + 1}</span>
                 </Link>
               </li>
             ))}

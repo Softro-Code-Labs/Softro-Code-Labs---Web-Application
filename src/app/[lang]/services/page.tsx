@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProjectStage } from "@/components/Devices";
-import { ArrowRight, Browser, Chat } from "@/components/icons";
+import { ArrowRight, Chat } from "@/components/icons";
+import { Iso, serviceArt } from "@/components/Iso";
 import { JsonLd } from "@/components/JsonLd";
-import { CapabilityGroups, ClosingCTA, IdeaCard, Process, serviceIcons } from "@/components/Sections";
+import { CapabilityGroups, ClosingCTA, IdeaCard, Process } from "@/components/Sections";
 import { Page, PageHero, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { whatsapp } from "@/content/site";
@@ -24,7 +25,7 @@ export default async function ServicesPage({ params }: LangParams) {
   const example = (href: string) => {
     const project = projects.find((item) => `/work/${item.slug}` === href);
     if (project) return { screen: project.screen, accent: project.accent, tint: project.tint };
-    return { screen: labShots.phone, accent: labShots.convert, tint: "#ef4c5b" };
+    return { screen: labShots.convert, accent: labShots.home, tint: "#ef4c5b" };
   };
 
   return (
@@ -46,20 +47,17 @@ export default async function ServicesPage({ params }: LangParams) {
       <section className="section pt-0!">
         <div className="wrap grid gap-6 min-[1024px]:gap-8">
           {services.map((service, index) => {
-            const Icon = serviceIcons[service.example.href] ?? Browser;
             const visual = example(service.example.href);
             const flip = index % 2 === 1;
             return (
-              <article key={service.name} className="card spot overflow-hidden p-2.5 min-[1024px]:p-3" data-spot data-tilt-scope data-reveal>
+              <article key={service.name} className="card spot overflow-hidden rounded-(--r-panel)! p-2.5 min-[1024px]:p-3" data-spot data-tilt-scope data-reveal>
                 <div className="grid items-center gap-6 min-[1024px]:grid-cols-2 min-[1024px]:gap-4">
                   <div className={`px-4 pt-5 pb-3 min-[640px]:px-6 min-[1024px]:px-10 min-[1024px]:py-12 ${flip ? "min-[1024px]:order-2" : ""}`}>
-                    <div className="flex items-center gap-4">
-                      <span className="icon-tile">
-                        <Icon size={22} />
-                      </span>
-                      <span className="font-mono text-[12px] tracking-[0.12em] text-subtle" aria-hidden="true">
+                    <div className="flex items-end justify-between gap-4">
+                      <span className="label" aria-hidden="true">
                         0{index + 1}
                       </span>
+                      <Iso boxes={serviceArt[service.example.href] ?? serviceArt["/lab"]} className="iso-hover h-[84px] w-auto" />
                     </div>
                     <h2 className="display-2 mt-7">{service.name}</h2>
                     <p className="mt-5 text-[17.5px] leading-relaxed text-muted">{service.long}</p>

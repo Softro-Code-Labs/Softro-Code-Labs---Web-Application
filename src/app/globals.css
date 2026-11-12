@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
 /*
-  Design tokens.
-  Colours are CSS variables, so the light theme only swaps the values in section 2.
+  The Softro design system.
+  Ink, bone and the logo's crimson. Large tight type with a serif italic for the highlighted words,
+  hairline rules, and small monospace labels, like the notes on a lab drawing.
+
+  Design tokens: colours are CSS variables, so a theme only swaps the values in section 1.
   Tailwind utilities such as bg-surface, text-muted and border-line read them.
 */
 @theme inline {
@@ -21,13 +24,12 @@
   --color-crimson-deep: #a70b21;
   --color-coral: #ff8a7a;
 
-  /* Schibsted Grotesk for Latin text; Sinhala letters fall through to Yaldevi Sinhala. */
-  --font-sans: var(--font-schibsted), "Yaldevi Sinhala", ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-schibsted), "Yaldevi Sinhala", ui-sans-serif, system-ui, sans-serif;
-  /* Yaldevi is the brand lettering: the wordmark beside the logo. */
-  --font-brand: var(--font-yaldevi), "Yaldevi Sinhala", system-ui, sans-serif;
-  /* Short on purpose: each family name is a font lookup on first paint. */
-  --font-mono: ui-monospace, Consolas, monospace;
+  /* Geist for Latin text; Sinhala letters fall through to Yaldevi Sinhala. */
+  --font-sans: var(--font-geist), "Yaldevi Sinhala", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-geist), "Yaldevi Sinhala", ui-sans-serif, system-ui, sans-serif;
+  /* The highlighted words in headings. */
+  --font-serif: var(--font-instrument), "Yaldevi Sinhala", Georgia, serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, Consolas, monospace;
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
@@ -57,57 +59,54 @@
 }
 
 /* ---------------------------------------------------------------------------
-   1. Themes. Dark is the default; the layout's inline script sets data-theme
-   before the first paint, from the saved choice or the system setting.
-   Every text colour here passes WCAG AA on the backgrounds it sits on.
+   1. Themes. Dark ("ink") is the default; the layout's inline script sets
+   data-theme before the first paint, from the saved choice or the system setting.
+   The .ink class gives one panel the dark colours in either theme (the footer,
+   the Lab panel). Every text colour passes WCAG AA on the backgrounds it sits on.
 --------------------------------------------------------------------------- */
-:root {
+:root,
+.ink {
   color-scheme: dark;
-  --bg: #070b14;
-  --bg-soft: #0a101c;
-  --surface: #0d1321;
-  --surface-2: #131b2d;
-  --fg: #eef1f6;
-  --muted: #9aa6bd; /* 8.0:1 on --bg */
-  --subtle: #7d8aa3; /* 5.4:1 on --bg */
-  --line: rgb(148 163 194 / 0.13);
-  --line-strong: rgb(148 163 194 / 0.24);
-  --accent: #ef4c5b; /* 5.5:1 on --bg */
+  --bg: #0b0b0d;
+  --bg-soft: #0f0f12;
+  --surface: #141417;
+  --surface-2: #1b1b1f;
+  --fg: #f3efe8;
+  --muted: #a8a39b; /* 7.9:1 on --bg */
+  --subtle: #8a857e; /* 5.3:1 on --bg */
+  --line: rgb(243 239 232 / 0.1);
+  --line-strong: rgb(243 239 232 / 0.2);
+  --accent: #f04a5c; /* 5.6:1 on --bg */
   --ok: #34d399;
-  --edge-hi: rgb(255 255 255 / 0.13);
-  --edge-lo: rgb(239 76 91 / 0.22);
-  --grid-line: rgb(148 163 194 / 0.07);
-  --glass: rgb(9 14 25 / 0.72);
-  --shadow-card: inset 0 1px 0 rgb(255 255 255 / 0.04), 0 30px 60px -32px rgb(0 0 0 / 0.75);
-  --shadow-pop: 0 24px 48px -20px rgb(0 0 0 / 0.65);
-  --text-grad: linear-gradient(100deg, #ff9d8f 0%, #ef4c5b 45%, #d0213b 100%);
-
-  --gutter: clamp(16px, 4vw, 40px);
-  --section-y: clamp(96px, 11vw, 160px);
-  --header-h: 72px;
+  --grid-dot: rgb(243 239 232 / 0.13);
+  --glass: rgb(15 15 18 / 0.74);
+  --shadow-card: 0 30px 60px -36px rgb(0 0 0 / 0.8);
+  --shadow-pop: 0 24px 48px -20px rgb(0 0 0 / 0.7);
+}
+:root {
+  --gutter: clamp(18px, 4vw, 48px);
+  --section-y: clamp(96px, 12vw, 176px);
+  --header-h: 76px;
+  --r-panel: clamp(20px, 2.4vw, 32px);
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #f5f6fa;
-  --bg-soft: #edf0f6;
-  --surface: #ffffff;
-  --surface-2: #fafbfd;
-  --fg: #0b1220;
-  --muted: #4a566d; /* 6.9:1 on --bg */
-  --subtle: #5a667d; /* 5.4:1 on --bg */
-  --line: rgb(11 18 32 / 0.09);
-  --line-strong: rgb(11 18 32 / 0.17);
-  --accent: #c01530; /* 5.7:1 on --bg */
-  --ok: #059669;
-  --edge-hi: rgb(11 18 32 / 0.08);
-  --edge-lo: rgb(192 21 48 / 0.16);
-  --grid-line: rgb(11 18 32 / 0.05);
-  --glass: rgb(245 246 250 / 0.78);
-  --shadow-card: 0 1px 2px rgb(11 18 32 / 0.04), 0 24px 48px -28px rgb(11 18 32 / 0.22);
-  --shadow-pop: 0 24px 48px -24px rgb(11 18 32 / 0.28);
-  --text-grad: linear-gradient(100deg, #e2384b 0%, #c01530 55%, #9e0c24 100%);
+  --bg: #f4f1eb;
+  --bg-soft: #ece8df;
+  --surface: #faf8f4;
+  --surface-2: #ffffff;
+  --fg: #121114;
+  --muted: #55514b; /* 7.0:1 on --bg */
+  --subtle: #6b665f; /* 5.1:1 on --bg */
+  --line: rgb(18 17 20 / 0.1);
+  --line-strong: rgb(18 17 20 / 0.2);
+  --accent: #c2132d; /* 5.4:1 on --bg */
+  --ok: #047857;
+  --grid-dot: rgb(18 17 20 / 0.14);
+  --glass: rgb(244 241 235 / 0.8);
+  --shadow-card: 0 1px 2px rgb(18 17 20 / 0.04), 0 24px 48px -32px rgb(18 17 20 / 0.25);
+  --shadow-pop: 0 24px 48px -24px rgb(18 17 20 / 0.3);
 }
-
 @media (max-width: 1100px) {
   :root {
     --header-h: 64px;
@@ -127,13 +126,13 @@
     color: var(--fg);
     font-family: var(--font-sans);
     font-size: 17px;
-    line-height: 1.65;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
   }
   ::selection {
-    background: rgb(239 76 91 / 0.32);
+    background: rgb(232 40 63 / 0.3);
   }
   :focus-visible {
     outline: 2px solid var(--accent);
@@ -148,13 +147,19 @@
    3. Components
 --------------------------------------------------------------------------- */
 @layer components {
+  /* A panel that keeps the dark colours in either theme (its colour values are set in section 1). */
+  .ink {
+    background: var(--surface);
+    color: var(--fg);
+  }
+
   .skip {
     position: absolute;
     left: 16px;
     top: -80px;
     z-index: 70;
     border-radius: 999px;
-    background: var(--accent);
+    background: #c2132d;
     color: #fff;
     padding: 12px 18px;
     font-weight: 600;
@@ -166,7 +171,7 @@
   /* Layout */
   .wrap {
     width: 100%;
-    max-width: 1280px;
+    max-width: 1320px;
     margin-inline: auto;
     padding-inline: var(--gutter);
   }
@@ -186,7 +191,7 @@
   }
   .hairline {
     height: 1px;
-    background: linear-gradient(90deg, transparent, var(--line-strong) 15%, var(--line-strong) 85%, transparent);
+    background: var(--line-strong);
   }
 
   /* Type */
@@ -199,72 +204,83 @@
     text-wrap: balance;
   }
   .display-hero {
-    font-size: clamp(2.5rem, 1.2rem + 4.6vw, 5.1rem);
-    line-height: 0.98;
-    letter-spacing: -0.036em;
-    font-weight: 700;
+    font-size: clamp(2.7rem, 1.1rem + 6.1vw, 6.5rem);
+    line-height: 0.96;
+    letter-spacing: -0.05em;
+    font-weight: 600;
   }
   .display-1 {
-    font-size: clamp(2.4rem, 1.45rem + 3.5vw, 4.6rem);
-    line-height: 1.01;
-    letter-spacing: -0.032em;
-    font-weight: 700;
+    font-size: clamp(2.5rem, 1.3rem + 4.4vw, 5.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.046em;
+    font-weight: 600;
   }
   .display-2 {
-    font-size: clamp(2rem, 1.35rem + 2.2vw, 3.35rem);
-    line-height: 1.05;
-    letter-spacing: -0.028em;
-    font-weight: 700;
+    font-size: clamp(2.05rem, 1.3rem + 2.7vw, 3.9rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    font-weight: 600;
   }
   .display-3 {
-    font-size: clamp(1.6rem, 1.2rem + 1.3vw, 2.4rem);
-    line-height: 1.1;
-    letter-spacing: -0.024em;
-    font-weight: 700;
+    font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.034em;
+    font-weight: 600;
   }
   .title {
-    font-size: clamp(1.35rem, 1.16rem + 0.65vw, 1.7rem);
+    font-size: clamp(1.3rem, 1.15rem + 0.5vw, 1.6rem);
     line-height: 1.2;
-    letter-spacing: -0.02em;
-    font-weight: 700;
+    letter-spacing: -0.025em;
+    font-weight: 600;
   }
   .lead {
-    font-size: clamp(1.125rem, 1.03rem + 0.36vw, 1.3rem);
-    line-height: 1.6;
+    font-size: clamp(1.125rem, 1.03rem + 0.4vw, 1.34rem);
+    line-height: 1.55;
+    letter-spacing: -0.012em;
   }
-  .text-gradient {
-    background: var(--text-grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    /* Keeps descenders and Sinhala marks inside the painted area. */
-    padding-block: 0.06em;
-    margin-block: -0.06em;
+  /* The highlighted words in a heading: serif italic, in the brand crimson. */
+  .em {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.1em;
+    letter-spacing: -0.025em;
+    color: var(--accent);
+    /* The italic leans past its box; this keeps the last letter from being clipped. */
+    padding-inline-end: 0.06em;
   }
 
-  /* A small label above a heading. The folded mark echoes the logo's ribbon. */
+  /* A small monospace label. The folded mark echoes the ribbon of the logo. */
   .eyebrow {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 500;
     line-height: 1.4;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--accent);
+    color: var(--muted);
   }
   .eyebrow::before {
     content: "";
     flex: none;
-    width: 10px;
-    height: 13px;
+    width: 9px;
+    height: 12px;
     background: linear-gradient(var(--color-crimson-deep), var(--color-crimson));
     clip-path: polygon(0 28%, 100% 0, 100% 72%, 0 100%);
   }
+  .label {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--subtle);
+  }
 
-  /* Buttons. The main button uses white on deep crimson (4.8:1 or more across the gradient). */
+  /* Buttons. The main button is white on crimson (5.3:1), with its arrow in a white disc. */
   .btn {
     position: relative;
     isolation: isolate;
@@ -272,21 +288,21 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    min-height: 52px;
-    padding: 0 24px;
+    min-height: 54px;
+    padding: 0 26px;
     border-radius: 999px;
     font-size: 15.5px;
-    font-weight: 600;
+    font-weight: 550;
     line-height: 1.25;
+    letter-spacing: -0.01em;
     text-align: center;
     cursor: pointer;
-    overflow: hidden;
     -webkit-tap-highlight-color: transparent;
     transition:
-      transform 0.3s var(--ease-expo),
+      transform 0.4s var(--ease-expo),
       box-shadow 0.3s,
-      background-color 0.2s,
-      color 0.2s;
+      background-color 0.25s,
+      color 0.25s;
   }
   .btn:active {
     transform: scale(0.97);
@@ -297,53 +313,68 @@
   }
   .btn-primary {
     color: #fff;
-    background: linear-gradient(180deg, #d92d42, #b8142c);
+    background: #cf1d38;
     box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.22),
-      inset 0 0 0 1px rgb(255 255 255 / 0.08),
-      0 12px 30px -12px rgb(239 76 91 / 0.7);
-  }
-  /* A light sweep crosses the button on hover. */
-  .btn-primary::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.3) 50%, transparent 70%);
-    transform: translateX(-130%);
-    transition: transform 0.8s var(--ease-expo);
+      inset 0 1px 0 rgb(255 255 255 / 0.2),
+      0 14px 30px -14px rgb(232 40 63 / 0.75);
   }
   .btn-primary:hover {
-    transform: translateY(-1px);
+    background: #b9142d;
     box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.25),
-      inset 0 0 0 1px rgb(255 255 255 / 0.1),
-      0 18px 40px -12px rgb(239 76 91 / 0.85);
-  }
-  .btn-primary:hover::before {
-    transform: translateX(130%);
+      inset 0 1px 0 rgb(255 255 255 / 0.2),
+      0 18px 36px -14px rgb(232 40 63 / 0.9);
   }
   .btn-secondary {
     color: var(--fg);
-    background: color-mix(in oklab, var(--surface-2) 72%, transparent);
     box-shadow: inset 0 0 0 1px var(--line-strong);
   }
   .btn-secondary:hover {
-    background: var(--surface-2);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fg) 32%, transparent);
+    background: color-mix(in oklab, var(--fg) 7%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fg) 40%, transparent);
+  }
+  /* For use on a crimson background. */
+  .btn-light {
+    color: #121114;
+    background: #fff;
+  }
+  .btn-light:hover {
+    background: #f4f1eb;
   }
   .btn-sm {
-    min-height: 42px;
+    min-height: 44px;
     padding: 0 18px;
     font-size: 14.5px;
     white-space: nowrap;
   }
   .btn .arrow {
-    transition: transform 0.35s var(--ease-expo);
+    transition: transform 0.45s var(--ease-expo);
+  }
+  /* The arrow sits in a disc at the end of the main buttons. */
+  .btn-primary > .arrow,
+  .btn-light > .arrow {
+    box-sizing: content-box;
+    flex: none;
+    margin-right: -16px;
+    padding: 8px;
+    border-radius: 50%;
+    background: #fff;
+    color: #b9142d;
+  }
+  .btn-light > .arrow {
+    background: #cf1d38;
+    color: #fff;
+  }
+  .btn-sm > .arrow {
+    margin-right: -11px;
+    padding: 6px;
   }
   .btn:hover .arrow,
   .link-arrow:hover .arrow {
     transform: translateX(3px);
+  }
+  .btn-primary:hover > .arrow:not(.arrow-ne),
+  .btn-light:hover > .arrow:not(.arrow-ne) {
+    transform: rotate(-45deg);
   }
   .btn:hover .arrow-ne,
   .link-arrow:hover .arrow-ne {
@@ -355,13 +386,13 @@
     display: inline-grid;
     place-items: center;
     flex: none;
-    min-width: 42px;
-    height: 42px;
+    min-width: 44px;
+    height: 44px;
     padding: 0 10px;
     border-radius: 999px;
     color: var(--fg);
     font-size: 14.5px;
-    font-weight: 600;
+    font-weight: 550;
     box-shadow: inset 0 0 0 1px var(--line-strong);
     transition:
       background-color 0.2s,
@@ -369,8 +400,8 @@
       transform 0.3s var(--ease-expo);
   }
   .icon-btn:hover {
-    background: var(--surface-2);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fg) 30%, transparent);
+    background: color-mix(in oklab, var(--fg) 7%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--fg) 36%, transparent);
   }
   .icon-btn:active {
     transform: scale(0.94);
@@ -382,15 +413,16 @@
     align-items: center;
     gap: 12px;
     font-size: 15.5px;
-    font-weight: 600;
+    font-weight: 550;
+    letter-spacing: -0.01em;
     color: var(--fg);
   }
   .link-arrow .ring {
     display: grid;
     place-items: center;
     flex: none;
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
     border-radius: 999px;
     box-shadow: inset 0 0 0 1px var(--line-strong);
     transition:
@@ -399,14 +431,14 @@
       color 0.3s;
   }
   .link-arrow:hover .ring {
-    background: var(--accent);
+    background: #cf1d38;
     box-shadow: none;
     color: #fff;
   }
 
   .link {
     color: var(--accent);
-    font-weight: 600;
+    font-weight: 550;
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 4px;
@@ -416,11 +448,73 @@
     text-decoration-thickness: 2px;
   }
 
+  /* The switch between the Lab's products: the one on show is raised, the other is a link to it. */
+  .lab-switch {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px;
+    border-radius: 22px;
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .lab-switch-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 48px;
+    padding: 6px 16px 6px 6px;
+    border-radius: 18px;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--muted);
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .lab-switch-item small {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--subtle);
+  }
+  a.lab-switch-item:hover {
+    color: var(--fg);
+    background: color-mix(in oklab, var(--fg) 6%, transparent);
+  }
+  .lab-switch-item[aria-current] {
+    color: var(--fg);
+    background: var(--surface-2);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      0 2px 8px -2px rgb(0 0 0 / 0.25);
+  }
+  /* On a phone the two products stack as equal rows, instead of wrapping unevenly. */
+  @media (max-width: 519px) {
+    .lab-switch {
+      display: grid;
+      width: 100%;
+    }
+    .lab-switch-item {
+      width: 100%;
+    }
+  }
+  .lab-switch-logo {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    overflow: hidden;
+    border-radius: 10px;
+  }
+
   /* Small pills */
   .chip {
     display: inline-flex;
     align-items: center;
-    gap: 7px;
+    gap: 8px;
     min-height: 30px;
     padding: 2px 12px;
     border-radius: 999px;
@@ -428,13 +522,12 @@
     font-weight: 500;
     line-height: 1.3;
     color: var(--muted);
-    background: color-mix(in oklab, var(--surface-2) 70%, transparent);
-    box-shadow: inset 0 0 0 1px var(--line);
+    box-shadow: inset 0 0 0 1px var(--line-strong);
   }
   .chip-mono {
     font-family: var(--font-mono);
     font-size: 12px;
-    letter-spacing: 0.01em;
+    border-radius: 8px;
   }
   .dot {
     position: relative;
@@ -455,14 +548,12 @@
     background: inherit;
   }
 
-  /* Cards: a soft surface with a gradient edge. */
+  /* Cards: a quiet surface with a hairline edge. */
   .card {
     position: relative;
-    border: 1px solid transparent;
-    border-radius: 24px;
-    background:
-      linear-gradient(180deg, var(--surface-2), var(--surface)) padding-box,
-      linear-gradient(165deg, var(--edge-hi), var(--line) 35%, var(--line) 65%, var(--edge-lo)) border-box;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background: var(--surface);
     box-shadow: var(--shadow-card);
   }
   .glass {
@@ -473,72 +564,94 @@
       inset 0 0 0 1px var(--line-strong),
       var(--shadow-pop);
   }
+  /* A large rounded panel, used for case studies and the Lab. */
+  .panel {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-panel);
+  }
 
-  /* Spotlight: a glow on the card edge that follows the pointer (set by Motion.tsx). */
-  .spot::before,
+  /* Spotlight: a soft glow that follows the pointer (set by Motion.tsx). */
   .spot::after {
     content: "";
     position: absolute;
+    inset: 0;
     border-radius: inherit;
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.4s;
+    background: radial-gradient(520px circle at var(--sx, 50%) var(--sy, 0%), color-mix(in oklab, var(--accent) 10%, transparent), transparent 60%);
   }
-  .spot::before {
-    inset: -1px;
-    padding: 1px;
-    background: radial-gradient(340px circle at var(--sx, 50%) var(--sy, 0%), color-mix(in oklab, var(--accent) 85%, transparent), transparent 70%);
-    -webkit-mask:
-      linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask:
-      linear-gradient(#000 0 0) content-box exclude,
-      linear-gradient(#000 0 0);
-  }
-  .spot::after {
-    inset: 0;
-    background: radial-gradient(520px circle at var(--sx, 50%) var(--sy, 0%), color-mix(in oklab, var(--accent) 8%, transparent), transparent 60%);
-  }
-  .spot:hover::before,
   .spot:hover::after {
     opacity: 1;
   }
 
-  /* Faint blueprint grid used behind heroes. */
+  /* Faint dotted paper, like a lab notebook. */
   .grid-bg {
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size: 56px 56px;
+    background-image: radial-gradient(circle, var(--grid-dot) 1px, transparent 1.6px);
+    background-size: 28px 28px;
   }
 
-  /* ----- Header ----- */
+  /* ----- Header: a bar that turns into a floating glass pill once the page scrolls ----- */
   .site-header {
     position: sticky;
     top: 0;
     z-index: 50;
-    border-bottom: 1px solid transparent;
+    display: flex;
+    align-items: center;
+    height: var(--header-h);
+  }
+  .header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    height: 58px;
+    margin-inline: -10px;
+    padding: 0 7px 0 18px;
+    border: 1px solid transparent;
+    border-radius: 999px;
     transition:
       background-color 0.35s,
-      border-color 0.35s;
+      border-color 0.35s,
+      box-shadow 0.35s;
   }
-  .site-header[data-scrolled],
-  .site-header[data-open] {
+  .site-header[data-scrolled] .header-bar {
     background: var(--glass);
-    border-bottom-color: var(--line);
+    border-color: var(--line);
     -webkit-backdrop-filter: blur(18px) saturate(1.5);
     backdrop-filter: blur(18px) saturate(1.5);
+    box-shadow: var(--shadow-pop);
   }
   .site-header[data-open] {
     background: var(--bg);
   }
+  .site-header[data-open] .header-bar {
+    background: transparent;
+    border-color: transparent;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  .brand-name {
+    font-size: 19px;
+    font-weight: 650;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    white-space: nowrap;
+  }
+  .brand-name span {
+    font-weight: 400;
+    color: var(--muted);
+  }
   .nav-link {
     position: relative;
-    padding: 8px 14px;
+    padding: 9px 15px;
     border-radius: 999px;
     font-size: 15px;
     font-weight: 500;
+    letter-spacing: -0.01em;
     color: var(--muted);
     white-space: nowrap;
     transition:
@@ -547,7 +660,7 @@
   }
   .nav-link:hover {
     color: var(--fg);
-    background: color-mix(in oklab, var(--fg) 6%, transparent);
+    background: color-mix(in oklab, var(--fg) 7%, transparent);
   }
   .nav-link[aria-current="page"] {
     color: var(--fg);
@@ -556,19 +669,19 @@
     content: "";
     position: absolute;
     left: 50%;
-    bottom: 1px;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
+    bottom: 2px;
+    width: 5px;
+    height: 7px;
     background: var(--accent);
+    clip-path: polygon(0 28%, 100% 0, 100% 72%, 0 100%);
     translate: -50% 0;
   }
-  /* The reading-progress ribbon along the bottom of the header. */
+  /* The reading-progress line along the very top of the window. */
   .progress {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -1px;
+    top: 0;
     height: 2px;
     transform-origin: 0 50%;
     transform: scaleX(0);
@@ -592,12 +705,12 @@
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    padding: 14px 0;
+    padding: 13px 0;
     border-bottom: 1px solid var(--line);
-    font-size: clamp(1.75rem, 1.2rem + 3vw, 2.4rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
+    font-size: clamp(1.9rem, 1.2rem + 3.4vw, 2.6rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
   }
   .mobile-link[aria-current="page"] {
     color: var(--accent);
@@ -626,10 +739,13 @@
   }
 
   /* ----- Hero ----- */
+  /* The opening of every page. It starts behind the header, so its background runs to the top of the window. */
   .hero {
     position: relative;
     isolation: isolate;
     overflow: clip;
+    margin-top: calc(var(--header-h) * -1);
+    padding-top: var(--header-h);
   }
   .hero-bg {
     position: absolute;
@@ -637,18 +753,16 @@
     z-index: -1;
     pointer-events: none;
   }
-  /* The grid fades out toward the edges: a background-coloured gradient painted over the lines. */
+  /* The dots fade out toward the edges: a background-coloured gradient painted over them. */
   .hero-bg .grid-bg {
     position: absolute;
     inset: 0;
     background-image:
-      radial-gradient(ellipse 70% 75% at 72% 22%, transparent 10%, var(--bg) 72%),
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      radial-gradient(ellipse 75% 80% at 70% 18%, transparent 8%, var(--bg) 74%),
+      radial-gradient(circle, var(--grid-dot) 1px, transparent 1.6px);
     background-size:
       100% 100%,
-      56px 56px,
-      56px 56px;
+      28px 28px;
   }
   .glow {
     position: absolute;
@@ -656,16 +770,157 @@
     pointer-events: none;
   }
   .glow-crimson {
-    background: radial-gradient(closest-side, rgb(239 76 91 / 0.24), rgb(239 76 91 / 0.06) 55%, transparent);
+    background: radial-gradient(closest-side, rgb(232 40 63 / 0.2), rgb(232 40 63 / 0.05) 55%, transparent);
   }
-  .glow-indigo {
-    background: radial-gradient(closest-side, rgb(91 104 230 / 0.18), transparent);
+  /* A second, cooler light. Kept very faint so crimson stays the only colour. */
+  .glow-soft {
+    background: radial-gradient(closest-side, rgb(243 239 232 / 0.05), transparent);
   }
   :root[data-theme="light"] .glow-crimson {
-    background: radial-gradient(closest-side, rgb(239 76 91 / 0.16), rgb(239 76 91 / 0.04) 55%, transparent);
+    background: radial-gradient(closest-side, rgb(232 40 63 / 0.13), rgb(232 40 63 / 0.03) 55%, transparent);
   }
-  :root[data-theme="light"] .glow-indigo {
-    background: radial-gradient(closest-side, rgb(91 104 230 / 0.12), transparent);
+  :root[data-theme="light"] .glow-soft {
+    background: radial-gradient(closest-side, rgb(255 255 255 / 0.7), transparent);
+  }
+
+  /* The home page opening: words on the left, the 3D logo on the right. */
+  .hero-grid {
+    display: grid;
+    align-items: center;
+    gap: 8px 40px;
+    padding-top: clamp(28px, 5vw, 72px);
+    padding-bottom: clamp(36px, 4vw, 56px);
+  }
+  @media (min-width: 1024px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.22fr) minmax(0, 0.78fr);
+      min-height: min(760px, calc(100svh - var(--header-h) - 150px));
+    }
+  }
+
+  /* ----- The 3D logo (LogoModel in Hero3D.tsx). The flat logo shows first; the 3D model fades in over it. ----- */
+  .model3d {
+    position: relative;
+    aspect-ratio: 1;
+    cursor: grab;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .model3d:active {
+    cursor: grabbing;
+  }
+  /* On the home page it is large and spills past its column. */
+  .hero3d {
+    width: min(100%, 420px);
+    margin-inline: auto;
+  }
+  @media (min-width: 1024px) {
+    .hero3d {
+      width: 138%;
+      max-width: 720px;
+      margin-inline: -19%;
+    }
+  }
+  /* On its own (About, 404) the box is portrait, like the mark. */
+  .model3d-solo {
+    aspect-ratio: 3 / 4;
+  }
+  .model3d::before {
+    content: "";
+    position: absolute;
+    inset: 8%;
+    z-index: -1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(232 40 63 / 0.3), rgb(232 40 63 / 0.08) 55%, transparent);
+  }
+  :root[data-theme="light"] .model3d::before {
+    background: radial-gradient(closest-side, rgb(232 40 63 / 0.2), rgb(232 40 63 / 0.05) 55%, transparent);
+  }
+  .model3d canvas,
+  .model3d-poster {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.9s var(--ease-expo);
+  }
+  .model3d canvas {
+    opacity: 0;
+  }
+  .model3d-poster {
+    display: grid;
+    place-items: center;
+  }
+  .model3d-poster svg {
+    width: auto;
+    height: 62%;
+    filter: drop-shadow(0 30px 40px rgb(167 11 33 / 0.35));
+  }
+  .model3d-solo .model3d-poster svg {
+    height: 72%;
+  }
+  .model3d[data-ready] canvas {
+    opacity: 1;
+  }
+  .model3d[data-ready] .model3d-poster {
+    opacity: 0;
+  }
+  .model3d-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 3%;
+    translate: -50% 0;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.6s 1.2s;
+  }
+  .model3d[data-ready] .model3d-hint {
+    opacity: 1;
+  }
+
+  /* Real numbers, in a ruled strip under the opening. */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+  }
+  .stat {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 22px 20px 22px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .stat:nth-child(even) {
+    padding-left: 20px;
+    border-left: 1px solid var(--line);
+  }
+  .stat dd {
+    font-size: clamp(2.4rem, 1.6rem + 2.6vw, 4rem);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+  }
+  .stat dt {
+    max-width: 24ch;
+    font-size: 14.5px;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+  @media (min-width: 1024px) {
+    .stats {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .stat {
+      padding: 28px 28px 8px;
+      border-bottom: 0;
+      border-left: 1px solid var(--line);
+    }
+    .stat:first-child {
+      padding-left: 0;
+      border-left: 0;
+    }
   }
 
   /* ----- 3D stage: real screens placed in depth, tilted toward the pointer ----- */
@@ -702,24 +957,6 @@
       translate: 0 1cqw;
     }
   }
-  /* The ribbon band from the logo, as a light streak behind the screens. */
-  .ribbon {
-    position: absolute;
-    left: -16%;
-    right: -12%;
-    top: 61%;
-    height: 14%;
-    transform: translateZ(-14cqw) rotate(-16deg);
-    background: linear-gradient(90deg, transparent, var(--color-crimson-deep) 18%, var(--color-crimson) 55%, var(--color-coral) 82%, transparent);
-    clip-path: polygon(0 34%, 100% 0, 100% 66%, 0 100%);
-  }
-  /* The glow is a soft-edged gradient, not a blur filter, so it costs one cheap paint. */
-  .ribbon-glow {
-    top: 52%;
-    height: 32%;
-    clip-path: none;
-    background: radial-gradient(closest-side, rgb(239 76 91 / 0.5), rgb(239 76 91 / 0.18) 55%, transparent);
-  }
   /* Cards floating inside a 3D stage. Browsers cannot blur behind elements in 3D, so these are solid. */
   .float-card {
     background: color-mix(in oklab, var(--surface-2) 94%, var(--fg) 6%);
@@ -731,7 +968,7 @@
     background: #fff;
     box-shadow:
       inset 0 0 0 1px var(--line-strong),
-      0 2cqw 5cqw -1cqw rgb(11 18 32 / 0.25);
+      0 2cqw 5cqw -1cqw rgb(18 17 20 / 0.25);
   }
 
   /* Device frames draw real hardware, so they keep dark bezels in both themes. */
@@ -743,13 +980,13 @@
   }
   :root[data-theme="light"] .device {
     box-shadow:
-      0 0 0 1px rgb(11 18 32 / 0.08),
-      0 2.4cqw 4.4cqw -1.6cqw rgb(11 18 32 / 0.35);
+      0 0 0 1px rgb(18 17 20 / 0.08),
+      0 2.4cqw 4.4cqw -1.6cqw rgb(18 17 20 / 0.35);
   }
   .device-browser {
     overflow: hidden;
     border-radius: max(8px, 1.5cqw);
-    background: #0b0f19;
+    background: #0c0c0f;
   }
   /* The title bar: three window dots drawn as one background, no extra elements. */
   .device-bar {
@@ -759,13 +996,13 @@
       radial-gradient(circle closest-side, #ef4c5b 96%, transparent) calc(max(8px, 1.5cqw)) 50% / var(--dot) var(--dot) no-repeat,
       radial-gradient(circle closest-side, rgb(255 255 255 / 0.2) 96%, transparent) calc(max(8px, 1.5cqw) + var(--dot) * 1.8) 50% / var(--dot) var(--dot) no-repeat,
       radial-gradient(circle closest-side, rgb(255 255 255 / 0.2) 96%, transparent) calc(max(8px, 1.5cqw) + var(--dot) * 3.6) 50% / var(--dot) var(--dot) no-repeat,
-      linear-gradient(#1b2335, #121929);
+      linear-gradient(#232327, #17171a);
     border-bottom: 1px solid rgb(255 255 255 / 0.06);
   }
   .device-phone {
     padding: max(4px, 0.9cqw);
     border-radius: max(18px, 5cqw);
-    background: linear-gradient(150deg, #2b3243, #0a0e17 38%, #171d2b);
+    background: linear-gradient(150deg, #34343a, #0c0c0f 38%, #1c1c20);
     box-shadow:
       inset 0 0 0 1px rgb(255 255 255 / 0.14),
       0 3cqw 6cqw -2cqw rgb(0 0 0 / 0.55);
@@ -774,26 +1011,26 @@
     position: relative;
     overflow: hidden;
     border-radius: max(14px, 4.1cqw);
-    background: #05080f;
+    background: #060608;
   }
   /* The camera island sits in its own status strip, so it never covers the app. */
   .device-phone .status {
     display: grid;
     place-items: center;
     height: max(10px, 2.6cqw);
-    background: #05080f;
+    background: #060608;
   }
   .device-phone .status::before {
     content: "";
     width: 30%;
     height: 56%;
     border-radius: 999px;
-    background: #1a2131;
+    background: #1e1e22;
   }
   .device-wide {
     padding: max(4px, 0.8cqw);
     border-radius: max(16px, 3.4cqw);
-    background: linear-gradient(150deg, #2b3243, #0a0e17 38%, #171d2b);
+    background: linear-gradient(150deg, #34343a, #0c0c0f 38%, #1c1c20);
     box-shadow:
       inset 0 0 0 1px rgb(255 255 255 / 0.14),
       0 3cqw 6cqw -2cqw rgb(0 0 0 / 0.55);
@@ -817,16 +1054,55 @@
       linear-gradient(118deg, rgb(255 255 255 / 0.08), transparent 32%);
   }
 
-  /* ----- Project cards ----- */
-  .project-card {
+  /* ----- Selected work: large panels that stack over each other as the page scrolls ----- */
+  .case-stack {
+    display: grid;
+    gap: 20px;
+  }
+  .case {
+    position: relative;
+    display: grid;
+    align-items: center;
     overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--r-panel);
+    /* A solid colour (not see-through), so a panel fully covers the one beneath it. */
+    background: color-mix(in oklab, var(--tint) 7%, var(--surface));
+    box-shadow: var(--shadow-card);
+  }
+  .case-copy {
+    padding: 28px 22px 8px;
+  }
+  .case-index {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    color: var(--subtle);
+  }
+  @media (min-width: 1024px) {
+    .case {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      min-height: 560px;
+    }
+    .case-copy {
+      padding: 56px 16px 56px 56px;
+    }
+  }
+  @media (min-width: 1024px) and (min-height: 760px) {
+    .case-stack {
+      gap: 28px;
+    }
+    .case-stack .case {
+      position: sticky;
+      top: calc(var(--header-h) + 14px + var(--n, 0) * 14px);
+    }
   }
   .project-stage {
     position: relative;
     isolation: isolate;
     overflow: hidden;
     border-radius: 18px;
-    background: color-mix(in oklab, var(--bg) 60%, var(--surface));
+    background: color-mix(in oklab, var(--tint) 6%, var(--surface));
     box-shadow: inset 0 0 0 1px var(--line);
   }
   .project-stage::before {
@@ -834,24 +1110,21 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background:
-      radial-gradient(ellipse 65% 70% at 60% 60%, color-mix(in oklab, var(--tint) 34%, transparent), transparent 72%),
-      radial-gradient(ellipse 50% 50% at 15% 10%, rgb(239 76 91 / 0.12), transparent 70%);
+    background: radial-gradient(ellipse 65% 70% at 58% 58%, color-mix(in oklab, var(--tint) 30%, transparent), transparent 72%);
   }
   .project-stage .grid-bg {
     position: absolute;
     inset: 0;
     z-index: -2;
-    background-image:
-      radial-gradient(ellipse 80% 80% at 50% 40%, transparent, color-mix(in oklab, var(--bg) 60%, var(--surface)) 80%),
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size:
-      100% 100%,
-      56px 56px,
-      56px 56px;
+    opacity: 0.7;
   }
-  /* The whole card is one link; the case study link stretches over it. */
+  /* Inside a case panel the stage has no box of its own: the panel is the box. */
+  .case .project-stage {
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+  /* The whole panel is one link; the case study link stretches over it. */
   .stretch::after {
     content: "";
     position: absolute;
@@ -860,57 +1133,167 @@
     border-radius: inherit;
   }
 
-  /* ----- Process steps: numbered nodes joined by lines that draw as you scroll ----- */
-  .step {
-    position: relative;
-    view-timeline: --step block;
+  /* ----- Core services: a ruled list, each row with its own block illustration ----- */
+  .svc-list {
+    border-top: 1px solid var(--line-strong);
   }
-  .step-node {
+  .svc-row {
+    isolation: isolate;
     position: relative;
-    z-index: 1;
     display: grid;
-    place-items: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    font-family: var(--font-mono);
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--fg);
-    background: var(--surface);
-    box-shadow:
-      inset 0 0 0 1px var(--line-strong),
-      0 0 0 6px var(--bg);
+    grid-template-columns: minmax(0, 1fr) 104px;
+    gap: 6px 16px;
+    align-items: center;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line-strong);
   }
-  .step:first-child .step-node {
-    color: #fff;
-    background: linear-gradient(180deg, #d92d42, #b8142c);
-    box-shadow:
-      0 0 0 6px var(--bg),
-      0 10px 24px -8px rgb(239 76 91 / 0.7);
-  }
-  /* The line to the next step: down on phones, across on desktop. */
-  .step-link {
+  .svc-row::before {
+    content: "";
     position: absolute;
-    left: 27px;
-    top: 62px;
-    bottom: -34px;
-    width: 2px;
-    border-radius: 2px;
-    background: linear-gradient(180deg, var(--color-crimson), color-mix(in oklab, var(--color-crimson) 12%, transparent));
-    transform-origin: 50% 0;
+    inset: 0 calc(var(--gutter) * -0.5);
+    z-index: -1;
+    border-radius: 20px;
+    background: color-mix(in oklab, var(--fg) 4%, transparent);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  .svc-row:hover::before {
+    opacity: 1;
+  }
+  .svc-num {
+    grid-column: 1 / -1;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .svc-text {
+    grid-column: 1 / -1;
+  }
+  .svc-art {
+    grid-row: 2;
+    grid-column: 2;
+    justify-self: end;
+    width: 100%;
+    max-height: clamp(96px, 13vw, 176px);
+  }
+  @media (min-width: 900px) {
+    .svc-row {
+      grid-template-columns: 64px minmax(0, 1fr) minmax(0, 1fr) clamp(150px, 16vw, 210px);
+      gap: 32px;
+      padding: 34px 0;
+    }
+    .svc-num,
+    .svc-text {
+      grid-column: auto;
+    }
+    .svc-art {
+      grid-row: auto;
+      grid-column: auto;
+    }
+  }
+
+  /*
+    Block illustrations (Iso.tsx). Each box is three flat faces: the top is lightest,
+    the left face a step darker and the right face darkest, as if lit from above left.
+  */
+  .iso {
+    overflow: visible;
+  }
+  .iso-box {
+    --c: color-mix(in oklab, var(--fg) 16%, var(--bg));
+    transition: transform 0.6s var(--ease-expo);
+    transition-delay: calc(var(--i, 0) * 35ms);
+  }
+  .iso-box .f-top {
+    fill: color-mix(in oklab, var(--c) 86%, #fff);
+  }
+  .iso-box .f-left {
+    fill: var(--c);
+  }
+  .iso-box .f-right {
+    fill: color-mix(in oklab, var(--c) 74%, #000);
+  }
+  .iso-box path {
+    stroke: var(--bg);
+    stroke-width: 0.6;
+    stroke-linejoin: round;
+  }
+  .tone-accent {
+    --c: #e23a4d;
+  }
+  .tone-deep {
+    --c: #a70b21;
+  }
+  .tone-bone {
+    --c: color-mix(in oklab, var(--fg) 72%, var(--bg));
+  }
+  .tone-soft {
+    --c: color-mix(in oklab, var(--fg) 30%, var(--bg));
+  }
+  /* The blocks lift a little, one after another, when their row is hovered. */
+  .svc-row:hover .iso-box,
+  .iso-hover:hover .iso-box {
+    transform: translateY(calc(var(--lift, 0) * -1px));
+  }
+
+  /* ----- Everything else we can build: four ruled columns ----- */
+  .cap-grid {
+    display: grid;
+    gap: 40px 32px;
+  }
+  @media (min-width: 700px) {
+    .cap-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .cap-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .cap-col {
+    padding-top: 22px;
+    border-top: 1px solid var(--line-strong);
+  }
+  .cap-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 0;
+    border-top: 1px solid var(--line);
+    font-size: 15.5px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  /* The Services page: one group per row, with a line about each kind of software. */
+  .cap-row {
+    display: grid;
+    gap: 28px 48px;
+    padding-block: 36px;
+    border-top: 1px solid var(--line-strong);
   }
   @media (min-width: 1024px) {
-    .step-link {
-      left: 66px;
-      right: -22px;
-      top: 27px;
-      bottom: auto;
-      width: auto;
-      height: 2px;
-      background: linear-gradient(90deg, var(--color-crimson), color-mix(in oklab, var(--color-crimson) 12%, transparent));
-      transform-origin: 0 50%;
+    .cap-row {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+      padding-block: 48px;
     }
+  }
+  .cap-item {
+    display: flex;
+    gap: 14px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .cap-icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 11px;
+    color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 11%, transparent);
   }
   .icon-tile {
     display: grid;
@@ -921,7 +1304,7 @@
     border-radius: 14px;
     color: var(--accent);
     background: color-mix(in oklab, var(--accent) 11%, transparent);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 28%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 26%, transparent);
   }
   .num {
     display: grid;
@@ -934,34 +1317,83 @@
     font-size: 13px;
     font-weight: 600;
     color: var(--accent);
-    background: color-mix(in oklab, var(--accent) 10%, transparent);
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 35%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent);
   }
-  /* The closing call to action: a panel with its own glow, and a grid in its top corner. */
-  .cta-grid {
+
+  /* The open slot at the end of the list: a crimson band inviting the visitor's own idea. */
+  .idea-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 20px 28px;
+    overflow: hidden;
+    padding: clamp(24px, 3.4vw, 44px);
+    border-radius: var(--r-panel);
+    color: #fff;
+    /* White text passes AA on every stop of this gradient (5.3:1 or more). */
+    background: linear-gradient(120deg, #cf1d38, #a70b21);
+  }
+  .idea-text {
+    color: rgb(255 255 255 / 0.9);
+  }
+  .idea-plus {
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    color: #fff;
+    box-shadow: inset 0 0 0 1.5px rgb(255 255 255 / 0.6);
+    transition: transform 0.7s var(--ease-expo);
+  }
+  .idea-card:hover .idea-plus {
+    transform: rotate(180deg);
+  }
+  @media (max-width: 767px) {
+    .idea-card {
+      grid-template-columns: minmax(0, 1fr);
+      justify-items: start;
+    }
+  }
+
+  /* ----- Process: four steps under a rule that fills with crimson as you scroll ----- */
+  .steps {
+    display: grid;
+    gap: 40px 32px;
+  }
+  @media (min-width: 700px) {
+    .steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+  .step {
+    position: relative;
+    padding-top: 26px;
+    border-top: 1px solid var(--line-strong);
+    view-timeline: --step block;
+  }
+  .step-link {
     position: absolute;
-    top: 0;
     left: 0;
-    width: 60%;
-    height: 60%;
-    pointer-events: none;
-    opacity: 0.6;
-    background-image:
-      radial-gradient(ellipse 100% 100% at 0% 0%, transparent, var(--surface-2) 92%),
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size:
-      100% 100%,
-      56px 56px,
-      56px 56px;
+    right: 0;
+    top: -1.5px;
+    height: 2px;
+    background: var(--accent);
+    transform-origin: 0 50%;
   }
-  .cta-glow {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 55% 65% at 100% 0%, rgb(239 76 91 / 0.17), transparent 62%),
-      radial-gradient(ellipse 45% 55% at 0% 100%, rgb(91 104 230 / 0.12), transparent 62%);
+  .step-node {
+    display: block;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: clamp(3rem, 2.4rem + 2vw, 4.4rem);
+    line-height: 1;
+    color: var(--accent);
   }
 
   /* ----- Lab bars ----- */
@@ -985,37 +1417,50 @@
     content: counter(num);
   }
 
+  /* ----- Closing call to action ----- */
+  .closing {
+    margin-top: calc(var(--section-y) / 2);
+    padding-block: calc(var(--section-y) * 0.8);
+    border-top: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  /* Floating cards inside an ink panel stay dark in the light theme. */
+  :root[data-theme="light"] .ink .float-card {
+    background: color-mix(in oklab, var(--surface-2) 94%, var(--fg) 6%);
+    box-shadow:
+      inset 0 0 0 1px var(--line-strong),
+      0 2cqw 5cqw -1cqw rgb(0 0 0 / 0.55);
+  }
+
   /* ----- Form ----- */
   .field-label {
     display: block;
     font-size: 14.5px;
-    font-weight: 600;
+    font-weight: 550;
     line-height: 1.4;
   }
   .input {
     display: block;
     width: 100%;
-    min-height: 52px;
+    min-height: 54px;
     margin-top: 8px;
-    padding: 13px 16px;
+    padding: 14px 16px;
     border-radius: 14px;
     border: 1px solid var(--line-strong);
-    background: color-mix(in oklab, var(--bg) 50%, var(--surface));
+    background: var(--bg);
     color: var(--fg);
     font-size: 16.5px;
     line-height: 1.45;
     transition:
       border-color 0.2s,
-      box-shadow 0.2s,
-      background-color 0.2s;
+      box-shadow 0.2s;
   }
   .input:hover {
-    border-color: color-mix(in oklab, var(--fg) 30%, transparent);
+    border-color: color-mix(in oklab, var(--fg) 36%, transparent);
   }
   .input:focus {
     outline: none;
     border-color: var(--accent);
-    background: var(--surface);
     box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 22%, transparent);
   }
   .input[aria-invalid="true"] {
@@ -1041,7 +1486,7 @@
     padding: 0 16px;
     border-radius: 999px;
     font-size: 14.5px;
-    font-weight: 600;
+    font-weight: 550;
     color: var(--muted);
     box-shadow: inset 0 0 0 1px var(--line-strong);
     cursor: pointer;
@@ -1065,13 +1510,13 @@
     color: var(--fg);
   }
   .pick input:checked + span {
-    color: var(--fg);
-    background: color-mix(in oklab, var(--accent) 13%, transparent);
-    box-shadow: inset 0 0 0 1px var(--accent);
+    color: var(--bg);
+    background: var(--fg);
+    box-shadow: none;
   }
   .pick input:checked + span::before {
-    background: var(--accent);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 25%, transparent);
+    background: #e8283f;
+    box-shadow: none;
   }
   .pick input:focus-visible + span {
     outline: 2px solid var(--accent);
@@ -1086,69 +1531,15 @@
     animation: spin 0.8s linear infinite;
   }
 
-  /* ----- 3D brand mark: slices of the logo stacked in depth ----- */
-  .emblem {
-    perspective: 1000px;
-  }
-  .emblem-body {
-    position: relative;
-    aspect-ratio: 110 / 167;
-    transform-style: preserve-3d;
-    transform: rotateX(calc(6deg + var(--ty, 0) * 1deg)) rotateY(calc(-26deg + var(--tx, 0) * 1deg));
-    transition: transform 1.2s var(--ease-expo);
-  }
-  .emblem-body[data-active] {
-    transition-duration: 0.35s;
-  }
-  .emblem-spin {
-    position: absolute;
-    inset: 0;
-    transform-style: preserve-3d;
-  }
-  .emblem-slice {
-    position: absolute;
-    inset: 0;
-    background: var(--c);
-    transform: translateZ(calc(var(--d) * var(--step, -1.6px)));
-    -webkit-mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-    mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-  }
-  .emblem-face {
-    background: linear-gradient(180deg, #a70b21 8%, #ef4c5b 92%);
-  }
-  .emblem-shine {
-    position: absolute;
-    inset: 0;
-    transform: translateZ(1px);
-    background: linear-gradient(125deg, rgb(255 255 255 / 0.32), transparent 28%, transparent 68%, rgb(255 255 255 / 0.1));
-    -webkit-mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-    mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-  }
-
-  /* ----- Capability ribbons: everything we build, on two bands that slide as you scroll ----- */
+  /* ----- Everything we build, in two lines of large type that slide as the page scrolls ----- */
   .ribbons {
     position: relative;
     overflow: hidden;
-    padding-block: clamp(40px, 5vw, 72px);
+    padding-block: clamp(18px, 2.2vw, 30px);
+    border-block: 1px solid var(--line);
   }
   .ribbon-band {
-    position: relative;
-    z-index: 1;
-    margin-inline: -3%;
-    padding-block: clamp(12px, 1.3vw, 18px);
-    transform: rotate(-2deg);
-    color: #fff;
-    /* White text passes AA on every stop of this gradient (4.8:1 or more). */
-    background: linear-gradient(90deg, #a70b21, #c41a33 30%, #d92d42 50%, #c41a33 70%, #a70b21);
-    box-shadow: 0 18px 40px -18px rgb(239 76 91 / 0.55);
-  }
-  .ribbon-band-alt {
-    z-index: 0;
-    margin-top: clamp(-30px, -2.2vw, -16px);
-    transform: rotate(1.6deg);
-    color: var(--fg);
-    background: var(--surface-2);
-    box-shadow: inset 0 0 0 1px var(--line-strong);
+    padding-block: clamp(4px, 0.6vw, 9px);
   }
   .ribbon-track {
     display: flex;
@@ -1157,104 +1548,58 @@
   .ribbon-item {
     display: inline-flex;
     align-items: center;
-    gap: clamp(18px, 2vw, 28px);
-    padding-left: clamp(18px, 2vw, 28px);
-    font-size: clamp(15px, 1.25vw, 19px);
+    gap: clamp(20px, 2.4vw, 38px);
+    padding-left: clamp(20px, 2.4vw, 38px);
+    font-size: clamp(1.75rem, 1rem + 3.3vw, 4rem);
     font-weight: 600;
-    letter-spacing: -0.01em;
+    line-height: 1.15;
+    letter-spacing: -0.045em;
     white-space: nowrap;
   }
-  /* The folded mark from the logo, between names. */
+  /* The second line is drawn in outline. */
+  .ribbon-band-alt .ribbon-item {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in oklab, var(--fg) 46%, transparent);
+  }
   .ribbon-item::after {
     content: "";
     flex: none;
-    width: 9px;
-    height: 12px;
-    background: currentColor;
-    opacity: 0.55;
+    width: 0.26em;
+    height: 0.36em;
+    background: linear-gradient(var(--color-crimson-deep), var(--color-crimson));
     clip-path: polygon(0 28%, 100% 0, 100% 72%, 0 100%);
   }
 
-  /* ----- What we build ----- */
-  .chip-cap {
-    min-height: 36px;
-    padding: 4px 14px 4px 11px;
-    font-size: 14px;
-    color: var(--fg);
-    background: color-mix(in oklab, var(--surface) 70%, transparent);
+  /* ----- Footer: always ink, with the name set as large as the page allows ----- */
+  .site-footer {
+    position: relative;
+    overflow: hidden;
+    background: var(--bg);
+    border-top: 1px solid var(--line);
   }
-  .cap-item {
-    display: flex;
-    gap: 14px;
-    padding: 16px;
-    border-radius: 16px;
-    background: color-mix(in oklab, var(--bg) 40%, var(--surface));
-    box-shadow: inset 0 0 0 1px var(--line);
-    transition: box-shadow 0.25s;
-  }
-  .cap-item:hover {
-    box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 45%, transparent);
-  }
-  .cap-icon {
-    display: grid;
-    place-items: center;
-    flex: none;
-    width: 38px;
-    height: 38px;
-    border-radius: 11px;
-    color: var(--accent);
-    background: color-mix(in oklab, var(--accent) 11%, transparent);
-  }
-  /* The open slot at the end of the list: a dashed outline waiting for the visitor's idea. */
-  .idea-card {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 20px 28px;
-    padding: clamp(22px, 3vw, 34px);
-    border-radius: 24px;
-    border: 1.5px dashed color-mix(in oklab, var(--accent) 55%, transparent);
-    background: color-mix(in oklab, var(--accent) 6%, transparent);
-  }
-  .idea-plus {
-    display: grid;
-    place-items: center;
-    width: 60px;
-    height: 60px;
-    border-radius: 18px;
-    color: #fff;
-    background: linear-gradient(180deg, #d92d42, #b8142c);
-    box-shadow: 0 12px 28px -12px rgb(239 76 91 / 0.7);
-    transition: transform 0.6s var(--ease-expo);
-  }
-  .idea-card:hover .idea-plus {
-    transform: rotate(90deg);
-  }
-  @media (max-width: 767px) {
-    .idea-card {
-      grid-template-columns: minmax(0, 1fr);
-      justify-items: start;
-    }
-  }
-
-  /* ----- Footer ----- */
   .foot-label {
     margin-bottom: 1rem;
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 500;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--subtle);
   }
+  .foot-link {
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .foot-link:hover {
+    color: var(--fg);
+  }
   .wordmark-xl {
-    font-family: var(--font-brand);
-    font-weight: 600;
-    font-size: clamp(2.2rem, 9.6vw, 9.2rem);
-    line-height: 0.9;
-    letter-spacing: -0.02em;
+    font-weight: 650;
+    font-size: clamp(1.9rem, 9.1vw, 8.9rem);
+    line-height: 0.86;
+    letter-spacing: -0.06em;
     white-space: nowrap;
-    background: linear-gradient(180deg, color-mix(in oklab, var(--fg) 16%, transparent), transparent 92%);
+    background: linear-gradient(180deg, color-mix(in oklab, var(--fg) 22%, transparent), color-mix(in oklab, var(--fg) 3%, transparent) 94%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -1264,10 +1609,9 @@
   /* ----- Legal and long text ----- */
   .prose-doc h2 {
     margin-top: 2.4rem;
-    font-family: var(--font-display);
     font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
+    font-weight: 600;
+    letter-spacing: -0.03em;
     line-height: 1.25;
   }
   .prose-doc p {
@@ -1295,17 +1639,12 @@
 @keyframes reveal {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(44px);
   }
 }
 @keyframes grow-x {
   from {
     transform: scaleX(0);
-  }
-}
-@keyframes grow-y {
-  from {
-    transform: scaleY(0);
   }
 }
 @keyframes count {
@@ -1321,14 +1660,6 @@
   to {
     transform: scale(3);
     opacity: 0;
-  }
-}
-@keyframes sway {
-  from {
-    transform: rotateY(-16deg) translateY(-2%);
-  }
-  to {
-    transform: rotateY(18deg) translateY(2%);
   }
 }
 @keyframes spin {
@@ -1354,18 +1685,31 @@
 }
 @keyframes ribbon-left {
   from {
-    transform: translateX(-4%);
+    transform: translateX(-2%);
   }
   to {
-    transform: translateX(-18%);
+    transform: translateX(-20%);
   }
 }
 @keyframes ribbon-right {
   from {
-    transform: translateX(-18%);
+    transform: translateX(-20%);
   }
   to {
-    transform: translateX(-4%);
+    transform: translateX(-2%);
+  }
+}
+/* A case panel eases back a little as the next one slides over it. */
+@keyframes tuck {
+  to {
+    transform: scale(0.955);
+    opacity: 0.55;
+  }
+}
+@keyframes drop {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
   }
 }
 
@@ -1389,9 +1733,6 @@
   .count {
     animation: count 1.9s var(--ease-expo) 0.45s both;
   }
-  .emblem-spin {
-    animation: sway 7s var(--ease-io) infinite alternate;
-  }
   .mobile-menu {
     animation: menu-in 0.35s var(--ease-expo);
   }
@@ -1412,9 +1753,9 @@
       animation-range: entry 0% entry calc(200px + var(--i, 0) * 60px);
     }
     .step-link {
-      animation: grow-y linear both;
+      animation: grow-x linear both;
       animation-timeline: --step;
-      animation-range: entry 70% cover 55%;
+      animation-range: entry 60% cover 45%;
     }
     .bar-fill {
       animation: grow-x linear both;
@@ -1433,13 +1774,22 @@
     .ribbon-band-alt .ribbon-track {
       animation-name: ribbon-right;
     }
+    /* Each block of an illustration drops into place as its row arrives. */
+    [data-reveal] .iso-box {
+      animation: drop linear both;
+      animation-timeline: view();
+      animation-range: entry calc(60px + var(--i, 0) * 16px) entry calc(260px + var(--i, 0) * 16px);
+    }
   }
 }
-@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) {
+@media (prefers-reduced-motion: no-preference) and (min-width: 1024px) and (min-height: 760px) {
   @supports (animation-timeline: view()) {
-    .step-link {
-      animation-name: grow-x;
-      animation-range: entry 90% cover 60%;
+    /* Not for the last panel: nothing slides over it. */
+    .case-stack .case:not(:last-child) {
+      animation: tuck linear both;
+      animation-timeline: view();
+      animation-range: exit-crossing 0% exit-crossing 100%;
+      transform-origin: 50% 0;
     }
   }
 }
@@ -1505,8 +1855,12 @@ html.theme-vt::view-transition-new(root) {
   .desktop-only {
     display: none !important;
   }
-  /* Room for the phone action bar. */
-  body {
+  .header-bar {
+    height: 52px;
+    padding: 0 4px 0 12px;
+  }
+  /* Room for the phone action bar under the last line of the footer. */
+  .site-footer {
     padding-bottom: 84px;
   }
 }
@@ -1520,50 +1874,59 @@ html.theme-vt::view-transition-new(root) {
    6. Sinhala. Its letters carry marks above and below the line, so headings
    need more line height, no negative letter spacing, and slightly smaller sizes
    so long words fit. Yaldevi Sinhala has regular and semibold only, so headings
-   use semibold rather than a faked bold.
+   use semibold rather than a faked bold, and highlighted words keep the same
+   letters in crimson instead of switching to the serif italic.
 --------------------------------------------------------------------------- */
 :lang(si) {
-  font-synthesis-weight: none;
+  font-synthesis: none;
 }
 :lang(si) body,
 body:lang(si) {
   line-height: 1.8;
+  letter-spacing: 0;
+}
+:lang(si) :is(.display-hero, .display-1, .display-2, .display-3, .title, .mobile-link, .ribbon-item, .lead, .btn, .nav-link, .link-arrow, .cap-list li) {
+  letter-spacing: 0;
 }
 :lang(si) :is(.display-hero, .display-1, .display-2, .display-3, .title, .mobile-link, .ribbon-item) {
-  letter-spacing: 0;
   font-weight: 600;
 }
+:lang(si) .em {
+  font-family: inherit;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1em;
+  letter-spacing: 0;
+  padding-inline-end: 0;
+}
 :lang(si) .display-hero {
-  font-size: clamp(2.15rem, 1.2rem + 3.6vw, 4.3rem);
-  line-height: 1.3;
+  font-size: clamp(2.15rem, 1.1rem + 4.2vw, 4.7rem);
+  line-height: 1.28;
 }
 :lang(si) .display-1 {
-  font-size: clamp(2rem, 1.25rem + 2.8vw, 3.6rem);
+  font-size: clamp(2rem, 1.2rem + 3.1vw, 4rem);
   line-height: 1.3;
 }
 :lang(si) .display-2 {
-  font-size: clamp(1.7rem, 1.2rem + 1.9vw, 2.7rem);
+  font-size: clamp(1.7rem, 1.2rem + 2vw, 2.9rem);
   line-height: 1.35;
 }
 :lang(si) .display-3 {
-  font-size: clamp(1.45rem, 1.15rem + 1vw, 2rem);
+  font-size: clamp(1.45rem, 1.15rem + 1vw, 2.05rem);
   line-height: 1.4;
 }
 :lang(si) .title {
-  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.55rem);
+  font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
   line-height: 1.45;
 }
 :lang(si) .lead {
   line-height: 1.75;
 }
-:lang(si) .eyebrow {
-  font-family: var(--font-sans);
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
+:lang(si) .ribbon-item {
+  font-size: clamp(1.5rem, 0.9rem + 2.6vw, 3.1rem);
+  line-height: 1.5;
 }
-:lang(si) .foot-label {
+:lang(si) :is(.eyebrow, .foot-label, .label) {
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 600;
@@ -1579,6 +1942,7 @@ body:lang(si) {
 }
 :lang(si) .mobile-link {
   font-size: clamp(1.5rem, 1.1rem + 2.4vw, 2rem);
+  line-height: 1.4;
 }
 /* Sinhala letters look smaller than Latin at the same size, so small text goes up a step. */
 :lang(si) .text-sm {
@@ -1589,6 +1953,6 @@ body:lang(si) {
   font-size: 16px;
 }
 /* English names inside Sinhala pages keep the English settings. */
-:lang(si) [lang="en"] {
-  letter-spacing: normal;
+:lang(si) [lang="en"]:is(.display-1, .display-2, .display-3) {
+  letter-spacing: -0.04em;
 }

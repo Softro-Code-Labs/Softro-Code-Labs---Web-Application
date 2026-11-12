@@ -6,7 +6,7 @@ import { ProjectStage, ScreenGallery } from "@/components/Devices";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
 import { ClosingCTA } from "@/components/Sections";
-import { Eyebrow, Page, SectionHeader, StatusBadge, vars } from "@/components/ui";
+import { Backdrop, Eyebrow, Page, SectionHeader, StatusBadge, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { projects as allProjects } from "@/content/projects";
 import { fill, langs, localize, resolveLang } from "@/i18n";
@@ -53,11 +53,7 @@ export default async function CaseStudy({ params }: Props) {
         ])}
       />
       <section className="hero" data-tilt-scope>
-        <div className="hero-bg" aria-hidden="true">
-          <div className="grid-bg" />
-          <div className="glow glow-crimson top-[-30%] right-[-12%] h-[72vw] max-h-[980px] w-[72vw] max-w-[980px]" />
-          <div className="glow glow-indigo top-[-20%] left-[-22%] h-[50vw] max-h-[700px] w-[50vw] max-w-[700px]" />
-        </div>
+        <Backdrop />
         <div className="wrap pt-8 pb-14 min-[1024px]:pt-12 min-[1024px]:pb-20">
           <Link className="link-arrow text-muted hover:text-fg" href={localize(lang, "/work")}>
             <span className="ring">

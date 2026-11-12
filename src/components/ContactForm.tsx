@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { flushSync } from "react-dom";
 import { site, whatsapp } from "@/content/site";
 import type { UI } from "@/content/ui";
@@ -11,10 +11,27 @@ import { vars } from "./ui";
 
 type Errors = Partial<Record<"name" | "contact" | "message", string>>;
 
-export function ContactForm({ lang, t, replyTime }: { lang: Lang; t: UI["form"]; replyTime: string }) {
+type Interest = keyof UI["form"]["interests"];
+const isInterest = (value: string | null, t: UI["form"]): value is Interest => value !== null && Object.hasOwn(t.interests, value);
+
+/**
+ * `interest` adds one of our products as the first choice, already picked: the Surelane page passes "surelane".
+ * Without it, a link such as /contact?interest=surelane does the same.
+ */
+export function ContactForm({ lang, t, replyTime, interest: given }: { lang: Lang; t: UI["form"]; replyTime: string; interest?: Interest }) {
   // "offline": the request never reached us. "failed": it reached us but could not be delivered.
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "failed" | "offline">("idle");
   const [errors, setErrors] = useState<Errors>({});
+  const [linked, setLinked] = useState<Interest>();
+  const interest = given ?? linked;
+
+  useEffect(() => {
+    if (given) return;
+    const value = new URLSearchParams(window.location.search).get("interest");
+    if (isInterest(value, t)) setLinked(value);
+  }, [given, t]);
+
+  const kinds = interest ? [t.interests[interest], ...t.kinds] : t.kinds;
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -70,9 +87,9 @@ export function ContactForm({ lang, t, replyTime }: { lang: Lang; t: UI["form"];
       <fieldset>
         <legend className="field-label">{t.kindLegend}</legend>
         <div className="mt-3 flex flex-wrap gap-2">
-          {t.kinds.map((kind, index) => (
+          {kinds.map((kind, index) => (
             <label key={kind.value} className="pick">
-              <input type="radio" name="kind" value={kind.value} defaultChecked={index === t.kinds.length - 1} />
+              <input type="radio" name="kind" value={kind.value} defaultChecked={interest ? index === 0 : index === kinds.length - 1} />
               <span>{kind.label}</span>
             </label>
           ))}
