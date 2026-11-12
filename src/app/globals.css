@@ -798,18 +798,21 @@
     }
   }
 
-  /* ----- The 3D logo (Hero3D.tsx). The flat logo shows first; the 3D model fades in over it. ----- */
-  .hero3d {
+  /* ----- The 3D logo (LogoModel in Hero3D.tsx). The flat logo shows first; the 3D model fades in over it. ----- */
+  .model3d {
     position: relative;
     aspect-ratio: 1;
-    width: min(100%, 420px);
-    margin-inline: auto;
     cursor: grab;
     touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
   }
-  .hero3d:active {
+  .model3d:active {
     cursor: grabbing;
+  }
+  /* On the home page it is large and spills past its column. */
+  .hero3d {
+    width: min(100%, 420px);
+    margin-inline: auto;
   }
   @media (min-width: 1024px) {
     .hero3d {
@@ -818,7 +821,11 @@
       margin-inline: -19%;
     }
   }
-  .hero3d::before {
+  /* On its own (About, 404) the box is portrait, like the mark. */
+  .model3d-solo {
+    aspect-ratio: 3 / 4;
+  }
+  .model3d::before {
     content: "";
     position: absolute;
     inset: 8%;
@@ -826,36 +833,39 @@
     border-radius: 50%;
     background: radial-gradient(closest-side, rgb(232 40 63 / 0.3), rgb(232 40 63 / 0.08) 55%, transparent);
   }
-  :root[data-theme="light"] .hero3d::before {
+  :root[data-theme="light"] .model3d::before {
     background: radial-gradient(closest-side, rgb(232 40 63 / 0.2), rgb(232 40 63 / 0.05) 55%, transparent);
   }
-  .hero3d canvas,
-  .hero3d-poster {
+  .model3d canvas,
+  .model3d-poster {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     transition: opacity 0.9s var(--ease-expo);
   }
-  .hero3d canvas {
+  .model3d canvas {
     opacity: 0;
   }
-  .hero3d-poster {
+  .model3d-poster {
     display: grid;
     place-items: center;
   }
-  .hero3d-poster svg {
+  .model3d-poster svg {
     width: auto;
     height: 62%;
     filter: drop-shadow(0 30px 40px rgb(167 11 33 / 0.35));
   }
-  .hero3d[data-ready] canvas {
+  .model3d-solo .model3d-poster svg {
+    height: 72%;
+  }
+  .model3d[data-ready] canvas {
     opacity: 1;
   }
-  .hero3d[data-ready] .hero3d-poster {
+  .model3d[data-ready] .model3d-poster {
     opacity: 0;
   }
-  .hero3d-hint {
+  .model3d-hint {
     position: absolute;
     left: 50%;
     bottom: 3%;
@@ -864,7 +874,7 @@
     opacity: 0;
     transition: opacity 0.6s 1.2s;
   }
-  .hero3d[data-ready] .hero3d-hint {
+  .model3d[data-ready] .model3d-hint {
     opacity: 1;
   }
 
@@ -1521,45 +1531,6 @@
     animation: spin 0.8s linear infinite;
   }
 
-  /* ----- The mark as a solid object: slices of the logo stacked in depth (Emblem.tsx) ----- */
-  .emblem {
-    perspective: 1000px;
-  }
-  .emblem-body {
-    position: relative;
-    aspect-ratio: 110 / 167;
-    transform-style: preserve-3d;
-    transform: rotateX(calc(6deg + var(--ty, 0) * 1deg)) rotateY(calc(-26deg + var(--tx, 0) * 1deg));
-    transition: transform 1.2s var(--ease-expo);
-  }
-  .emblem-body[data-active] {
-    transition-duration: 0.35s;
-  }
-  .emblem-spin {
-    position: absolute;
-    inset: 0;
-    transform-style: preserve-3d;
-  }
-  .emblem-slice {
-    position: absolute;
-    inset: 0;
-    background: var(--c);
-    transform: translateZ(calc(var(--d) * var(--step, -1.6px)));
-    -webkit-mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-    mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-  }
-  .emblem-face {
-    background: linear-gradient(180deg, #a70b21 8%, #ef4c5b 92%);
-  }
-  .emblem-shine {
-    position: absolute;
-    inset: 0;
-    transform: translateZ(1px);
-    background: linear-gradient(125deg, rgb(255 255 255 / 0.3), transparent 28%, transparent 68%, rgb(255 255 255 / 0.1));
-    -webkit-mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-    mask: url("/brand/softro-mark-mono-night.svg") center / contain no-repeat;
-  }
-
   /* ----- Everything we build, in two lines of large type that slide as the page scrolls ----- */
   .ribbons {
     position: relative;
@@ -1691,14 +1662,6 @@
     opacity: 0;
   }
 }
-@keyframes sway {
-  from {
-    transform: rotateY(-16deg) translateY(-2%);
-  }
-  to {
-    transform: rotateY(18deg) translateY(2%);
-  }
-}
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -1769,9 +1732,6 @@
   }
   .count {
     animation: count 1.9s var(--ease-expo) 0.45s both;
-  }
-  .emblem-spin {
-    animation: sway 7s var(--ease-io) infinite alternate;
   }
   .mobile-menu {
     animation: menu-in 0.35s var(--ease-expo);

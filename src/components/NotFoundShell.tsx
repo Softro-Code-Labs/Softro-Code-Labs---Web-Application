@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Emblem } from "@/components/Emblem";
+import { LogoModel } from "@/components/Hero3D";
 import { Footer } from "@/components/Footer";
 import { Header, PhoneBar } from "@/components/SiteChrome";
 import { ArrowRight } from "@/components/icons";
@@ -71,7 +71,7 @@ export function NotFoundShell() {
               </Link>
             </p>
           </div>
-          <Emblem className="w-[150px] min-[1024px]:mr-16 min-[1024px]:w-[230px]" interactive />
+          <LogoModel solo className="w-[200px] min-[1024px]:mr-10 min-[1024px]:w-[320px]" />
         </div>
       </main>
       <Footer lang={lang} t={ui.chrome} address={ui.address} />
