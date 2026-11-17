@@ -36,23 +36,69 @@ export async function POST(request: Request) {
   const language = body.lang === "si" ? "Sinhala" : "English";
   if (!name || !contact || !message) return NextResponse.json({ error: "Missing details." }, { status: 400 });
 
-  const key = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO_EMAIL;
-  const from = process.env.CONTACT_FROM_EMAIL;
-  if (!key || !to || !from) return NextResponse.json({ error: "Email is not set up." }, { status: 503 });
+  // Each enquiry goes to two places: an email (Resend) and a lead in Softro CRM.
+  // The visitor sees "sent" if at least one of them worked, so nothing is lost.
+  const emailReady = Boolean(process.env.RESEND_API_KEY && process.env.CONTACT_TO_EMAIL && process.env.CONTACT_FROM_EMAIL);
+  const crmReady = Boolean(process.env.CRM_URL && process.env.CRM_LEAD_API_KEY);
+  if (!emailReady && !crmReady) return NextResponse.json({ error: "Email is not set up." }, { status: 503 });
 
-  const email = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      from,
-      to,
-      reply_to: contact.includes("@") ? contact : undefined,
-      subject: `New enquiry from ${name}${language === "Sinhala" ? " (Sinhala)" : ""}`,
-      text: `Name: ${name}\nContact: ${contact}\nNeeds: ${kind}\nSite language: ${language}\n\n${message}`,
-    }),
-  });
+  const [emailSent, savedToCrm] = await Promise.all([
+    emailReady ? sendEmail({ name, contact, kind, message, language }) : Promise.resolve(false),
+    crmReady ? sendToCrm({ name, contact, kind, message, lang: body.lang === "si" ? "si" : "en", ip }) : Promise.resolve(false),
+  ]);
 
-  if (!email.ok) return NextResponse.json({ error: "The enquiry could not be sent." }, { status: 502 });
+  if (!emailSent && !savedToCrm) return NextResponse.json({ error: "The enquiry could not be sent." }, { status: 502 });
   return NextResponse.json({ ok: true });
+}
+
+type Enquiry = { name: string; contact: string; kind: string; message: string; language: string };
+
+async function sendEmail({ name, contact, kind, message, language }: Enquiry) {
+  try {
+    const response = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from: process.env.CONTACT_FROM_EMAIL,
+        to: process.env.CONTACT_TO_EMAIL,
+        reply_to: contact.includes("@") ? contact : undefined,
+        subject: `New enquiry from ${name}${language === "Sinhala" ? " (Sinhala)" : ""}`,
+        text: `Name: ${name}\nContact: ${contact}\nNeeds: ${kind}\nSite language: ${language}\n\n${message}`,
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!response.ok) console.error("Resend failed", response.status, await response.text());
+    return response.ok;
+  } catch (error) {
+    console.error("Resend failed", error);
+    return false;
+  }
+}
+
+/** Creates a lead in Softro CRM (POST /api/leads). See the CRM README, "Website form". */
+async function sendToCrm({ name, contact, kind, message, lang, ip }: { name: string; contact: string; kind: string; message: string; lang: "en" | "si"; ip: string }) {
+  try {
+    const response = await fetch(new URL("/api/leads", process.env.CRM_URL), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.CRM_LEAD_API_KEY!,
+        "x-visitor-ip": ip,
+      },
+      body: JSON.stringify({
+        name,
+        contact,
+        service: kind === "Not given" ? undefined : kind,
+        message,
+        language: lang,
+        page: "softrocodelabs.com contact form",
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!response.ok) console.error("CRM lead failed", response.status, await response.text());
+    return response.ok;
+  } catch (error) {
+    console.error("CRM lead failed", error);
+    return false;
+  }
 }
