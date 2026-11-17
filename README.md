@@ -74,6 +74,10 @@ The enquiry form sends email through Resend. Keep these in `.env.local` on your 
 | `RESEND_API_KEY` | Your key from resend.com. **Secret, never share it.** |
 | `CONTACT_TO_EMAIL` | Where enquiries arrive, e.g. `hello@softrocodelabs.com` |
 | `CONTACT_FROM_EMAIL` | The sender, e.g. `Softro website <website@softrocodelabs.com>`. It must be on the domain verified in Resend |
+| `CRM_URL` | Softro CRM address, e.g. `https://softro-code-labs-crm-system.vercel.app`. Each enquiry also becomes a lead there |
+| `CRM_LEAD_API_KEY` | The same value as `WEBSITE_LEAD_API_KEY` in the CRM. **Secret, never share it.** |
+
+Each enquiry is emailed **and** saved as a lead in the CRM. If one of them fails, the other still goes through and the visitor still sees "sent". Failures are logged in Vercel's function logs.
 
 Until these are set and the domain is verified, the form shows our email address and WhatsApp link instead, so enquiries are never lost silently.
 
@@ -128,7 +132,7 @@ The design is built to stay quick on ordinary phones. When you add to it:
 ## Going live on Vercel
 
 1. Import this GitHub repository into Vercel.
-2. Add the three [settings](#settings-environment-variables) under Environment Variables.
+2. Add the [settings](#settings-environment-variables) under Environment Variables.
 3. Add `softrocodelabs.com` under Domains and follow the DNS steps.
 4. Verify the domain in Resend.
 5. Send a test enquiry and confirm that it arrives.
