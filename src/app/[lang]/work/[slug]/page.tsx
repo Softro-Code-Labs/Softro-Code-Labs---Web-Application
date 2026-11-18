@@ -5,10 +5,11 @@ import { notFound } from "next/navigation";
 import { ProjectStage, ScreenGallery } from "@/components/Devices";
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
-import { ClosingCTA } from "@/components/Sections";
+import { ClosingCTA, TestimonialSection } from "@/components/Sections";
 import { Backdrop, Eyebrow, Page, SectionHeader, StatusBadge, vars } from "@/components/ui";
 import { getContent } from "@/content";
 import { projects as allProjects } from "@/content/projects";
+import { testimonials } from "@/content/testimonials";
 import { fill, langs, localize, resolveLang } from "@/i18n";
 import { breadcrumbJsonLd, pageMetadata } from "@/seo";
 
@@ -38,6 +39,7 @@ export default async function CaseStudy({ params }: Props) {
   if (index < 0) notFound();
   const project = projects[index];
   const next = projects[(index + 1) % projects.length];
+  const words = testimonials.filter((item) => item.project === project.slug);
   const facts = [
     { label: t.kindLabel, value: project.kind },
     { label: t.techLabel, value: project.tech.join(", ") },
@@ -143,6 +145,8 @@ export default async function CaseStudy({ params }: Props) {
           <ScreenGallery shots={project.gallery} />
         </div>
       </section>
+
+      <TestimonialSection lang={lang} items={words} eyebrow="04" id="client-words" />
 
       <section className="section defer" style={vars({ "--defer-h": "560px" })}>
         <div className="wrap">
