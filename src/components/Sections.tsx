@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ComponentProps, ComponentType, SVGProps } from "react";
 import { ContactForm } from "@/components/ContactForm";
@@ -8,7 +9,7 @@ import { LabProducts } from "@/components/LabProducts";
 import { getContent } from "@/content";
 import type { CapabilityGroupId, CapabilityId, Project, Step } from "@/content/projects";
 import { site, whatsapp } from "@/content/site";
-import { testimonials } from "@/content/testimonials";
+import { testimonials, type Testimonial } from "@/content/testimonials";
 import { fill, localize, type Lang } from "@/i18n";
 import {
   ArrowRight,
@@ -531,29 +532,140 @@ export function Process({ steps, eyebrow, title }: { steps: Step[]; eyebrow: str
 
 /* ---------------------------------------------------------------- Testimonials */
 
-/** Stays hidden until real client words are added to content/testimonials.ts. */
-export function Testimonials({ lang }: { lang: Lang }) {
-  if (testimonials.length === 0) return null;
-  const { ui } = getContent(lang);
+/** The client's photo, name and company, under their words. */
+function ClientName({ item }: { item: Testimonial }) {
   return (
-    <section className="section defer" aria-labelledby="testimonials-heading">
-      <div className="wrap">
-        <SectionHeader id="testimonials-heading" title={ui.testimonialsHeading} />
-        <div className="grid gap-5 min-[1024px]:grid-cols-2">
-          {testimonials.map((item, index) => (
-            // Quotes are shown in the words the client used.
-            <figure key={item.name} lang="en" className="card p-8 min-[1024px]:p-10" data-reveal style={vars({ "--i": index % 2 })}>
-              <Quote size={28} className="text-accent" />
-              <blockquote className="lead mt-5">“{item.quote}”</blockquote>
-              <figcaption className="mt-6 text-sm text-muted">
-                <span className="font-semibold text-fg">{item.name}</span>, {item.role}, {item.project}
-              </figcaption>
-            </figure>
-          ))}
+    <span className="flex items-center gap-4" lang="en">
+      {item.photo && (
+        <Image
+          className="h-12 w-12 flex-none rounded-full object-cover shadow-[0_0_0_3px_var(--surface),0_0_0_4px_var(--line-strong)]"
+          src={item.photo}
+          width={48}
+          height={48}
+          alt=""
+        />
+      )}
+      <span>
+        <span className="block font-semibold text-fg">{item.name ?? item.role}</span>
+        <span className="block text-sm text-muted">{item.name ? `${item.role}, ${item.company}` : item.company}</span>
+      </span>
+    </span>
+  );
+}
+
+/** The project a client is talking about, as a small card that leads to its case study. */
+function ProjectLink({ lang, slug }: { lang: Lang; slug: Testimonial["project"] }) {
+  const { ui, projects } = getContent(lang);
+  const project = projects.find((entry) => entry.slug === slug);
+  if (!project) return null;
+  return (
+    <Link
+      href={localize(lang, `/work/${project.slug}`)}
+      aria-label={fill(ui.projectRow.ctaLabel, { name: project.name })}
+      className="card spot group flex flex-wrap items-center justify-between gap-x-6 gap-y-4 p-5 min-[1024px]:p-6"
+      data-spot
+    >
+      <span>
+        <span className="block font-semibold text-fg" lang="en">
+          {project.name}
+        </span>
+        <span className="block text-sm text-muted">{project.kind}</span>
+      </span>
+      <span className="link-arrow text-muted group-hover:text-fg">
+        {ui.projectRow.cta}
+        <span className="ring">
+          <ArrowRight size={16} />
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+/**
+ * Client words. One quote is laid out as a feature: the heading and the project it's about on the left,
+ * the words on the right with the first paragraph pulled out larger. Two or more sit side by side as cards.
+ * Quotes always stay in the words, and the language, the client used.
+ */
+export function TestimonialSection({
+  lang,
+  items,
+  eyebrow,
+  linkProject = false,
+  id = "testimonials-heading",
+}: {
+  lang: Lang;
+  items: Testimonial[];
+  eyebrow?: string;
+  /** Link to the case study the words are about. Not wanted on that case study itself. */
+  linkProject?: boolean;
+  id?: string;
+}) {
+  if (items.length === 0) return null;
+  const { ui } = getContent(lang);
+
+  if (items.length > 1) {
+    return (
+      <section className="section defer" aria-labelledby={id}>
+        <div className="wrap">
+          <SectionHeader id={id} eyebrow={eyebrow} title={ui.testimonialsHeading} />
+          <div className="grid gap-5 min-[1024px]:grid-cols-2">
+            {items.map((item, index) => (
+              <figure key={item.quote[0]} className="card p-7 min-[640px]:p-10" data-reveal style={vars({ "--i": index % 2 })}>
+                <Quote size={28} className="text-accent" />
+                <blockquote lang="en" className="mt-5 space-y-4 text-[17.5px] leading-relaxed">
+                  {item.quote.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </blockquote>
+                <figcaption className="mt-8 border-t border-line pt-6">
+                  <ClientName item={item} />
+                </figcaption>
+              </figure>
+            ))}
+          </div>
         </div>
+      </section>
+    );
+  }
+
+  const [item] = items;
+  const [lead, ...rest] = item.quote;
+  return (
+    <section className="section defer" style={vars({ "--defer-h": "640px" })} aria-labelledby={id}>
+      <div className="wrap grid items-start gap-x-16 gap-y-10 min-[1024px]:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+        <div className="min-[1024px]:sticky min-[1024px]:top-[calc(var(--header-h)+32px)]" data-reveal>
+          {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+          <h2 id={id} className={`display-2 ${eyebrow ? "mt-5" : ""}`}>
+            {ui.testimonialsHeading}
+          </h2>
+          {linkProject && (
+            <div className="mt-10 max-w-[440px]">
+              <ProjectLink lang={lang} slug={item.project} />
+            </div>
+          )}
+        </div>
+        <figure className="card p-7 min-[640px]:p-10 min-[1024px]:p-12" data-reveal style={vars({ "--i": 1 })}>
+          <Quote size={36} className="text-accent" />
+          <blockquote lang="en" className="mt-6">
+            <p className="text-[20px] leading-[1.45] font-medium text-fg min-[1024px]:text-[24px]">{lead}</p>
+            {rest.map((paragraph) => (
+              <p key={paragraph} className="mt-5 text-[17px] leading-relaxed text-muted">
+                {paragraph}
+              </p>
+            ))}
+          </blockquote>
+          <figcaption className="mt-9 border-t border-line pt-7">
+            <ClientName item={item} />
+          </figcaption>
+        </figure>
       </div>
     </section>
   );
+}
+
+/** On the home page. Stays hidden until real client words are added to content/testimonials.ts. */
+export function Testimonials({ lang }: { lang: Lang }) {
+  return <TestimonialSection lang={lang} items={testimonials} linkProject />;
 }
 
 /* ---------------------------------------------------------------- Closing call to action */

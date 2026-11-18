@@ -69,6 +69,8 @@ In headings, words between `*asterisks*` are set in the crimson serif italic, as
 
 The enquiry form sends email through Resend. Keep these in `.env.local` on your computer and in Vercel's Environment Variables for the live site. **Never commit them.**
 
+To start, copy the template and fill in the real values: `cp .env.example .env.local`
+
 | Variable | What it's for |
 |---|---|
 | `RESEND_API_KEY` | Your key from resend.com. **Secret, never share it.** |

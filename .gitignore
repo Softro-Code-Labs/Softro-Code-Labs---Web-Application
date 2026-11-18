@@ -4,5 +4,7 @@ node_modules
 .env
 .env.local
 .env*
+# The template with placeholder values is safe to commit.
+!.env.example
 *.tsbuildinfo
 next-env.d.ts
