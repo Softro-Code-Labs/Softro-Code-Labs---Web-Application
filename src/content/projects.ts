@@ -91,10 +91,14 @@ const baileyn = {
 } satisfies Record<string, Shot>;
 
 const tourvista = {
-  home: { src: "/work/tourvista-home.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista Tours home page with the headline Your Journey to Serendipity Starts Here and a landmark search box", caption: "The landing page and its landmark search." },
-  packages: { src: "/work/tourvista-packages.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista packages page with a destination search, a budget filter and tour cards for Kandy and Wilpattu showing prices", caption: "Packages, with search and a budget filter." },
-  heritage: { src: "/work/tourvista-heritage.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista attractions page section Ancient Wonders and Sacred Heritage, with cards for Sigiriya, Galle Fort and Dambulla Cave Temple", caption: "Attractions are grouped by theme, from ancient heritage to wildlife." },
-  beaches: { src: "/work/tourvista-beaches.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista attractions page section Sri Lankan Beaches, with cards for Hikkaduwa, Talpe, Mirissa, Unawatuna, Weligama and Bentota", caption: "Each place has its own card and page." },
+  home: { src: "/work/tourvista-dark-home.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista Tours home page in the dark theme with the headline Your Journey to Serendipity Starts Here, a Where do you want to go? search box and quick links for Sigiriya, Ella Rock, Galle Fort and Nine Arch Bridge", caption: "The landing page and its landmark search, here in the dark theme." },
+  packages: { src: "/work/tourvista-dark-packages.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista packages page with tour cards for Southern Shores and Marine Life Expedition, The Sacred City and Sigiriya Rock Climb, and Deep South Leopard and Elephant Safari, each with a price per person, days and a Book now button", caption: "Tour packages show the price per person, the length and a Book now button." },
+  adminContent: { src: "/work/tourvista-admin-content.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista admin studio managing the Ancient Wonders and Sacred Heritage attractions, with cards for Sigiriya Rock Fortress and Galle Fort and buttons to add and view gallery items", caption: "The admin studio: attractions are grouped by theme, each with its own photo gallery." },
+  adminTours: { src: "/work/tourvista-admin-tours.webp", width: 1200, height: 750, frame: "browser", alt: "Tourvista admin Tour Manager with counts for total, live and hidden tours, a search with price filters and a Live only switch, and four tour cards with prices", caption: "The Tour Manager: every tour, live or hidden, with search and price filters." },
+  attractions: { src: "/work/tourvista-phone-attractions.webp", width: 540, height: 1169, frame: "phone", alt: "Tourvista Ancient Wonders and Sacred Heritage section on a phone, with a card for Sigiriya Rock Fortress, Lion Rock Kingdom", caption: "Attractions on a phone, grouped by theme." },
+  package: { src: "/work/tourvista-phone-package.webp", width: 540, height: 1169, frame: "phone", alt: "Tourvista tour overview on a phone for Southern Shores and Marine Life Expedition, with location, 4 days, 1 to 15 guests, 120 dollars per person and a Proceed to reservation button", caption: "Each tour shows its length, group size and price before booking." },
+  editor: { src: "/work/tourvista-phone-editor.webp", width: 540, height: 1169, frame: "phone", alt: "Tourvista admin Edit Package screen on a phone with a Live switch, cover photo, title, location, duration, vehicle type and guest limits, and an Update Package button", caption: "Staff can edit a tour, or take it offline, from a phone." },
+  menu: { src: "/work/tourvista-phone-menu.webp", width: 540, height: 1169, frame: "phone", alt: "Tourvista Admin Studio menu on a phone with System Overview, Attractions, Culture, Showcases, Manage Tours, Reservations Hub, Payments Hub and Customer Base", caption: "The admin studio covers content, tours, bookings, payments and customers." },
 } satisfies Record<string, Shot>;
 
 export const projects: Project[] = [
@@ -168,6 +172,7 @@ export const projects: Project[] = [
       "Attractions and culture sections that present Sri Lanka as a destination",
       "A packages page with search and a budget filter",
       "A reservations section for booking",
+      "An admin studio to manage attractions, culture, tours, reservations, payments and customers",
       "WhatsApp contact and links to Facebook, Instagram and TikTok",
       "Privacy, terms and cancellation pages",
       "Page titles, descriptions and share images written for search",
@@ -176,9 +181,9 @@ export const projects: Project[] = [
     status: "Live",
     tint: "#22b8cf",
     link: { href: "https://tourvistatours.com/", label: "Visit Tourvista Tours" },
-    screen: tourvista.home,
-    accent: tourvista.packages,
-    gallery: [tourvista.home, tourvista.packages, tourvista.heritage, tourvista.beaches],
+    screen: tourvista.package,
+    accent: tourvista.home,
+    gallery: [tourvista.home, tourvista.packages, tourvista.adminContent, tourvista.adminTours, tourvista.attractions, tourvista.package, tourvista.editor, tourvista.menu],
   },
 ];
 
