@@ -60,6 +60,7 @@ export const projectText: Record<Slug, ProjectText> = {
       "ශ්‍රී ලංකාව සංචාරක ගමනාන්තයක් ලෙස ඉදිරිපත් කරන ආකර්ෂණීය ස්ථාන සහ සංස්කෘතිය අංශ",
       "සෙවුමක් සහ අයවැය පෙරහනක් සහිත පැකේජ පිටුවක්",
       "වෙන්කිරීම් සඳහා අංශයක්",
+      "ආකර්ෂණීය ස්ථාන, සංස්කෘතිය, සංචාර, වෙන්කිරීම්, ගෙවීම් සහ පාරිභෝගිකයන් කළමනාකරණය කිරීමට පාලන ස්ටුඩියෝවක්",
       "WhatsApp සම්බන්ධතාව සහ Facebook, Instagram, TikTok සබැඳි",
       "රහස්‍යතා, කොන්දේසි සහ අවලංගු කිරීමේ ප්‍රතිපත්ති පිටු",
       "සෙවුම් යන්ත්‍ර සඳහා ලියූ පිටු මාතෘකා, විස්තර සහ බෙදාගැනීමේ රූප",
@@ -141,21 +142,37 @@ export const shotText: Record<string, ShotText> = {
     alt: "සූදානම් කිරීම ආරම්භ කිරීමට හෝ යැවූ බව සටහන් කිරීමට බොත්තම්, Processing, Dispatched සහ Cancelled සහිත විවෘත තත්ත්ව මෙනුවක්, භාණ්ඩ සහ ඇණවුම් ඉතිහාසය සහිත Baileyn පාලක ඇණවුම් පිටුව",
     caption: "කාර්ය මණ්ඩලය සෑම පියවරකදීම අවශ්‍ය නම් සටහනක් සමඟ ඇණවුම ඉදිරියට ගෙන යයි. පාරිභෝගික විස්තර මෙහි බොඳ කර ඇත.",
   },
-  "/work/tourvista-home.webp": {
-    alt: "Your Journey to Serendipity Starts Here සිරස්තලය සහ ස්ථාන සෙවුම් කොටුව සහිත Tourvista Tours මුල් පිටුව",
-    caption: "මුල් පිටුව සහ එහි ස්ථාන සෙවුම.",
+  "/work/tourvista-dark-home.webp": {
+    alt: "Your Journey to Serendipity Starts Here සිරස්තලය, Where do you want to go? සෙවුම් කොටුව සහ සීගිරිය, ඇල්ල රොක්, ගාලු කොටුව සහ නවආරුක්කු පාලම සඳහා ඉක්මන් සබැඳි සහිත, අඳුරු තේමාවේ Tourvista Tours මුල් පිටුව",
+    caption: "මුල් පිටුව සහ එහි ස්ථාන සෙවුම, මෙහි අඳුරු තේමාවෙන්.",
   },
-  "/work/tourvista-packages.webp": {
-    alt: "ගමනාන්ත සෙවුම, අයවැය පෙරහන සහ මිල සහිත මහනුවර සහ විල්පත්තු සංචාර කාඩ්පත් සහිත Tourvista පැකේජ පිටුව",
-    caption: "සෙවුමක් සහ අයවැය පෙරහනක් සහිත පැකේජ.",
+  "/work/tourvista-dark-packages.webp": {
+    alt: "එක් පුද්ගලයෙකුට මිල, දින ගණන සහ Book now බොත්තමක් සහිත, Southern Shores and Marine Life Expedition, The Sacred City and Sigiriya Rock Climb සහ Deep South Leopard and Elephant Safari සංචාර කාඩ්පත් ඇති Tourvista පැකේජ පිටුව",
+    caption: "සංචාර පැකේජවල එක් පුද්ගලයෙකුට මිල, කාලය සහ Book now බොත්තමක් පෙන්වයි.",
   },
-  "/work/tourvista-heritage.webp": {
-    alt: "සීගිරිය, ගාලු කොටුව සහ දඹුලු ලෙන් විහාරය සඳහා කාඩ්පත් සහිත Tourvista ආකර්ෂණීය ස්ථාන පිටුවේ පුරාණ උරුමය කොටස",
-    caption: "ආකර්ෂණීය ස්ථාන, පුරාණ උරුමයේ සිට වනජීවීන් දක්වා තේමා අනුව කාණ්ඩ කර ඇත.",
+  "/work/tourvista-admin-content.webp": {
+    alt: "සීගිරිය සහ ගාලු කොටුව සඳහා කාඩ්පත් සහ ඡායාරූප එකතුවට අයිතම එක් කිරීමට හා බැලීමට බොත්තම් සමඟ, Ancient Wonders and Sacred Heritage ආකර්ෂණීය ස්ථාන කළමනාකරණය කරන Tourvista පාලන ස්ටුඩියෝව",
+    caption: "පාලන ස්ටුඩියෝව: ආකර්ෂණීය ස්ථාන තේමාව අනුව සමූහ කර ඇති අතර, සෑම එකකටම තමන්ගේම ඡායාරූප එකතුවක් ඇත.",
   },
-  "/work/tourvista-beaches.webp": {
-    alt: "හික්කඩුව, තල්පෙ, මිරිස්ස, උණවටුන, වැලිගම සහ බෙන්තොට සඳහා කාඩ්පත් සහිත Tourvista වෙරළ කොටස",
-    caption: "සෑම ස්ථානයකටම තමන්ගේම කාඩ්පතක් සහ පිටුවක් ඇත.",
+  "/work/tourvista-admin-tours.webp": {
+    alt: "මුළු, ක්‍රියාත්මක සහ සඟවා ඇති සංචාර ගණන්, මිල පෙරහන් සහ Live only ස්විචය සහිත සෙවුමක්, සහ මිල සමඟ සංචාර කාඩ්පත් හතරක් ඇති Tourvista Tour Manager",
+    caption: "Tour Manager: ක්‍රියාත්මක හෝ සඟවා ඇති සෑම සංචාරයක්ම, සෙවුම සහ මිල පෙරහන් සමඟ.",
+  },
+  "/work/tourvista-phone-attractions.webp": {
+    alt: "සීගිරිය බලකොටුව සඳහා කාඩ්පතක් සහිත, දුරකථනයක Tourvista Ancient Wonders and Sacred Heritage කොටස",
+    caption: "දුරකථනයක ආකර්ෂණීය ස්ථාන, තේමාව අනුව සමූහ කර.",
+  },
+  "/work/tourvista-phone-package.webp": {
+    alt: "ස්ථානය, දින 4, අමුත්තන් 1 සිට 15 දක්වා, එක් පුද්ගලයෙකුට ඩොලර් 120 සහ Proceed to reservation බොත්තම සහිත, දුරකථනයක Southern Shores and Marine Life Expedition සංචාරයේ විස්තර",
+    caption: "සෑම සංචාරයක්ම වෙන්කිරීමට පෙර එහි කාලය, කණ්ඩායම් ප්‍රමාණය සහ මිල පෙන්වයි.",
+  },
+  "/work/tourvista-phone-editor.webp": {
+    alt: "Live ස්විචය, ආවරණ ඡායාරූපය, මාතෘකාව, ස්ථානය, කාලය, වාහන වර්ගය සහ අමුත්තන් සීමා සහ Update Package බොත්තම සහිත, දුරකථනයක Tourvista පාලක Edit Package තිරය",
+    caption: "කාර්ය මණ්ඩලයට දුරකථනයකින්ම සංචාරයක් සංස්කරණය කිරීමට හෝ එය නොපෙන්වා තැබීමට හැකියි.",
+  },
+  "/work/tourvista-phone-menu.webp": {
+    alt: "System Overview, Attractions, Culture, Showcases, Manage Tours, Reservations Hub, Payments Hub සහ Customer Base සහිත, දුරකථනයක Tourvista Admin Studio මෙනුව",
+    caption: "පාලන ස්ටුඩියෝව අන්තර්ගතය, සංචාර, වෙන්කිරීම්, ගෙවීම් සහ පාරිභෝගිකයන් ආවරණය කරයි.",
   },
   "/work/surelane-today.webp": {
     alt: "ඊළඟ සෙවුමේ වේලාව, Searched ලෙස සලකුණු කළ පෙ.ව. 8:00, ප.ව. 12:30 සහ ප.ව. 5:00 සෙවුම් කාලරේඛාවක්, සොයාගත් රැකියා සහ ගැළපීම් ගණන්, සහ 90% හොඳම ගැළපීම සහිත Surelane Today පිටුව",
