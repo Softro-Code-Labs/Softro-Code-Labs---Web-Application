@@ -217,7 +217,7 @@ const framecraft = {
   welcome: { src: "/work/framecraft-welcome.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft in Video mode on a first visit, with the LTX-2.5 model that makes video with sound, a prompt box, a start-image drop zone, and a Let's create something guide in three steps", caption: "Video mode: LTX-2.5 makes short clips with sound, and a three-step guide helps on the first visit." },
   chat: { src: "/work/framecraft-chat.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft Edit in chat beside a rainy street café picture, with earlier versions and instructions such as make it a bright sunny morning and add a red bicycle", caption: "Edit in chat: each message changes the picture, and every version is kept." },
   download: { src: "/work/framecraft-download.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft asking before it downloads the Wan 2.2 video model: an 18 GB download, the free space before and after, where it will be saved and about how long it takes, with Download and Not now buttons", caption: "Before a model downloads, Framecraft shows its size, the free space left and where it will go." },
-  viewer: { src: "/work/framecraft-viewer.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft viewer showing a photo-like portrait of an astronaut in a sunflower field, with its prompt, seed, size, steps, time and graphics memory used, and buttons to edit in chat, reuse settings, show in folder or delete", caption: "Every result keeps its prompt, seed and settings, ready to edit in chat or reuse." },
+  settings: { src: "/work/framecraft-settings.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft Settings with a Hugging Face token box, the model library that lists folders holding models, the folder where downloads are saved, and where results and app data are kept", caption: "Settings: add a drive that already holds models, choose where downloads go, and where results are saved." },
   models: { src: "/work/framecraft-models.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft Models window listing video models such as LTX-2.5, Wan 2.2 and MiniMax H3 and image models such as Qwen-Image 2.1, FLUX.2 klein and Ideogram 4, each with its size, status and buttons to download or load", caption: "Models download when first needed, or load from a drive you already have." },
 } satisfies Record<string, Shot>;
 
@@ -271,8 +271,8 @@ export const labApps: LabApp[] = [
     platform: "Windows",
     category: "MultimediaApplication",
     screen: framecraft.images,
-    accent: framecraft.viewer,
-    gallery: [framecraft.images, framecraft.chat, framecraft.welcome, framecraft.viewer, framecraft.models, framecraft.download],
+    accent: framecraft.chat,
+    gallery: [framecraft.images, framecraft.chat, framecraft.welcome, framecraft.settings, framecraft.models, framecraft.download],
   },
   {
     slug: "autoledger",
