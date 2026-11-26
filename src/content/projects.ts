@@ -199,8 +199,9 @@ export const labShots = {
   password: { src: "/work/sch-tool-password.webp", width: 355, height: 798, frame: "phone", alt: "Swift Converter Hub password generator on a phone with a coloured password, Copy and New password buttons, and a Very strong rating", caption: "The password generator, one of the 13 text tools." },
 } satisfies Record<string, Shot>;
 
-/** Surelane, our commercial job-search agent, shown on The Lab page. */
-export const surelaneShots = {
+/* ---------------------------------------------------------------- The Lab's commercial apps */
+
+const surelane = {
   today: { src: "/work/surelane-today.webp", width: 1200, height: 575, frame: "browser", alt: "Surelane Today page with the next search time, a timeline of the 8:00 AM, 12:30 PM and 5:00 PM searches all marked Searched, counts of jobs found, new today, strong, good and potential matches, and the best match at 90%", caption: "Today: the next search, the day's three searches and the best matches." },
   applications: { src: "/work/surelane-applications.webp", width: 1200, height: 575, frame: "browser", alt: "Surelane Applications page with counts for Saved, Interested, Applied, Interview, Shortlisted and Offer Received, and a Full-Stack Developer job marked 80% Strong with a stage menu and a Move to Applied button", caption: "Each application moves from saved to offer, with a note at every step." },
   sources: { src: "/work/surelane-sources.webp", width: 1200, height: 575, frame: "browser", alt: "Surelane Job sources page listing ITPro.lk, Jobpal.lk, Govjobs.lk, Govdoc Jobs and Himalayas, each marked Checked with the number of listings and when they were read", caption: "Every source is shown with what happened last time, and what is never read." },
@@ -210,6 +211,81 @@ export const surelaneShots = {
   insights: { src: "/work/surelane-phone-insights.webp", width: 355, height: 798, frame: "phone", alt: "Surelane Career insights on a phone, listing the skills matching jobs ask for most, such as Communication, Problem Solving and Linux, with links to free courses", caption: "Career insights point to free courses for the skills jobs ask for most." },
   settings: { src: "/work/surelane-phone-settings.webp", width: 355, height: 798, frame: "phone", alt: "Surelane Search settings on a phone with switches for the Surelane agent, local job opportunities, global job opportunities and match emails", caption: "Switches for local and global jobs, and for the email alerts." },
 } satisfies Record<string, Shot>;
+
+const framecraft = {
+  images: { src: "/work/framecraft-images.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft creating images: the Image tab with the FLUX.2 klein model, a prompt for an astronaut in a sunflower field, a gold Create button, and a gallery of results including a poster, a hummingbird, a coffee cup and a fox in snow", caption: "Pick a model, describe the picture and press Create. Every result joins the gallery." },
+  videos: { src: "/work/framecraft-videos.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft in Video mode with the LTX-2.5 model, which makes video with sound, a prompt about waves on black rocks at sunset, an optional starting picture and a size choice", caption: "Video mode makes short clips, some with sound, from a prompt or a starting picture." },
+  chat: { src: "/work/framecraft-chat.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft Edit in chat beside a rainy street café picture, with earlier versions and instructions such as make it a bright sunny morning and add a red bicycle", caption: "Edit in chat: each message changes the picture, and every version is kept." },
+  poster: { src: "/work/framecraft-poster.webp", width: 1200, height: 675, frame: "browser", alt: "A Framecraft result in the viewer: a dark poster reading Create without limits in gold letters, with its model, size, seed and time listed beside it", caption: "Results open in a viewer with their prompt, seed and settings, ready to reuse." },
+  progress: { src: "/work/framecraft-progress.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft while creating: a live tile at 50% in the gallery, a progress bar reading Creating, step 2 of 4, and a Cancel button", caption: "A live tile and progress bar show each step, and Cancel stops at any point." },
+  models: { src: "/work/framecraft-models.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft Models window listing video models such as LTX-2.5, Wan 2.2 and MiniMax H3 and image models such as Qwen-Image 2.1, FLUX.2 klein and Ideogram 4, each with its size, status and buttons to download or load", caption: "Models download when first needed, or load from a drive you already have." },
+} satisfies Record<string, Shot>;
+
+const autoledger = {
+  login: { src: "/work/autoledger-login.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger sign-in screen with the headline Every service. Every rupee., a list of what the app does and a Welcome back form with email, password and a Keep me logged in option", caption: "Each person signs in to their own private ledger." },
+  dashboard: { src: "/work/autoledger-dashboard.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger dashboard with total spend, this month, the monthly average and the odometer, a monthly spend chart, a category donut chart and recent expenses", caption: "The dashboard: this month against last, a 12-month chart and the share per category." },
+  addExpense: { src: "/work/autoledger-add-expense.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger Add expense form with item, category, vendor, date, odometer, unit cost and quantity, and the total worked out as LKR 126,000", caption: "Adding an expense: the total works itself out from the cost and quantity." },
+  log: { src: "/work/autoledger-expense-log.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger expense log with search, category, vendor and date filters, totals, an Export CSV button and a table of services, parts and fuel with coloured category badges", caption: "The expense log searches, filters and exports exactly what's on screen." },
+  reports: { src: "/work/autoledger-reports.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger Spending insights with lifetime spend, cost per km, the busiest month and the top category, a spend over time chart, and breakdowns by category and vendor", caption: "Reports add cost per kilometre, the busiest month and the biggest costs." },
+  backups: { src: "/work/autoledger-backups.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger administrator Backups page showing the last backup, the next automatic backup in 30 minutes, the stored snapshots and buttons to back up now, import or restore", caption: "Backups run every 30 minutes, and any of them can be restored in one click." },
+} satisfies Record<string, Shot>;
+
+export type LabAppSlug = "surelane" | "framecraft" | "autoledger";
+
+/** A commercial app from the Lab. Each has its own page at /lab/{slug}; its words are in ui.apps. */
+export type LabApp = {
+  slug: LabAppSlug;
+  name: string;
+  /** The square app icon in public/work. */
+  icon: string;
+  /** The colour of the glow behind the app's screens. */
+  tint: string;
+  /** For search engines (schema.org): where it runs and what kind of app it is. */
+  platform: "Web" | "Windows";
+  category: "BusinessApplication" | "MultimediaApplication" | "FinanceApplication";
+  /** The screen in front, and the one behind it, at the top of the app's page. */
+  screen: Shot;
+  accent?: Shot;
+  /** All screens, shown on the app's page. The first desktop one also appears on The Lab page. */
+  gallery: Shot[];
+};
+
+/** In the order they appear, after Swift Converter Hub. */
+export const labApps: LabApp[] = [
+  {
+    slug: "surelane",
+    name: "Surelane",
+    icon: "/work/surelane-icon.webp",
+    tint: "#6f5cf0",
+    platform: "Web",
+    category: "BusinessApplication",
+    screen: surelane.jobs,
+    accent: surelane.today,
+    gallery: [surelane.today, surelane.applications, surelane.sources, surelane.storage, surelane.jobs, surelane.match, surelane.insights, surelane.settings],
+  },
+  {
+    slug: "framecraft",
+    name: "Framecraft",
+    icon: "/work/framecraft-icon.webp",
+    tint: "#c9a56a",
+    platform: "Windows",
+    category: "MultimediaApplication",
+    screen: framecraft.images,
+    accent: framecraft.poster,
+    gallery: [framecraft.images, framecraft.videos, framecraft.chat, framecraft.poster, framecraft.progress, framecraft.models],
+  },
+  {
+    slug: "autoledger",
+    name: "AutoLedger",
+    icon: "/work/autoledger-icon.webp",
+    tint: "#2dd4bf",
+    platform: "Windows",
+    category: "FinanceApplication",
+    screen: autoledger.dashboard,
+    accent: autoledger.reports,
+    gallery: [autoledger.dashboard, autoledger.addExpense, autoledger.log, autoledger.reports, autoledger.backups, autoledger.login],
+  },
+];
 
 export const studios = [
   { name: "Text", tools: 13 },

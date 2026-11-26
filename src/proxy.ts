@@ -11,6 +11,9 @@ export function proxy(request: NextRequest) {
 
   if (pathname === "/si" || pathname.startsWith("/si/")) return NextResponse.next();
 
+  // Generated share pictures (opengraph-image files) are linked at their /en address, so they're served there as they are.
+  if (pathname.startsWith("/en/") && pathname.includes("/opengraph-image")) return NextResponse.next();
+
   if (pathname === "/en" || pathname.startsWith("/en/")) {
     const url = request.nextUrl.clone();
     url.pathname = pathname.slice(3) || "/";

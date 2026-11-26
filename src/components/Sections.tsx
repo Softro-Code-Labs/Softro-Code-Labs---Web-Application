@@ -9,6 +9,7 @@ import { LabProducts } from "@/components/LabProducts";
 import { getContent } from "@/content";
 import type { CapabilityGroupId, CapabilityId, Project, Step } from "@/content/projects";
 import { site, whatsapp } from "@/content/site";
+import type { StatCount } from "@/content/ui";
 import { testimonials, type Testimonial } from "@/content/testimonials";
 import { fill, localize, type Lang } from "@/i18n";
 import {
@@ -95,25 +96,40 @@ export function Hero({ lang }: { lang: Lang }) {
       </div>
 
       <div className="wrap pb-10">
-        <Stats stats={t.stats} />
+        <Stats lang={lang} />
       </div>
     </section>
   );
 }
 
-/** Real numbers only. Each counts up from zero (CSS only); screen readers get the plain number. */
-function Stats({ stats }: { stats: { value: number; label: string }[] }) {
+/**
+ * Real numbers only, worked out from the content, so they stay right as projects and Lab products are added.
+ * Each counts up from zero (CSS only); screen readers get the plain number.
+ */
+function Stats({ lang }: { lang: Lang }) {
+  const { ui, projects, labApps, studios } = getContent(lang);
+  const counts: Record<StatCount, number> = {
+    projects: projects.length,
+    // Swift Converter Hub, plus the commercial apps.
+    labProducts: 1 + labApps.length,
+    tools: studios.reduce((total, studio) => total + studio.tools, 0),
+    // The number in the reply time ("2 working days"), so it always matches the "We reply within" line above.
+    replyDays: Number(ui.replyTime.match(/\d+/)?.[0]),
+  };
   return (
     <dl className="stats enter" style={vars({ "--i": 4 })}>
-      {stats.map((stat) => (
-        <div key={stat.label} className="stat">
-          <dt>{stat.label}</dt>
-          <dd>
-            <span className="sr-only">{stat.value}</span>
-            <span aria-hidden="true" className="count" style={vars({ "--to": stat.value })} />
-          </dd>
-        </div>
-      ))}
+      {ui.home.stats.map((stat) => {
+        const value = counts[stat.count];
+        return (
+          <div key={stat.label} className="stat">
+            <dt>{stat.label}</dt>
+            <dd>
+              <span className="sr-only">{value}</span>
+              <span aria-hidden="true" className="count" style={vars({ "--to": value })} />
+            </dd>
+          </div>
+        );
+      })}
     </dl>
   );
 }

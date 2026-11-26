@@ -4,16 +4,17 @@ import {
   capabilityGroupText,
   capabilityLayout,
   capabilityText,
+  labApps,
   labShots,
   projects,
   services,
   steps,
   studios,
-  surelaneShots,
   type CapabilityGroup,
   type CapabilityGroupId,
   type CapabilityId,
   type CapabilityText,
+  type LabApp,
   type Project,
   type Shot,
 } from "./projects";
@@ -37,6 +38,11 @@ function shotSi(shot: Shot): Shot {
   return { ...shot, ...text };
 }
 
+/** A Lab app with Sinhala descriptions and captions for its screenshots. */
+function labAppSi(app: LabApp): LabApp {
+  return { ...app, screen: shotSi(app.screen), accent: app.accent && shotSi(app.accent), gallery: app.gallery.map(shotSi) };
+}
+
 function projectSi(project: Project): Project {
   const { linkLabel, ...text } = projectText[project.slug];
   return {
@@ -55,12 +61,12 @@ function capabilities(groups: Record<CapabilityGroupId, CapabilityText>, items: 
 }
 
 const content = {
-  en: { ui: en, projects, labShots, surelaneShots, studios, services, steps, capabilities: capabilities(capabilityGroupText, capabilityText), legal: legalEn },
+  en: { ui: en, projects, labShots, labApps, studios, services, steps, capabilities: capabilities(capabilityGroupText, capabilityText), legal: legalEn },
   si: {
     ui: si,
     projects: projects.map(projectSi),
     labShots: Object.fromEntries(Object.entries(labShots).map(([key, shot]) => [key, shotSi(shot)])) as typeof labShots,
-    surelaneShots: Object.fromEntries(Object.entries(surelaneShots).map(([key, shot]) => [key, shotSi(shot)])) as typeof surelaneShots,
+    labApps: labApps.map(labAppSi),
     studios: studios.map((studio) => ({ ...studio, name: studioNames[studio.name] ?? studio.name })),
     services: servicesSi,
     steps: stepsSi,

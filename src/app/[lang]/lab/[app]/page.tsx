@@ -1,50 +1,72 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { ScreenGallery } from "@/components/Devices";
-import { ArrowLeft, ArrowRight, Calendar, Check, Mail, Plus, Shield, Sparkles } from "@/components/icons";
+import { ArrowLeft, ArrowRight, Calendar, Chat, Check, Dashboard, Download, Layers, Mail, Plus, Receipt, Shield, Sparkles, Users } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
+import { AppIcon, AppStage } from "@/components/LabApps";
 import { LabProducts } from "@/components/LabProducts";
 import { ClosingCTA } from "@/components/Sections";
-import { SurelaneLogo, SurelaneStage } from "@/components/Surelane";
 import { Backdrop, Page, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
+import { labApps as allApps, type LabAppSlug } from "@/content/projects";
 import { site } from "@/content/site";
-import { fill, localize, resolveLang, type LangParams } from "@/i18n";
+import { fill, langs, localize, resolveLang } from "@/i18n";
 import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/seo";
 
-const stepIcons = [Plus, Calendar, Sparkles, Mail];
+type Props = { params: Promise<{ lang: string; app: string }> };
 
-export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
-  const lang = await resolveLang(params);
-  const { surelane } = getContent(lang).ui;
-  return pageMetadata(lang, "/lab/surelane", surelane.title, surelane.description);
+/** An icon for each of an app's four "how it works" steps. */
+const stepIcons: Record<LabAppSlug, typeof Plus[]> = {
+  surelane: [Plus, Calendar, Sparkles, Mail],
+  framecraft: [Download, Layers, Sparkles, Chat],
+  autoledger: [Users, Receipt, Dashboard, Download],
+};
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return langs.flatMap((lang) => allApps.map((app) => ({ lang, app: app.slug })));
 }
 
-/** Surelane, our commercial job-search agent. People who want to use it ask through the form at the foot of the page. */
-export default async function SurelanePage({ params }: LangParams) {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const lang = await resolveLang(params);
-  const { ui, surelaneShots } = getContent(lang);
-  const t = ui.surelane;
-  const shots = surelaneShots;
+  const { app: slug } = await params;
+  const app = allApps.find((item) => item.slug === slug);
+  if (!app) return {};
+  const text = getContent(lang).ui.apps[app.slug];
+  return pageMetadata(lang, `/lab/${app.slug}`, text.title, text.description, { ownImage: true });
+}
+
+/** A commercial app from the Lab. People who want to use it ask through the form at the foot of the page. */
+export default async function LabAppPage({ params }: Props) {
+  const lang = await resolveLang(params);
+  const { app: slug } = await params;
+  const { ui, labApps } = getContent(lang);
+  const app = labApps.find((item) => item.slug === slug);
+  if (!app) notFound();
+  const t = ui.apps[app.slug];
+  const icons = stepIcons[app.slug];
+  const path = `/lab/${app.slug}`;
 
   return (
     <Page>
       <JsonLd
         data={breadcrumbJsonLd(lang, [
           { name: ui.chrome.lab, path: "/lab" },
-          { name: "Surelane", path: "/lab/surelane" },
+          { name: app.name, path },
         ])}
       />
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "SoftwareApplication",
-          name: "Surelane",
-          applicationCategory: "BusinessApplication",
-          operatingSystem: "Web",
+          name: app.name,
+          applicationCategory: app.category,
+          operatingSystem: app.platform,
           description: t.description,
-          url: absoluteUrl(localize(lang, "/lab/surelane")),
-          image: absoluteUrl(shots.today.src),
+          url: absoluteUrl(localize(lang, path)),
+          image: absoluteUrl(app.gallery[0].src),
           inLanguage: lang,
           publisher: { "@type": "Organization", name: site.name, url: site.url },
         }}
@@ -60,7 +82,7 @@ export default async function SurelanePage({ params }: LangParams) {
               </span>
               {ui.chrome.lab}
             </Link>
-            <LabProducts lang={lang} current="surelane" className="max-[519px]:w-full" />
+            <LabProducts lang={lang} current={app.slug} className="max-[519px]:w-full" />
           </div>
 
           <div className="mt-10 grid items-center gap-x-14 gap-y-12 min-[1024px]:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
@@ -70,9 +92,9 @@ export default async function SurelanePage({ params }: LangParams) {
                 <span className="chip">{t.tagline}</span>
               </div>
               <div className="mt-7 flex items-center gap-5">
-                <SurelaneLogo size={64} eager />
+                <AppIcon app={app} size={64} eager />
                 <h1 className="display-1" lang="en">
-                  Surelane
+                  {app.name}
                 </h1>
               </div>
               <p className="lead enter mt-6 max-w-[540px] text-muted" style={vars({ "--i": 1 })}>
@@ -90,7 +112,7 @@ export default async function SurelanePage({ params }: LangParams) {
               </div>
             </div>
             <div className="stage-enter">
-              <SurelaneStage lang={lang} eager />
+              <AppStage app={app} eager />
             </div>
           </div>
 
@@ -110,7 +132,7 @@ export default async function SurelanePage({ params }: LangParams) {
           <SectionHeader id="steps-heading" title={t.stepsHeading} />
           <ol className="grid gap-5 min-[768px]:grid-cols-2 min-[1280px]:grid-cols-4">
             {t.steps.map((step, index) => {
-              const Icon = stepIcons[index] ?? Sparkles;
+              const Icon = icons[index] ?? Sparkles;
               return (
                 <li key={step.title} className="card spot p-7 min-[1024px]:p-8" data-spot data-reveal style={vars({ "--i": index })}>
                   <div className="flex items-start justify-between gap-4">
@@ -155,12 +177,12 @@ export default async function SurelanePage({ params }: LangParams) {
 
       <section className="section defer" style={vars({ "--defer-h": "1600px" })} aria-labelledby="screens">
         <div className="wrap">
-          <SectionHeader id="screens" eyebrow="Surelane" title={t.screensHeading} />
-          <ScreenGallery shots={[shots.today, shots.applications, shots.sources, shots.storage, shots.jobs, shots.match, shots.insights, shots.settings]} />
+          <SectionHeader id="screens" eyebrow={app.name} title={t.screensHeading} />
+          <ScreenGallery shots={app.gallery} />
         </div>
       </section>
 
-      <ClosingCTA lang={lang} heading={t.ctaHeading} lead={fill(t.ctaText, { time: ui.replyTime })} interest="surelane" />
+      <ClosingCTA lang={lang} heading={t.ctaHeading} lead={fill(t.ctaText, { time: ui.replyTime })} interest={app.slug} />
     </Page>
   );
 }

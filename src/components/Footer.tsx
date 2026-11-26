@@ -94,7 +94,7 @@ export function Footer({ lang, t, address }: { lang: Lang; t: Chrome; address: s
       <div className="wrap">
         <div className="flex flex-wrap items-center justify-between gap-4 border-t border-line py-6 text-sm text-subtle">
           <p>
-            © {new Date().getFullYear()} <span lang="en">{site.name}</span>
+            © {new Date().getFullYear()} <span lang="en">{site.legalName}</span>
           </p>
           <a href="#main" className="foot-link inline-flex items-center gap-2">
             {t.backToTop}

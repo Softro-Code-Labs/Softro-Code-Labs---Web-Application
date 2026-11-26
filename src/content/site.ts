@@ -3,6 +3,8 @@ import type { Lang } from "@/i18n";
 /** Details that are the same in both languages. Translated wording lives in ui.ts and si/ui.ts. */
 export const site = {
   name: "Softro Code Labs",
+  /** The registered company, for the copyright line, the privacy policy and terms, and search engines. The brand stays `name`. */
+  legalName: "Softro Code Labs (Pvt) Ltd",
   url: "https://softrocodelabs.com",
   email: "hello@softrocodelabs.com",
   phoneDisplay: "077 278 0771",
@@ -13,7 +15,7 @@ export const site = {
    * When the site's content last changed, as year-month-day. The sitemap gives this date to search engines,
    * so they know when to read the pages again. Change it whenever you publish new wording, projects or screenshots.
    */
-  updated: "2026-11-04",
+  updated: "2026-11-26",
 };
 
 const whatsappGreeting: Record<Lang, string> = {

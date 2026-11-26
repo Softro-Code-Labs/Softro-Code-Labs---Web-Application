@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { ui, projects } = getContent(lang);
   const project = projects.find((item) => item.slug === slug);
   if (!project) return {};
-  return pageMetadata(lang, `/work/${slug}`, fill(ui.caseStudy.title, { name: project.name, kind: project.kind }), project.summary);
+  return pageMetadata(lang, `/work/${slug}`, fill(ui.caseStudy.title, { name: project.name, kind: project.kind }), project.summary, { ownImage: true });
 }
 
 export default async function CaseStudy({ params }: Props) {

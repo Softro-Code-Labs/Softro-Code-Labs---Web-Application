@@ -1,17 +1,20 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getContent } from "@/content";
+import type { LabAppSlug } from "@/content/projects";
 import { localize, type Lang } from "@/i18n";
 
-type ProductId = "swift" | "surelane";
+type ProductId = "swift" | LabAppSlug;
 
 /**
- * Switches between the Lab's products. The one on show is raised and marked current;
- * the other is a link to its page. Used under the Lab intro and at the top of each product's page.
+ * Switches between the Lab's products: Swift Converter Hub first, then the commercial apps.
+ * The one on show is raised and marked current; the others link to their pages.
+ * Used under the Lab intro and at the top of each app's page.
  */
 export function LabProducts({ lang, current, className = "" }: { lang: Lang; current: ProductId; className?: string }) {
-  const t = getContent(lang).ui.lab.products;
-  const products = [
+  const { ui, labApps } = getContent(lang);
+  const t = ui.lab.products;
+  const products: { id: ProductId; name: string; meta: string; href: string; logo: React.ReactNode }[] = [
     {
       id: "swift",
       name: "Swift Converter Hub",
@@ -23,14 +26,14 @@ export function LabProducts({ lang, current, className = "" }: { lang: Lang; cur
         </span>
       ),
     },
-    {
-      id: "surelane",
-      name: "Surelane",
+    ...labApps.map((app) => ({
+      id: app.slug,
+      name: app.name,
       meta: t.commercial,
-      href: "/lab/surelane",
-      logo: <Image className="lab-switch-logo" src="/work/surelane-icon.webp" width={36} height={36} alt="" />,
-    },
-  ] satisfies { id: ProductId; name: string; meta: string; href: string; logo: React.ReactNode }[];
+      href: `/lab/${app.slug}`,
+      logo: <Image className="lab-switch-logo" src={app.icon} width={36} height={36} alt="" />,
+    })),
+  ];
 
   return (
     <nav aria-label={t.label} className={className}>
@@ -39,7 +42,7 @@ export function LabProducts({ lang, current, className = "" }: { lang: Lang; cur
           const body = (
             <>
               {product.logo}
-              <span>
+              <span className="min-w-0">
                 <span lang="en">{product.name}</span>
                 <small>{product.meta}</small>
               </span>
