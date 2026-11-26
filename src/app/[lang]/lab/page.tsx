@@ -3,18 +3,19 @@ import { ScreenGallery } from "@/components/Devices";
 import { Cpu, Download, Save } from "@/components/icons";
 import { JsonLd } from "@/components/JsonLd";
 import { ClosingCTA, LabFeature } from "@/components/Sections";
-import { SurelaneTeaser } from "@/components/Surelane";
+import { LabAppsSection } from "@/components/LabApps";
 import { Page, SectionHeader, vars } from "@/components/ui";
 import { getContent } from "@/content";
+import { site } from "@/content/site";
 import { resolveLang, type LangParams } from "@/i18n";
-import { breadcrumbJsonLd, pageMetadata } from "@/seo";
+import { absoluteUrl, breadcrumbJsonLd, pageMetadata } from "@/seo";
 
 const stepIcons = [Download, Cpu, Save];
 
 export async function generateMetadata({ params }: LangParams): Promise<Metadata> {
   const lang = await resolveLang(params);
   const { lab } = getContent(lang).ui;
-  return pageMetadata(lang, "/lab", lab.title, lab.description);
+  return pageMetadata(lang, "/lab", lab.title, lab.description, { ownImage: true });
 }
 
 export default async function LabPage({ params }: LangParams) {
@@ -23,6 +24,23 @@ export default async function LabPage({ params }: LangParams) {
   return (
     <Page>
       <JsonLd data={breadcrumbJsonLd(lang, [{ name: ui.chrome.lab, path: "/lab" }])} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          name: "Swift Converter Hub",
+          url: "https://www.swiftconverterhub.com/",
+          applicationCategory: "UtilitiesApplication",
+          operatingSystem: "Any (runs in the browser)",
+          browserRequirements: "Requires a modern web browser",
+          description: ui.lab.productLead,
+          image: absoluteUrl(labShots.home.src),
+          inLanguage: "en",
+          isAccessibleForFree: true,
+          offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+          publisher: { "@type": "Organization", name: site.name, url: site.url },
+        }}
+      />
       <LabFeature pageTitle lang={lang} />
 
       <section className="section defer" style={vars({ "--defer-h": "600px" })} aria-labelledby="how-heading">
@@ -57,7 +75,7 @@ export default async function LabPage({ params }: LangParams) {
         </div>
       </section>
 
-      <SurelaneTeaser lang={lang} />
+      <LabAppsSection lang={lang} />
 
       <ClosingCTA lang={lang} />
     </Page>

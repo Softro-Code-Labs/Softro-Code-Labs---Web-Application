@@ -448,19 +448,24 @@
     text-decoration-thickness: 2px;
   }
 
-  /* The switch between the Lab's products: the one on show is raised, the other is a link to it. */
+  /* The switch between the Lab's products, two by two: the one on show is raised, the others link to theirs. */
   .lab-switch {
-    display: inline-flex;
-    flex-wrap: wrap;
+    display: inline-grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4px;
     padding: 4px;
     border-radius: 22px;
     box-shadow: inset 0 0 0 1px var(--line);
   }
+  /* Items in a row share one height, even when a long name wraps. */
+  .lab-switch > li {
+    display: flex;
+  }
   .lab-switch-item {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 10px;
+    width: 100%;
     min-height: 48px;
     padding: 6px 16px 6px 6px;
     border-radius: 18px;
@@ -490,14 +495,25 @@
       inset 0 0 0 1px var(--line-strong),
       0 2px 8px -2px rgb(0 0 0 / 0.25);
   }
-  /* On a phone the two products stack as equal rows, instead of wrapping unevenly. */
+  /* On a phone the switch fills the width, and the items tighten so four still fit two by two. */
   @media (max-width: 519px) {
     .lab-switch {
       display: grid;
       width: 100%;
     }
     .lab-switch-item {
-      width: 100%;
+      gap: 8px;
+      padding-right: 8px;
+      font-size: 13px;
+    }
+    .lab-switch-item small {
+      font-size: 11.5px;
+    }
+    /* Two classes, so it wins over the base size defined below. */
+    .lab-switch .lab-switch-logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
     }
   }
   .lab-switch-logo {
@@ -1531,7 +1547,7 @@
     animation: spin 0.8s linear infinite;
   }
 
-  /* ----- Everything we build, in two lines of large type that slide as the page scrolls ----- */
+  /* ----- Everything we build, in two lines of large type that drift past in opposite directions ----- */
   .ribbons {
     position: relative;
     overflow: hidden;
@@ -1683,20 +1699,13 @@
     transform: scaleX(1);
   }
 }
-@keyframes ribbon-left {
+/* A ribbon holds three copies of its line, so moving it by one copy (a third) loops without a seam. */
+@keyframes ribbon-loop {
   from {
-    transform: translateX(-2%);
+    transform: translateX(0);
   }
   to {
-    transform: translateX(-20%);
-  }
-}
-@keyframes ribbon-right {
-  from {
-    transform: translateX(-20%);
-  }
-  to {
-    transform: translateX(-2%);
+    transform: translateX(calc(-100% / 3));
   }
 }
 /* A case panel eases back a little as the next one slides over it. */
@@ -1744,6 +1753,18 @@
     stroke-dasharray: var(--len, 60);
     animation: draw 0.7s var(--ease-expo) 0.15s both;
   }
+  /* The ribbons drift on their own: the solid line to the left, the outline line to the right, a little slower. */
+  .ribbon-track {
+    animation: ribbon-loop 120s linear infinite;
+  }
+  .ribbon-band-alt .ribbon-track {
+    animation-duration: 150s;
+    animation-direction: reverse;
+  }
+  /* Hold still while the pointer rests on them, so a phrase can be read. */
+  .ribbons:hover .ribbon-track {
+    animation-play-state: paused;
+  }
 
   /* Scroll-linked effects, where the browser supports them. Elsewhere everything simply shows. */
   @supports (animation-timeline: view()) {
@@ -1765,14 +1786,6 @@
     .progress {
       animation: progress linear both;
       animation-timeline: scroll(root);
-    }
-    .ribbon-track {
-      animation: ribbon-left linear both;
-      animation-timeline: view();
-      animation-range: cover 0% cover 100%;
-    }
-    .ribbon-band-alt .ribbon-track {
-      animation-name: ribbon-right;
     }
     /* Each block of an illustration drops into place as its row arrives. */
     [data-reveal] .iso-box {

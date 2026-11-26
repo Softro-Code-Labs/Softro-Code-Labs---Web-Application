@@ -14,23 +14,28 @@ export const shareImage = { url: "/og.png", width: 1200, height: 630, alt: `${si
  * Next.js replaces the layout's card with a page's card instead of merging the two,
  * so each page repeats these through pageMetadata.
  */
-export function shareCard(lang: Lang) {
+export function shareCard(lang: Lang, withImage = true) {
   return {
     type: "website" as const,
     siteName: site.name,
     locale: getContent(lang).ui.meta.locale,
     alternateLocale: langs.filter((other) => other !== lang).map((other) => getContent(other).ui.meta.locale),
-    images: [shareImage],
+    ...(withImage ? { images: [shareImage] } : {}),
   };
 }
 
-/** Title, description, language links and share card for one page. */
-export function pageMetadata(lang: Lang, path: string, title: string | undefined, description: string): Metadata {
+/**
+ * Title, description, language links and share card for one page.
+ * `ownImage`: the page has its own opengraph-image file (a case study or a Lab page), so the site-wide
+ * picture is left out here; otherwise it would win over the page's own. X falls back to that same picture.
+ */
+export function pageMetadata(lang: Lang, path: string, title: string | undefined, description: string, { ownImage = false } = {}): Metadata {
   return {
     ...(title ? { title } : {}),
     description,
     alternates: languageAlternates(lang, path),
-    openGraph: { ...shareCard(lang), url: localize(lang, path) },
+    openGraph: { ...shareCard(lang, !ownImage), ...(title ? { title } : {}), description, url: localize(lang, path) },
+    ...(ownImage ? { twitter: { card: "summary_large_image", ...(title ? { title } : {}), description } } : {}),
   };
 }
 
@@ -45,6 +50,7 @@ export function businessJsonLd(lang: Lang) {
         "@type": "LocalBusiness",
         "@id": business,
         name: site.name,
+        legalName: site.legalName,
         url: site.url,
         logo: absoluteUrl("/brand/softro-mark.svg"),
         image: absoluteUrl(shareImage.url),

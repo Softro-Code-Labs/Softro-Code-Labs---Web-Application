@@ -6,7 +6,7 @@ import { Backdrop, Page } from "./ui";
 
 export function Legal({ doc, lang }: { doc: LegalDoc; lang: Lang }) {
   const { ui } = getContent(lang);
-  const values = { name: site.name, email: site.email };
+  const values = { name: site.legalName, email: site.email };
   return (
     <Page>
       <section className="hero">
