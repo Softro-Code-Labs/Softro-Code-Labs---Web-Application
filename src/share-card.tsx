@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
+import sharp from "sharp";
 import type { Shot } from "@/content/projects";
 import { site } from "@/content/site";
 
@@ -14,15 +15,13 @@ export const shareSize = { width: 1200, height: 630 };
 
 /**
  * A file in public/ as a data address the image renderer can draw.
- * The renderer can't read WebP, so screenshots and icons are turned into PNG first, with sharp (which Next.js
- * installs for its own image optimisation). If sharp isn't there, the picture is left out and the card still works.
+ * The renderer can't read WebP, so screenshots and icons are turned into PNG first, with sharp.
+ * sharp must stay in package.json's dependencies: pnpm (which Vercel uses) won't find it through Next.js.
  */
 async function asDataUrl(publicPath: string, width?: number) {
   const data = await readFile(join(process.cwd(), "public", publicPath));
   if (publicPath.endsWith(".svg")) return `data:image/svg+xml;base64,${data.toString("base64")}`;
   if (publicPath.endsWith(".png")) return `data:image/png;base64,${data.toString("base64")}`;
-  const sharp = await import("sharp").then((module) => module.default).catch(() => undefined);
-  if (!sharp) return undefined;
   const png = await sharp(data).resize({ width, withoutEnlargement: true }).png().toBuffer();
   return `data:image/png;base64,${png.toString("base64")}`;
 }
