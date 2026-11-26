@@ -214,10 +214,10 @@ const surelane = {
 
 const framecraft = {
   images: { src: "/work/framecraft-images.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft creating images: the Image tab with the FLUX.2 klein model, a prompt for an astronaut in a sunflower field, a gold Create button, and a gallery of results including a poster, a hummingbird, a coffee cup and a fox in snow", caption: "Pick a model, describe the picture and press Create. Every result joins the gallery." },
-  videos: { src: "/work/framecraft-videos.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft in Video mode with the LTX-2.5 model, which makes video with sound, a prompt about waves on black rocks at sunset, an optional starting picture and a size choice", caption: "Video mode makes short clips, some with sound, from a prompt or a starting picture." },
+  welcome: { src: "/work/framecraft-welcome.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft in Video mode on a first visit, with the LTX-2.5 model that makes video with sound, a prompt box, a start-image drop zone, and a Let's create something guide in three steps", caption: "Video mode: LTX-2.5 makes short clips with sound, and a three-step guide helps on the first visit." },
   chat: { src: "/work/framecraft-chat.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft Edit in chat beside a rainy street café picture, with earlier versions and instructions such as make it a bright sunny morning and add a red bicycle", caption: "Edit in chat: each message changes the picture, and every version is kept." },
-  poster: { src: "/work/framecraft-poster.webp", width: 1200, height: 675, frame: "browser", alt: "A Framecraft result in the viewer: a dark poster reading Create without limits in gold letters, with its model, size, seed and time listed beside it", caption: "Results open in a viewer with their prompt, seed and settings, ready to reuse." },
-  progress: { src: "/work/framecraft-progress.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft while creating: a live tile at 50% in the gallery, a progress bar reading Creating, step 2 of 4, and a Cancel button", caption: "A live tile and progress bar show each step, and Cancel stops at any point." },
+  download: { src: "/work/framecraft-download.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft asking before it downloads the Wan 2.2 video model: an 18 GB download, the free space before and after, where it will be saved and about how long it takes, with Download and Not now buttons", caption: "Before a model downloads, Framecraft shows its size, the free space left and where it will go." },
+  viewer: { src: "/work/framecraft-viewer.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft viewer showing a photo-like portrait of an astronaut in a sunflower field, with its prompt, seed, size, steps, time and graphics memory used, and buttons to edit in chat, reuse settings, show in folder or delete", caption: "Every result keeps its prompt, seed and settings, ready to edit in chat or reuse." },
   models: { src: "/work/framecraft-models.webp", width: 1200, height: 675, frame: "browser", alt: "Framecraft Models window listing video models such as LTX-2.5, Wan 2.2 and MiniMax H3 and image models such as Qwen-Image 2.1, FLUX.2 klein and Ideogram 4, each with its size, status and buttons to download or load", caption: "Models download when first needed, or load from a drive you already have." },
 } satisfies Record<string, Shot>;
 
@@ -226,7 +226,7 @@ const autoledger = {
   dashboard: { src: "/work/autoledger-dashboard.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger dashboard with total spend, this month, the monthly average and the odometer, a monthly spend chart, a category donut chart and recent expenses", caption: "The dashboard: this month against last, a 12-month chart and the share per category." },
   addExpense: { src: "/work/autoledger-add-expense.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger Add expense form with item, category, vendor, date, odometer, unit cost and quantity, and the total worked out as LKR 126,000", caption: "Adding an expense: the total works itself out from the cost and quantity." },
   log: { src: "/work/autoledger-expense-log.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger expense log with search, category, vendor and date filters, totals, an Export CSV button and a table of services, parts and fuel with coloured category badges", caption: "The expense log searches, filters and exports exactly what's on screen." },
-  reports: { src: "/work/autoledger-reports.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger Spending insights with lifetime spend, cost per km, the busiest month and the top category, a spend over time chart, and breakdowns by category and vendor", caption: "Reports add cost per kilometre, the busiest month and the biggest costs." },
+  categories: { src: "/work/autoledger-categories.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger Categories and vendors page with a card for each category, such as Brakes, Fuel, Service and Tyres, showing how many expenses it has, the last date and its total spend on a coloured bar", caption: "Each category shows its total spend, and its colour carries through the charts." },
   backups: { src: "/work/autoledger-backups.webp", width: 1200, height: 750, frame: "browser", alt: "AutoLedger administrator Backups page showing the last backup, the next automatic backup in 30 minutes, the stored snapshots and buttons to back up now, import or restore", caption: "Backups run every 30 minutes, and any of them can be restored in one click." },
 } satisfies Record<string, Shot>;
 
@@ -271,8 +271,8 @@ export const labApps: LabApp[] = [
     platform: "Windows",
     category: "MultimediaApplication",
     screen: framecraft.images,
-    accent: framecraft.poster,
-    gallery: [framecraft.images, framecraft.videos, framecraft.chat, framecraft.poster, framecraft.progress, framecraft.models],
+    accent: framecraft.viewer,
+    gallery: [framecraft.images, framecraft.chat, framecraft.welcome, framecraft.viewer, framecraft.models, framecraft.download],
   },
   {
     slug: "autoledger",
@@ -282,8 +282,8 @@ export const labApps: LabApp[] = [
     platform: "Windows",
     category: "FinanceApplication",
     screen: autoledger.dashboard,
-    accent: autoledger.reports,
-    gallery: [autoledger.dashboard, autoledger.addExpense, autoledger.log, autoledger.reports, autoledger.backups, autoledger.login],
+    accent: autoledger.categories,
+    gallery: [autoledger.dashboard, autoledger.addExpense, autoledger.log, autoledger.categories, autoledger.backups, autoledger.login],
   },
 ];
 
