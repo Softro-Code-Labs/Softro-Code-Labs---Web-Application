@@ -617,7 +617,7 @@ export function TestimonialSection({
   id?: string;
 }) {
   if (items.length === 0) return null;
-  const { ui } = getContent(lang);
+  const { ui, projects } = getContent(lang);
 
   if (items.length > 1) {
     return (
@@ -625,19 +625,35 @@ export function TestimonialSection({
         <div className="wrap">
           <SectionHeader id={id} eyebrow={eyebrow} title={ui.testimonialsHeading} />
           <div className="grid gap-5 min-[1024px]:grid-cols-2">
-            {items.map((item, index) => (
-              <figure key={item.quote[0]} className="card p-7 min-[640px]:p-10" data-reveal style={vars({ "--i": index % 2 })}>
-                <Quote size={28} className="text-accent" />
-                <blockquote lang="en" className="mt-5 space-y-4 text-[17.5px] leading-relaxed">
-                  {item.quote.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                </blockquote>
-                <figcaption className="mt-8 border-t border-line pt-6">
-                  <ClientName item={item} />
-                </figcaption>
-              </figure>
-            ))}
+            {items.map((item, index) => {
+              const project = projects.find((entry) => entry.slug === item.project);
+              return (
+                // A column, so the names line up at the foot of each card however long the words are.
+                <figure key={item.quote[0]} className="card flex flex-col p-7 min-[640px]:p-10" data-reveal style={vars({ "--i": index % 2 })}>
+                  <Quote size={28} className="text-accent" />
+                  <blockquote lang="en" className="mt-5 mb-8 space-y-4 text-[17.5px] leading-relaxed">
+                    {item.quote.map((paragraph) => (
+                      <p key={paragraph}>{paragraph}</p>
+                    ))}
+                  </blockquote>
+                  <figcaption className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-line pt-6">
+                    <ClientName item={item} />
+                    {linkProject && project && (
+                      <Link
+                        className="link-arrow text-[15px] text-muted hover:text-fg"
+                        href={localize(lang, `/work/${project.slug}`)}
+                        aria-label={fill(ui.projectRow.ctaLabel, { name: project.name })}
+                      >
+                        {ui.projectRow.cta}
+                        <span className="ring">
+                          <ArrowRight size={16} />
+                        </span>
+                      </Link>
+                    )}
+                  </figcaption>
+                </figure>
+              );
+            })}
           </div>
         </div>
       </section>
